@@ -1,5 +1,7 @@
 pub mod query;
-use crate::client::query::Query;
+use crate::Verb;
+use crate::client::query::{GetRecordArgs, Query};
+
 use anyhow::{Result, bail};
 use serde::Serialize;
 use url::Url;
@@ -21,6 +23,12 @@ impl Client {
 
         let client = Self { endpoint };
         Ok(client)
+    }
+
+    pub fn get_record(&self, args: GetRecordArgs) -> Result<String> {
+        let query: Query<GetRecordArgs> = Query::new(Verb::GetRecord, args);
+        let url = self.build_url(query)?;
+        Ok("".to_string())
     }
 
     fn build_url<T: Serialize>(&self, query: Query<T>) -> Result<String> {
