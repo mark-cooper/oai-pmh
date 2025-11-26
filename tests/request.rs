@@ -22,12 +22,12 @@ mod tests {
             ]))
             .with_status(200)
             .with_header("content-type", "application/xml")
-            .with_body(fixture.to_string())
+            .with_body(fixture)
             .create();
 
         let args = GetRecordArgs {
-            identifier: identifier.to_string(),
-            metadata_prefix: "oai_ead".to_string(),
+            identifier: identifier.into(),
+            metadata_prefix: "oai_ead".into(),
         };
 
         let client = Client::new(&server.url()).unwrap();

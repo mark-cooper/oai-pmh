@@ -82,8 +82,8 @@ mod tests {
         let query: Query<GetRecordArgs> = Query::new(
             Verb::GetRecord,
             GetRecordArgs {
-                identifier: "oai:archivesspace:/repositories/2/resources/2".to_string(),
-                metadata_prefix: "oai_ead".to_string(),
+                identifier: "oai:archivesspace:/repositories/2/resources/2".into(),
+                metadata_prefix: "oai_ead".into(),
             },
         );
         let url = client.build_url(query).unwrap();

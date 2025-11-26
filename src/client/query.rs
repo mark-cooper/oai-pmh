@@ -13,7 +13,7 @@ pub struct Query<T> {
 impl<T> Query<T> {
     pub fn new(verb: Verb, args: T) -> Self {
         Self {
-            verb: verb.as_param().to_string(),
+            verb: verb.as_param().into(),
             args,
         }
     }
@@ -37,8 +37,8 @@ mod tests {
     fn construct_get_record_query() {
         let q = "verb=GetRecord&identifier=oai:archivesspace:/repositories/2/resources/2&metadataPrefix=oai_ead";
         let args = GetRecordArgs {
-            identifier: "oai:archivesspace:/repositories/2/resources/2".to_string(),
-            metadata_prefix: "oai_ead".to_string(),
+            identifier: "oai:archivesspace:/repositories/2/resources/2".into(),
+            metadata_prefix: "oai_ead".into(),
         };
 
         let expected: Query<GetRecordArgs> = Query::new(Verb::GetRecord, args);
