@@ -6,10 +6,10 @@ use anyhow::{Result, bail};
 use serde::Serialize;
 use url::Url;
 
-const REQUIRED_SCHEME: &str = "https";
+const REQUIRED_SCHEME: &str = "http";
 
 pub struct Client {
-    // client: reqwest::blocking:client,
+    client: reqwest::blocking::Client,
     endpoint: Url,
 }
 
@@ -17,18 +17,27 @@ impl Client {
     pub fn new(endpoint: &str) -> Result<Self> {
         let endpoint = Url::parse(endpoint)?;
 
-        if endpoint.scheme() != REQUIRED_SCHEME {
-            bail!("Endpoint must be an https url, given: {endpoint}")
+        if !endpoint.scheme().contains(REQUIRED_SCHEME) {
+            bail!("Endpoint must be an http or https url, given: {endpoint}")
         }
 
-        let client = Self { endpoint };
+        let client = Self {
+            client: reqwest::blocking::Client::new(),
+            endpoint,
+        };
         Ok(client)
     }
 
     pub fn get_record(&self, args: GetRecordArgs) -> Result<String> {
         let query: Query<GetRecordArgs> = Query::new(Verb::GetRecord, args);
         let url = self.build_url(query)?;
-        Ok("".to_string())
+        let body = self
+            .client
+            .get(url)
+            .header("Accept", "application/xml")
+            .send()?
+            .text()?;
+        Ok(body)
     }
 
     fn build_url<T: Serialize>(&self, query: Query<T>) -> Result<String> {

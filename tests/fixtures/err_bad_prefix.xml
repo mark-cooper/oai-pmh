@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<OAI-PMH
+    xmlns="http://www.openarchives.org/OAI/2.0/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd"
+><responseDate>2025-11-26T19:48:17Z</responseDate><request
+    >https://test.archivesspace.org</request><error
+        code="cannotDisseminateFormat"
+    >The metadata format identified by the value given for the metadataPrefix argument is not supported by the item or by the repository.</error></OAI-PMH>
