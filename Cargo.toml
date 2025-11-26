@@ -1,0 +1,10 @@
+[package]
+name = "oai-pmh"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+anyhow = "1.0.100"
+serde = {version = "1.0.228", features = ["derive"]}
+serde_qs = "0.15.0"
+url = "2.5.7"
