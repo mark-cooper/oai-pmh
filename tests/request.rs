@@ -8,7 +8,7 @@ mod tests {
         let identifier = "oai:archivesspace:/repositories/2/resources/2";
         let metadata_prefix = "oai_ead";
 
-        let fixture = std::fs::read_to_string("tests/fixtures/get_record.ead.xml")
+        let xml = std::fs::read_to_string("tests/fixtures/get_record.xml")
             .expect("Failed to load fixture");
 
         let mut server = mockito::Server::new();
@@ -22,7 +22,7 @@ mod tests {
             ]))
             .with_status(200)
             .with_header("content-type", "application/xml")
-            .with_body(fixture)
+            .with_body(xml)
             .create();
 
         let args = GetRecordArgs {

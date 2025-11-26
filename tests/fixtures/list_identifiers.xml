@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+  <responseDate>2025-11-26T21:58:16Z</responseDate>
+  <request metadataPrefix="oai_ead" verb="ListIdentifiers">https://test.archivesspace.org</request>
+  <ListIdentifiers>
+    <header>
+      <identifier>oai:archivesspace:/repositories/2/resources/2</identifier>
+      <datestamp>2025-11-11T14:28:08Z</datestamp>
+    </header>
+    <resumptionToken>eyJtZXRhZGF0YV9wcmVmaXgiOiJvYWlfZWFkIiwiZnJvbSI6IjE5NzAtMDEtMDEgMDA6MDA6MDAgVVRDIiwidW50aWwiOiIyMDI1LTExLTI2IDIxOjU4OjE1IFVUQyIsInN0YXRlIjoicHJvZHVjaW5nX3JlY29yZHMiLCJsYXN0X2RlbGV0ZV9pZCI6MCwicmVtYWluaW5nX3R5cGVzIjp7IlJlc291cmNlIjoyfSwiaXNzdWVfdGltZSI6MTc2NDE5NDI5NjA2Mn0=</resumptionToken>
+  </ListIdentifiers>
+</OAI-PMH>

@@ -1,4 +1,5 @@
 pub mod query;
+pub mod response;
 use crate::Verb;
 use crate::client::query::{GetRecordArgs, Query};
 
