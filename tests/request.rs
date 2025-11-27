@@ -89,7 +89,38 @@ mod tests {
         };
 
         let client = Client::new(&server.url()).unwrap();
-        let _ = client.list_records(args).unwrap();
+
+        // Test cases for records from first page
+        let test_cases = [
+            (
+                "oai:archivesspace:/repositories/2/archival_objects/1",
+                "Correspondence about art, 1974–2014",
+            ),
+            (
+                "oai:archivesspace:/repositories/2/archival_objects/2",
+                "Correspondence about Veterans Affairs appeals, 1945–2012",
+            ),
+            (
+                "oai:archivesspace:/repositories/2/archival_objects/3",
+                "Correspondence relating to family, 1922–1972, undated",
+            ),
+        ];
+
+        for (idx, record) in client.list_records(args).unwrap().enumerate() {
+            let record = record.unwrap();
+
+            if idx < test_cases.len() {
+                let (expected_id, expected_title) = test_cases[idx];
+                assert_eq!(record.header.identifier, expected_id);
+                assert!(record.metadata.contains(expected_title));
+            }
+
+            // Break immediately after verifying test cases
+            // This keeps us on the first page and avoids resumption token request
+            if idx >= test_cases.len() - 1 {
+                break;
+            }
+        }
 
         mock.assert();
     }

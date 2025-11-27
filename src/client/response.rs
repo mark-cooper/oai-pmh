@@ -160,7 +160,9 @@ impl ListRecordsResponse {
 pub struct ListRecords {
     #[serde(rename = "record")]
     pub record: Vec<Record>,
-    pub resumption_token: ResumptionToken,
+
+    #[serde(default)]
+    pub resumption_token: Option<ResumptionToken>,
 }
 
 // General elements
@@ -295,8 +297,10 @@ mod tests {
         assert_eq!(response.request, "https://test.archivesspace.org");
 
         let payload = response.payload.unwrap();
+
+        let token = payload.resumption_token.as_ref().unwrap();
         assert_eq!(
-            payload.resumption_token.token,
+            token.token,
             "eyJtZXRhZGF0YV9wcmVmaXgiOiJvYWlfZGMiLCJmcm9tIjoiMTk3MC0wMS0wMSAwMDowMDowMCBVVEMiLCJ1bnRpbCI6IjIwMjUtMTEtMjcgMDI6MTA6MDYgVVRDIiwic3RhdGUiOiJwcm9kdWNpbmdfcmVjb3JkcyIsImxhc3RfZGVsZXRlX2lkIjowLCJyZW1haW5pbmdfdHlwZXMiOnsiUmVzb3VyY2UiOjAsIkFyY2hpdmFsT2JqZWN0IjoyNX0sImlzc3VlX3RpbWUiOjE3NjQyMDk0MDc3MzN9"
         );
 

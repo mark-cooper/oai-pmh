@@ -1,9 +1,12 @@
 pub mod metadata;
 pub mod query;
 pub mod response;
+pub(crate) mod resumable;
+
 use crate::Verb;
 use crate::client::query::{GetRecordArgs, ListRecordsArgs, Query};
-use crate::client::response::{GetRecordResponse, IdentifyResponse, ListRecordsResponse};
+use crate::client::response::{GetRecordResponse, IdentifyResponse, ListRecordsResponse, Record};
+use crate::client::resumable::ResumableIter;
 
 use anyhow::{Result, bail};
 use serde::Serialize;
@@ -43,10 +46,11 @@ impl Client {
         Ok(response)
     }
 
-    pub fn list_records(&self, args: ListRecordsArgs) -> Result<ListRecordsResponse> {
-        let xml = self.do_query(Query::new(Verb::ListRecords, args))?;
-        let response = ListRecordsResponse::new(xml)?;
-        Ok(response)
+    pub fn list_records(
+        &self,
+        args: ListRecordsArgs,
+    ) -> Result<ResumableIter<'_, Record, ListRecordsResponse>> {
+        ResumableIter::new(self, Verb::ListRecords, args)
     }
 
     fn build_url<T: Serialize>(&self, query: Query<T>) -> Result<String> {
@@ -55,7 +59,7 @@ impl Client {
         Ok(url)
     }
 
-    fn do_query<T: Serialize>(&self, query: Query<T>) -> Result<String> {
+    pub(crate) fn do_query<T: Serialize>(&self, query: Query<T>) -> Result<String> {
         let url = self.build_url(query)?;
         let xml = self
             .client
