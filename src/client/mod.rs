@@ -61,10 +61,12 @@ impl Client {
 
     pub(crate) fn do_query<T: Serialize>(&self, query: Query<T>) -> Result<String> {
         let url = self.build_url(query)?;
+        let user_agent = format!("oai-pmh-rs/{}", env!("CARGO_PKG_VERSION"));
         let xml = self
             .client
             .get(url)
             .header("Accept", "text/xml")
+            .header("User-Agent", user_agent)
             .send()?
             .text()?;
         Ok(xml)
