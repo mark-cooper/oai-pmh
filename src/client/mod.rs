@@ -1,7 +1,9 @@
+pub mod metadata;
 pub mod query;
 pub mod response;
 use crate::Verb;
 use crate::client::query::{GetRecordArgs, Query};
+use crate::client::response::GetRecordResponse;
 
 use anyhow::{Result, bail};
 use serde::Serialize;
@@ -29,16 +31,17 @@ impl Client {
         Ok(client)
     }
 
-    pub fn get_record(&self, args: GetRecordArgs) -> Result<String> {
+    pub fn get_record(&self, args: GetRecordArgs) -> Result<GetRecordResponse> {
         let query: Query<GetRecordArgs> = Query::new(Verb::GetRecord, args);
         let url = self.build_url(query)?;
-        let body = self
+        let xml = self
             .client
             .get(url)
-            .header("Accept", "application/xml")
+            .header("Accept", "text/xml")
             .send()?
             .text()?;
-        Ok(body)
+        let response = GetRecordResponse::new(xml)?;
+        Ok(response)
     }
 
     fn build_url<T: Serialize>(&self, query: Query<T>) -> Result<String> {

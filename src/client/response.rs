@@ -1,39 +1,27 @@
+use anyhow::Result;
 use serde::Deserialize;
 use std::fmt;
 
-#[derive(Debug, Deserialize)]
-#[serde(rename = "OAI-PMH")]
-pub struct OaiResponse {
-    #[serde(rename = "responseDate")]
-    pub response_date: String,
-    #[serde(rename = "request")]
-    pub request: String,
-    #[serde(rename = "error", default)]
-    pub error: Option<OaiError>,
-}
-
-impl OaiResponse {
-    pub fn is_err(&self) -> bool {
-        self.error.is_some()
-    }
-}
+use crate::client::metadata;
 
 #[derive(Debug, Deserialize)]
-pub struct OaiError {
+pub struct ResponseError {
     #[serde(rename = "@code")]
     pub code: ErrorCode,
+
     #[serde(rename = "$value")]
     pub message: String,
 }
 
-impl std::error::Error for OaiError {}
+impl std::error::Error for ResponseError {}
 
-impl fmt::Display for OaiError {
+impl fmt::Display for ResponseError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}: {}", self.code, self.message)
     }
 }
 
+// Error codes
 #[derive(Debug, Deserialize, Clone, Copy, PartialEq, Eq)]
 pub enum ErrorCode {
     #[serde(rename = "badArgument")]
@@ -69,16 +57,146 @@ impl fmt::Display for ErrorCode {
     }
 }
 
+// GetRecord implementation
+#[derive(Debug, Deserialize)]
+#[serde(rename = "OAI-PMH")]
+#[serde(rename_all = "camelCase")]
+pub struct GetRecordResponse {
+    pub response_date: String,
+    pub request: String,
+
+    #[serde(default)]
+    pub error: Option<ResponseError>,
+
+    #[serde(rename = "GetRecord", default)]
+    pub payload: Option<GetRecord>,
+}
+
+impl GetRecordResponse {
+    pub fn new(xml: String) -> Result<Self> {
+        let mut response: Self = quick_xml::de::from_str(xml.as_str())?;
+
+        let metadata = metadata::extract_metadata(xml.as_str())
+            .into_iter()
+            .next()
+            .unwrap_or_default();
+
+        if let Some(ref mut payload) = response.payload {
+            payload.record.metadata = metadata;
+        }
+
+        Ok(response)
+    }
+
+    pub fn is_err(&self) -> bool {
+        self.error.is_some()
+    }
+}
+
+#[derive(Debug, Deserialize)]
+pub struct GetRecord {
+    #[serde(rename = "record")]
+    pub record: Record,
+}
+
+// Identify implementation
+#[derive(Debug, Deserialize)]
+#[serde(rename = "OAI-PMH")]
+#[serde(rename_all = "camelCase")]
+pub struct IdentifyResponse {
+    pub response_date: String,
+    pub request: String,
+
+    #[serde(default)]
+    pub error: Option<ResponseError>,
+
+    #[serde(rename = "Identify", default)]
+    pub payload: Option<Identify>,
+}
+
+impl IdentifyResponse {
+    pub fn new(xml: String) -> Result<Self> {
+        let response: Self = quick_xml::de::from_str(xml.as_str())?;
+        Ok(response)
+    }
+
+    pub fn is_err(&self) -> bool {
+        self.error.is_some()
+    }
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Identify {
+    pub repository_name: String,
+    #[serde(rename = "baseURL")]
+    pub base_url: String,
+    pub protocol_version: String,
+
+    #[serde(default)]
+    pub admin_email: Vec<String>,
+    pub earliest_datestamp: String,
+    pub deleted_record: String,
+    pub granularity: String,
+
+    #[serde(default)]
+    pub compression: Vec<String>,
+
+    #[serde(skip)]
+    pub description: String,
+}
+
+// General elements
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Header {
+    pub identifier: String,
+    pub datestamp: String,
+
+    #[serde(rename = "@status", default)]
+    pub status: Option<String>,
+
+    #[serde(default)]
+    pub set_spec: Vec<String>,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Record {
+    pub header: Header,
+
+    #[serde(skip)]
+    pub metadata: String,
+
+    #[serde(default)]
+    pub about: String,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct ResumptionToken {
+    #[serde(rename = "$value")]
+    pub token: String,
+
+    #[serde(rename = "@expirationDate", default)]
+    pub expiration_date: Option<String>,
+
+    #[serde(rename = "@completeListSize", default)]
+    pub complete_list_size: Option<u64>,
+
+    #[serde(rename = "@cursor", default)]
+    pub cursor: Option<u64>,
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
 
     #[test]
-    fn test_deserialize_cannot_disseminate_format() {
+    fn test_err_cannot_disseminate_format() {
         let xml = std::fs::read_to_string("tests/fixtures/err_bad_prefix.xml")
             .expect("Failed to load fixture");
 
-        let response: OaiResponse = quick_xml::de::from_str(xml.as_str()).unwrap();
+        let response = GetRecordResponse::new(xml).unwrap();
         assert!(response.is_err());
 
         let error = response.error.unwrap();
@@ -90,11 +208,11 @@ mod tests {
     }
 
     #[test]
-    fn test_deserialize_id_does_not_exist() {
+    fn test_err_id_does_not_exist() {
         let xml = std::fs::read_to_string("tests/fixtures/err_not_found.xml")
             .expect("Failed to load fixture");
 
-        let response: OaiResponse = quick_xml::de::from_str(xml.as_str()).unwrap();
+        let response = GetRecordResponse::new(xml).unwrap();
         assert!(response.is_err());
 
         let error = response.error.unwrap();
@@ -103,5 +221,49 @@ mod tests {
             error.message,
             "The value of the identifier argument is unknown or illegal in this repository."
         );
+    }
+
+    #[test]
+    fn test_get_record_success() {
+        let xml = std::fs::read_to_string("tests/fixtures/get_record.xml")
+            .expect("Failed to load fixture");
+
+        let response = GetRecordResponse::new(xml).unwrap();
+        assert!(!response.is_err());
+        assert_eq!(response.response_date, "2025-11-26T19:16:06Z");
+        assert_eq!(response.request, "https://test.archivesspace.org");
+
+        let payload = response.payload.unwrap();
+        assert_eq!(
+            payload.record.header.identifier,
+            "oai:archivesspace:/repositories/2/resources/2"
+        );
+        assert_eq!(payload.record.header.datestamp, "2025-11-11T14:28:08Z");
+
+        let metadata = payload.record.metadata;
+        assert!(metadata.contains("<ead"));
+        assert!(metadata.contains("xmlns=\"urn:isbn:1-931666-22-9\""));
+        assert!(metadata.contains("</ead>"));
+    }
+
+    #[test]
+    fn test_identify_success() {
+        let xml =
+            std::fs::read_to_string("tests/fixtures/identify.xml").expect("Failed to load fixture");
+
+        let response = IdentifyResponse::new(xml).unwrap();
+        assert!(!response.is_err());
+        assert_eq!(response.response_date, "2025-11-26T21:49:54Z");
+        assert_eq!(response.request, "https://test.archivesspace.org");
+
+        let payload = response.payload.unwrap();
+        assert_eq!(payload.repository_name, "ArchivesSpace OAI Provider");
+        assert_eq!(payload.base_url, "https://test.archivesspace.org");
+        assert_eq!(payload.protocol_version, "2.0");
+        assert_eq!(payload.admin_email, vec!["admin@example.com"]);
+        assert_eq!(payload.earliest_datestamp, "1970-01-01T00:00:00Z");
+        assert_eq!(payload.deleted_record, "persistent");
+        assert_eq!(payload.granularity, "YYYY-MM-DDThh:mm:ssZ");
+        assert!(payload.compression.is_empty());
     }
 }

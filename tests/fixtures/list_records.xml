@@ -1,0 +1,877 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+  <responseDate>2025-11-27T02:10:07Z</responseDate>
+  <request metadataPrefix="oai_dc" verb="ListRecords">https://test.archivesspace.org</request>
+  <ListRecords>
+    <record>
+      <header>
+        <identifier>oai:archivesspace:/repositories/2/archival_objects/1</identifier>
+        <datestamp>2025-11-11T00:31:42Z</datestamp>
+      </header>
+      <metadata>
+        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Allen Doe Research Center</dc:publisher>
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Parent-Institution-test</dc:publisher>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/ark:/99999/10027</dc:identifier>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/repositories/2/archival_objects/1</dc:identifier>
+          <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">Correspondence about art, 1974–2014</dc:title>
+          <dc:date xmlns:dc="http://purl.org/dc/elements/1.1/">1974–2014</dc:date>
+          <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">2.625 Linear Feet; 3 standard-size legal size document cases
+1 oversize flat case</dc:format>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">eng</dc:language>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">Latn</dc:language>
+          <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">The Richard Saholt Collection contains materials created by and about Richard Saholt, including correspondence, medical and military files, artwork reproductions, audiovisual materials, print and slide photography, a collaged artist's book, a scrapbook, and press materials related to Saholt's life and work. The collection was donated by Michael Bonesteel, a scholar and art historian, with whom Saholt began communication with in the 1990s. Following Saholt's death in 2014, Bonesteel inherited additional documents, correspondence, photography, videos, and books. The materials exemplify Saholt's artistic process, revealing the traumatic biographical events and motivations that informed the imagery in his work. The collection may be of interest to researchers studying self-taught art, outsider art, artists working with mental illnesses, artist veterans, collage, artists' books, military history, and Minneapolis-based artists. The materials within the collection date from 1922 to 2011.
+
+ The collection contains a significant amount of correspondence from Saholt to Michael Bonesteel from the mid-1990s through 2005. The correspondence comprises handwritten letters, facsimiles, annotated collage reproductions, and acknowledgments of artwork donations from Saholt to Bonesteel. These letters describe Saholt's desire to exhibit and publish his work and mention his interest in Bonesteel's scholarship on outsider art. While correspondence is primarily from Saholt to Michael Bonesteel, the collection does not contain Bonesteel's responses. Additional original handwritten letters and facsimiles document Saholt's ongoing legal battles with the Veterans Affairs Office requesting service-connected disability compensation. Correspondence relating to veterans affairs claims are housed within the same folder but pertain to various appeals made between 1945 and 2012. Correspondence and press packets from Saholt to journalists and publishers show additional intent to exhibit and publish his work. This folder contains both acceptance and rejection responses from writers and publishers. A small portion of the correspondence is letters from Saholt to family members including an endearing letter to his wife Doris.
+
+ Additional correspondence encompasses psychological evaluations; records relating to his military history; annotated and collaged court hearings and testimonies; biographical material, medical, and military documentation on Torfen Saholt, Richard Saholt's father. Medical documentation and psychological evaluations are restricted.
+
+ Photographic materials are undated and consist of personal family pictures and portraits of Saholt (from childhood through adult years), photography of exhibition installations and receptions, and reproductions of his collages in both print and 35mm slide format. Saholt's collage works are reproduced as color prints on paper, occasionally embellished with annotations and handwriting.
+
+ Three VHS video cassettes, housed in collaged covers, feature interviews with the artist giving insight into his childhood and artistic process. Saholt inscribed, altered, and collaged three books in the collection. A copy of The Wall: Images and Offerings from the Vietnam Veterans Memorial is altered using collaged newspaper and magazine clippings to highlight the horrors of war and its traumatic effect on veterans. Saholt inscribed the interior cover of Principles of General Psychology, which depicts and discusses a collage created while under psychiatric care. The scrapbook combines visual and textual collages layered with family pictures, exhibition photography, and portraits of the artist.
+
+ Press materials include newspapers, magazines, and exhibition catalogs related to Saholt's artwork and exhibitions published between 1985 and 2001. Additional newspaper clippings chronicle Saholt's publicized legal battles with the Veterans Affairs Office. A small collection of ephemera includes business and personal membership cards.</dc:description>
+          <dc:rights xmlns:dc="http://purl.org/dc/elements/1.1/">The collection is open for research. Medical documents are restricted.</dc:rights>
+          <dc:subject xmlns:dc="http://purl.org/dc/elements/1.1/">Acting</dc:subject>
+          <dc:relation xmlns:dc="http://purl.org/dc/elements/1.1/">Richard Saholt Collection, A0058</dc:relation>
+        </oai_dc:dc>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:archivesspace:/repositories/2/archival_objects/2</identifier>
+        <datestamp>2025-11-11T00:31:42Z</datestamp>
+      </header>
+      <metadata>
+        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Allen Doe Research Center</dc:publisher>
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Parent-Institution-test</dc:publisher>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/ark:/99999/10028</dc:identifier>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/repositories/2/archival_objects/2</dc:identifier>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Saholt, Richard, (1924 - 2014)</dc:creator>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Bonesteel, Michael</dc:creator>
+          <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">Correspondence about Veterans Affairs appeals, 1945–2012</dc:title>
+          <dc:date xmlns:dc="http://purl.org/dc/elements/1.1/">1945–2012</dc:date>
+          <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">2.625 Linear Feet; 3 standard-size legal size document cases
+1 oversize flat case</dc:format>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">eng</dc:language>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">Latn</dc:language>
+          <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">The Richard Saholt Collection contains materials created by and about Richard Saholt, including correspondence, medical and military files, artwork reproductions, audiovisual materials, print and slide photography, a collaged artist's book, a scrapbook, and press materials related to Saholt's life and work. The collection was donated by Michael Bonesteel, a scholar and art historian, with whom Saholt began communication with in the 1990s. Following Saholt's death in 2014, Bonesteel inherited additional documents, correspondence, photography, videos, and books. The materials exemplify Saholt's artistic process, revealing the traumatic biographical events and motivations that informed the imagery in his work. The collection may be of interest to researchers studying self-taught art, outsider art, artists working with mental illnesses, artist veterans, collage, artists' books, military history, and Minneapolis-based artists. The materials within the collection date from 1922 to 2011.
+
+ The collection contains a significant amount of correspondence from Saholt to Michael Bonesteel from the mid-1990s through 2005. The correspondence comprises handwritten letters, facsimiles, annotated collage reproductions, and acknowledgments of artwork donations from Saholt to Bonesteel. These letters describe Saholt's desire to exhibit and publish his work and mention his interest in Bonesteel's scholarship on outsider art. While correspondence is primarily from Saholt to Michael Bonesteel, the collection does not contain Bonesteel's responses. Additional original handwritten letters and facsimiles document Saholt's ongoing legal battles with the Veterans Affairs Office requesting service-connected disability compensation. Correspondence relating to veterans affairs claims are housed within the same folder but pertain to various appeals made between 1945 and 2012. Correspondence and press packets from Saholt to journalists and publishers show additional intent to exhibit and publish his work. This folder contains both acceptance and rejection responses from writers and publishers. A small portion of the correspondence is letters from Saholt to family members including an endearing letter to his wife Doris.
+
+ Additional correspondence encompasses psychological evaluations; records relating to his military history; annotated and collaged court hearings and testimonies; biographical material, medical, and military documentation on Torfen Saholt, Richard Saholt's father. Medical documentation and psychological evaluations are restricted.
+
+ Photographic materials are undated and consist of personal family pictures and portraits of Saholt (from childhood through adult years), photography of exhibition installations and receptions, and reproductions of his collages in both print and 35mm slide format. Saholt's collage works are reproduced as color prints on paper, occasionally embellished with annotations and handwriting.
+
+ Three VHS video cassettes, housed in collaged covers, feature interviews with the artist giving insight into his childhood and artistic process. Saholt inscribed, altered, and collaged three books in the collection. A copy of The Wall: Images and Offerings from the Vietnam Veterans Memorial is altered using collaged newspaper and magazine clippings to highlight the horrors of war and its traumatic effect on veterans. Saholt inscribed the interior cover of Principles of General Psychology, which depicts and discusses a collage created while under psychiatric care. The scrapbook combines visual and textual collages layered with family pictures, exhibition photography, and portraits of the artist.
+
+ Press materials include newspapers, magazines, and exhibition catalogs related to Saholt's artwork and exhibitions published between 1985 and 2001. Additional newspaper clippings chronicle Saholt's publicized legal battles with the Veterans Affairs Office. A small collection of ephemera includes business and personal membership cards.</dc:description>
+          <dc:rights xmlns:dc="http://purl.org/dc/elements/1.1/">The collection is open for research. Medical documents are restricted.</dc:rights>
+          <dc:relation xmlns:dc="http://purl.org/dc/elements/1.1/">Richard Saholt Collection, A0058</dc:relation>
+        </oai_dc:dc>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:archivesspace:/repositories/2/archival_objects/3</identifier>
+        <datestamp>2025-11-11T00:31:42Z</datestamp>
+      </header>
+      <metadata>
+        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Allen Doe Research Center</dc:publisher>
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Parent-Institution-test</dc:publisher>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/ark:/99999/10029</dc:identifier>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/repositories/2/archival_objects/3</dc:identifier>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Saholt, Richard, (1924 - 2014)</dc:creator>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Bonesteel, Michael</dc:creator>
+          <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">Correspondence relating to family, 1922–1972, undated</dc:title>
+          <dc:date xmlns:dc="http://purl.org/dc/elements/1.1/">1922–1972, undated</dc:date>
+          <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">2.625 Linear Feet; 3 standard-size legal size document cases
+1 oversize flat case</dc:format>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">eng</dc:language>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">Latn</dc:language>
+          <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">The Richard Saholt Collection contains materials created by and about Richard Saholt, including correspondence, medical and military files, artwork reproductions, audiovisual materials, print and slide photography, a collaged artist's book, a scrapbook, and press materials related to Saholt's life and work. The collection was donated by Michael Bonesteel, a scholar and art historian, with whom Saholt began communication with in the 1990s. Following Saholt's death in 2014, Bonesteel inherited additional documents, correspondence, photography, videos, and books. The materials exemplify Saholt's artistic process, revealing the traumatic biographical events and motivations that informed the imagery in his work. The collection may be of interest to researchers studying self-taught art, outsider art, artists working with mental illnesses, artist veterans, collage, artists' books, military history, and Minneapolis-based artists. The materials within the collection date from 1922 to 2011.
+
+ The collection contains a significant amount of correspondence from Saholt to Michael Bonesteel from the mid-1990s through 2005. The correspondence comprises handwritten letters, facsimiles, annotated collage reproductions, and acknowledgments of artwork donations from Saholt to Bonesteel. These letters describe Saholt's desire to exhibit and publish his work and mention his interest in Bonesteel's scholarship on outsider art. While correspondence is primarily from Saholt to Michael Bonesteel, the collection does not contain Bonesteel's responses. Additional original handwritten letters and facsimiles document Saholt's ongoing legal battles with the Veterans Affairs Office requesting service-connected disability compensation. Correspondence relating to veterans affairs claims are housed within the same folder but pertain to various appeals made between 1945 and 2012. Correspondence and press packets from Saholt to journalists and publishers show additional intent to exhibit and publish his work. This folder contains both acceptance and rejection responses from writers and publishers. A small portion of the correspondence is letters from Saholt to family members including an endearing letter to his wife Doris.
+
+ Additional correspondence encompasses psychological evaluations; records relating to his military history; annotated and collaged court hearings and testimonies; biographical material, medical, and military documentation on Torfen Saholt, Richard Saholt's father. Medical documentation and psychological evaluations are restricted.
+
+ Photographic materials are undated and consist of personal family pictures and portraits of Saholt (from childhood through adult years), photography of exhibition installations and receptions, and reproductions of his collages in both print and 35mm slide format. Saholt's collage works are reproduced as color prints on paper, occasionally embellished with annotations and handwriting.
+
+ Three VHS video cassettes, housed in collaged covers, feature interviews with the artist giving insight into his childhood and artistic process. Saholt inscribed, altered, and collaged three books in the collection. A copy of The Wall: Images and Offerings from the Vietnam Veterans Memorial is altered using collaged newspaper and magazine clippings to highlight the horrors of war and its traumatic effect on veterans. Saholt inscribed the interior cover of Principles of General Psychology, which depicts and discusses a collage created while under psychiatric care. The scrapbook combines visual and textual collages layered with family pictures, exhibition photography, and portraits of the artist.
+
+ Press materials include newspapers, magazines, and exhibition catalogs related to Saholt's artwork and exhibitions published between 1985 and 2001. Additional newspaper clippings chronicle Saholt's publicized legal battles with the Veterans Affairs Office. A small collection of ephemera includes business and personal membership cards.</dc:description>
+          <dc:rights xmlns:dc="http://purl.org/dc/elements/1.1/">The collection is open for research. Medical documents are restricted.</dc:rights>
+          <dc:relation xmlns:dc="http://purl.org/dc/elements/1.1/">Richard Saholt Collection, A0058</dc:relation>
+        </oai_dc:dc>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:archivesspace:/repositories/2/archival_objects/4</identifier>
+        <datestamp>2025-11-11T00:31:42Z</datestamp>
+      </header>
+      <metadata>
+        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Allen Doe Research Center</dc:publisher>
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Parent-Institution-test</dc:publisher>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/ark:/99999/10030</dc:identifier>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/repositories/2/archival_objects/4</dc:identifier>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Saholt, Richard, (1924 - 2014)</dc:creator>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Bonesteel, Michael</dc:creator>
+          <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">Correspondence relating to mental health and medical history, 1974–2014, undated</dc:title>
+          <dc:date xmlns:dc="http://purl.org/dc/elements/1.1/">1974–2014, undated</dc:date>
+          <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">2.625 Linear Feet; 3 standard-size legal size document cases
+1 oversize flat case</dc:format>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">eng</dc:language>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">Latn</dc:language>
+          <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">The Richard Saholt Collection contains materials created by and about Richard Saholt, including correspondence, medical and military files, artwork reproductions, audiovisual materials, print and slide photography, a collaged artist's book, a scrapbook, and press materials related to Saholt's life and work. The collection was donated by Michael Bonesteel, a scholar and art historian, with whom Saholt began communication with in the 1990s. Following Saholt's death in 2014, Bonesteel inherited additional documents, correspondence, photography, videos, and books. The materials exemplify Saholt's artistic process, revealing the traumatic biographical events and motivations that informed the imagery in his work. The collection may be of interest to researchers studying self-taught art, outsider art, artists working with mental illnesses, artist veterans, collage, artists' books, military history, and Minneapolis-based artists. The materials within the collection date from 1922 to 2011.
+
+ The collection contains a significant amount of correspondence from Saholt to Michael Bonesteel from the mid-1990s through 2005. The correspondence comprises handwritten letters, facsimiles, annotated collage reproductions, and acknowledgments of artwork donations from Saholt to Bonesteel. These letters describe Saholt's desire to exhibit and publish his work and mention his interest in Bonesteel's scholarship on outsider art. While correspondence is primarily from Saholt to Michael Bonesteel, the collection does not contain Bonesteel's responses. Additional original handwritten letters and facsimiles document Saholt's ongoing legal battles with the Veterans Affairs Office requesting service-connected disability compensation. Correspondence relating to veterans affairs claims are housed within the same folder but pertain to various appeals made between 1945 and 2012. Correspondence and press packets from Saholt to journalists and publishers show additional intent to exhibit and publish his work. This folder contains both acceptance and rejection responses from writers and publishers. A small portion of the correspondence is letters from Saholt to family members including an endearing letter to his wife Doris.
+
+ Additional correspondence encompasses psychological evaluations; records relating to his military history; annotated and collaged court hearings and testimonies; biographical material, medical, and military documentation on Torfen Saholt, Richard Saholt's father. Medical documentation and psychological evaluations are restricted.
+
+ Photographic materials are undated and consist of personal family pictures and portraits of Saholt (from childhood through adult years), photography of exhibition installations and receptions, and reproductions of his collages in both print and 35mm slide format. Saholt's collage works are reproduced as color prints on paper, occasionally embellished with annotations and handwriting.
+
+ Three VHS video cassettes, housed in collaged covers, feature interviews with the artist giving insight into his childhood and artistic process. Saholt inscribed, altered, and collaged three books in the collection. A copy of The Wall: Images and Offerings from the Vietnam Veterans Memorial is altered using collaged newspaper and magazine clippings to highlight the horrors of war and its traumatic effect on veterans. Saholt inscribed the interior cover of Principles of General Psychology, which depicts and discusses a collage created while under psychiatric care. The scrapbook combines visual and textual collages layered with family pictures, exhibition photography, and portraits of the artist.
+
+ Press materials include newspapers, magazines, and exhibition catalogs related to Saholt's artwork and exhibitions published between 1985 and 2001. Additional newspaper clippings chronicle Saholt's publicized legal battles with the Veterans Affairs Office. A small collection of ephemera includes business and personal membership cards.</dc:description>
+          <dc:rights xmlns:dc="http://purl.org/dc/elements/1.1/">The collection is open for research. Medical documents are restricted.</dc:rights>
+          <dc:relation xmlns:dc="http://purl.org/dc/elements/1.1/">Richard Saholt Collection, A0058</dc:relation>
+        </oai_dc:dc>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:archivesspace:/repositories/2/archival_objects/5</identifier>
+        <datestamp>2025-11-11T00:31:42Z</datestamp>
+      </header>
+      <metadata>
+        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Allen Doe Research Center</dc:publisher>
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Parent-Institution-test</dc:publisher>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/ark:/99999/10031</dc:identifier>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/repositories/2/archival_objects/5</dc:identifier>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Saholt, Richard, (1924 - 2014)</dc:creator>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Bonesteel, Michael</dc:creator>
+          <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">Correspondence relating to 10th Mountain Division, 1945–2010</dc:title>
+          <dc:date xmlns:dc="http://purl.org/dc/elements/1.1/">1945–2010</dc:date>
+          <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">2.625 Linear Feet; 3 standard-size legal size document cases
+1 oversize flat case</dc:format>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">eng</dc:language>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">Latn</dc:language>
+          <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">The Richard Saholt Collection contains materials created by and about Richard Saholt, including correspondence, medical and military files, artwork reproductions, audiovisual materials, print and slide photography, a collaged artist's book, a scrapbook, and press materials related to Saholt's life and work. The collection was donated by Michael Bonesteel, a scholar and art historian, with whom Saholt began communication with in the 1990s. Following Saholt's death in 2014, Bonesteel inherited additional documents, correspondence, photography, videos, and books. The materials exemplify Saholt's artistic process, revealing the traumatic biographical events and motivations that informed the imagery in his work. The collection may be of interest to researchers studying self-taught art, outsider art, artists working with mental illnesses, artist veterans, collage, artists' books, military history, and Minneapolis-based artists. The materials within the collection date from 1922 to 2011.
+
+ The collection contains a significant amount of correspondence from Saholt to Michael Bonesteel from the mid-1990s through 2005. The correspondence comprises handwritten letters, facsimiles, annotated collage reproductions, and acknowledgments of artwork donations from Saholt to Bonesteel. These letters describe Saholt's desire to exhibit and publish his work and mention his interest in Bonesteel's scholarship on outsider art. While correspondence is primarily from Saholt to Michael Bonesteel, the collection does not contain Bonesteel's responses. Additional original handwritten letters and facsimiles document Saholt's ongoing legal battles with the Veterans Affairs Office requesting service-connected disability compensation. Correspondence relating to veterans affairs claims are housed within the same folder but pertain to various appeals made between 1945 and 2012. Correspondence and press packets from Saholt to journalists and publishers show additional intent to exhibit and publish his work. This folder contains both acceptance and rejection responses from writers and publishers. A small portion of the correspondence is letters from Saholt to family members including an endearing letter to his wife Doris.
+
+ Additional correspondence encompasses psychological evaluations; records relating to his military history; annotated and collaged court hearings and testimonies; biographical material, medical, and military documentation on Torfen Saholt, Richard Saholt's father. Medical documentation and psychological evaluations are restricted.
+
+ Photographic materials are undated and consist of personal family pictures and portraits of Saholt (from childhood through adult years), photography of exhibition installations and receptions, and reproductions of his collages in both print and 35mm slide format. Saholt's collage works are reproduced as color prints on paper, occasionally embellished with annotations and handwriting.
+
+ Three VHS video cassettes, housed in collaged covers, feature interviews with the artist giving insight into his childhood and artistic process. Saholt inscribed, altered, and collaged three books in the collection. A copy of The Wall: Images and Offerings from the Vietnam Veterans Memorial is altered using collaged newspaper and magazine clippings to highlight the horrors of war and its traumatic effect on veterans. Saholt inscribed the interior cover of Principles of General Psychology, which depicts and discusses a collage created while under psychiatric care. The scrapbook combines visual and textual collages layered with family pictures, exhibition photography, and portraits of the artist.
+
+ Press materials include newspapers, magazines, and exhibition catalogs related to Saholt's artwork and exhibitions published between 1985 and 2001. Additional newspaper clippings chronicle Saholt's publicized legal battles with the Veterans Affairs Office. A small collection of ephemera includes business and personal membership cards.</dc:description>
+          <dc:rights xmlns:dc="http://purl.org/dc/elements/1.1/">The collection is open for research. Medical documents are restricted.</dc:rights>
+          <dc:relation xmlns:dc="http://purl.org/dc/elements/1.1/">Richard Saholt Collection, A0058</dc:relation>
+        </oai_dc:dc>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:archivesspace:/repositories/2/archival_objects/6</identifier>
+        <datestamp>2025-11-11T00:31:42Z</datestamp>
+      </header>
+      <metadata>
+        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Allen Doe Research Center</dc:publisher>
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Parent-Institution-test</dc:publisher>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/ark:/99999/4</dc:identifier>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/repositories/2/archival_objects/6</dc:identifier>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Saholt, Richard, (1924 - 2014)</dc:creator>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Bonesteel, Michael</dc:creator>
+          <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">Correspondence with journalists and publishers, 1990–2000</dc:title>
+          <dc:date xmlns:dc="http://purl.org/dc/elements/1.1/">1990–2000</dc:date>
+          <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">2.625 Linear Feet; 3 standard-size legal size document cases
+1 oversize flat case</dc:format>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">eng</dc:language>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">Latn</dc:language>
+          <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">The Richard Saholt Collection contains materials created by and about Richard Saholt, including correspondence, medical and military files, artwork reproductions, audiovisual materials, print and slide photography, a collaged artist's book, a scrapbook, and press materials related to Saholt's life and work. The collection was donated by Michael Bonesteel, a scholar and art historian, with whom Saholt began communication with in the 1990s. Following Saholt's death in 2014, Bonesteel inherited additional documents, correspondence, photography, videos, and books. The materials exemplify Saholt's artistic process, revealing the traumatic biographical events and motivations that informed the imagery in his work. The collection may be of interest to researchers studying self-taught art, outsider art, artists working with mental illnesses, artist veterans, collage, artists' books, military history, and Minneapolis-based artists. The materials within the collection date from 1922 to 2011.
+
+ The collection contains a significant amount of correspondence from Saholt to Michael Bonesteel from the mid-1990s through 2005. The correspondence comprises handwritten letters, facsimiles, annotated collage reproductions, and acknowledgments of artwork donations from Saholt to Bonesteel. These letters describe Saholt's desire to exhibit and publish his work and mention his interest in Bonesteel's scholarship on outsider art. While correspondence is primarily from Saholt to Michael Bonesteel, the collection does not contain Bonesteel's responses. Additional original handwritten letters and facsimiles document Saholt's ongoing legal battles with the Veterans Affairs Office requesting service-connected disability compensation. Correspondence relating to veterans affairs claims are housed within the same folder but pertain to various appeals made between 1945 and 2012. Correspondence and press packets from Saholt to journalists and publishers show additional intent to exhibit and publish his work. This folder contains both acceptance and rejection responses from writers and publishers. A small portion of the correspondence is letters from Saholt to family members including an endearing letter to his wife Doris.
+
+ Additional correspondence encompasses psychological evaluations; records relating to his military history; annotated and collaged court hearings and testimonies; biographical material, medical, and military documentation on Torfen Saholt, Richard Saholt's father. Medical documentation and psychological evaluations are restricted.
+
+ Photographic materials are undated and consist of personal family pictures and portraits of Saholt (from childhood through adult years), photography of exhibition installations and receptions, and reproductions of his collages in both print and 35mm slide format. Saholt's collage works are reproduced as color prints on paper, occasionally embellished with annotations and handwriting.
+
+ Three VHS video cassettes, housed in collaged covers, feature interviews with the artist giving insight into his childhood and artistic process. Saholt inscribed, altered, and collaged three books in the collection. A copy of The Wall: Images and Offerings from the Vietnam Veterans Memorial is altered using collaged newspaper and magazine clippings to highlight the horrors of war and its traumatic effect on veterans. Saholt inscribed the interior cover of Principles of General Psychology, which depicts and discusses a collage created while under psychiatric care. The scrapbook combines visual and textual collages layered with family pictures, exhibition photography, and portraits of the artist.
+
+ Press materials include newspapers, magazines, and exhibition catalogs related to Saholt's artwork and exhibitions published between 1985 and 2001. Additional newspaper clippings chronicle Saholt's publicized legal battles with the Veterans Affairs Office. A small collection of ephemera includes business and personal membership cards.</dc:description>
+          <dc:rights xmlns:dc="http://purl.org/dc/elements/1.1/">The collection is open for research. Medical documents are restricted.</dc:rights>
+          <dc:relation xmlns:dc="http://purl.org/dc/elements/1.1/">Richard Saholt Collection, A0058</dc:relation>
+        </oai_dc:dc>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:archivesspace:/repositories/2/archival_objects/7</identifier>
+        <datestamp>2025-11-11T00:31:42Z</datestamp>
+      </header>
+      <metadata>
+        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Allen Doe Research Center</dc:publisher>
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Parent-Institution-test</dc:publisher>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/ark:/99999/10032</dc:identifier>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/repositories/2/archival_objects/7</dc:identifier>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Saholt, Richard, (1924 - 2014)</dc:creator>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Bonesteel, Michael</dc:creator>
+          <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">Collaged and annotated court testimonies and hearings, undated</dc:title>
+          <dc:date xmlns:dc="http://purl.org/dc/elements/1.1/">undated</dc:date>
+          <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">2.625 Linear Feet; 3 standard-size legal size document cases
+1 oversize flat case</dc:format>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">eng</dc:language>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">Latn</dc:language>
+          <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">Now I'm adding a note with 3&amp;5 other ones but this time with "&amp;"</dc:description>
+          <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">lalala</dc:description>
+          <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">The Richard Saholt Collection contains materials created by and about Richard Saholt, including correspondence, medical and military files, artwork reproductions, audiovisual materials, print and slide photography, a collaged artist's book, a scrapbook, and press materials related to Saholt's life and work. The collection was donated by Michael Bonesteel, a scholar and art historian, with whom Saholt began communication with in the 1990s. Following Saholt's death in 2014, Bonesteel inherited additional documents, correspondence, photography, videos, and books. The materials exemplify Saholt's artistic process, revealing the traumatic biographical events and motivations that informed the imagery in his work. The collection may be of interest to researchers studying self-taught art, outsider art, artists working with mental illnesses, artist veterans, collage, artists' books, military history, and Minneapolis-based artists. The materials within the collection date from 1922 to 2011.
+
+ The collection contains a significant amount of correspondence from Saholt to Michael Bonesteel from the mid-1990s through 2005. The correspondence comprises handwritten letters, facsimiles, annotated collage reproductions, and acknowledgments of artwork donations from Saholt to Bonesteel. These letters describe Saholt's desire to exhibit and publish his work and mention his interest in Bonesteel's scholarship on outsider art. While correspondence is primarily from Saholt to Michael Bonesteel, the collection does not contain Bonesteel's responses. Additional original handwritten letters and facsimiles document Saholt's ongoing legal battles with the Veterans Affairs Office requesting service-connected disability compensation. Correspondence relating to veterans affairs claims are housed within the same folder but pertain to various appeals made between 1945 and 2012. Correspondence and press packets from Saholt to journalists and publishers show additional intent to exhibit and publish his work. This folder contains both acceptance and rejection responses from writers and publishers. A small portion of the correspondence is letters from Saholt to family members including an endearing letter to his wife Doris.
+
+ Additional correspondence encompasses psychological evaluations; records relating to his military history; annotated and collaged court hearings and testimonies; biographical material, medical, and military documentation on Torfen Saholt, Richard Saholt's father. Medical documentation and psychological evaluations are restricted.
+
+ Photographic materials are undated and consist of personal family pictures and portraits of Saholt (from childhood through adult years), photography of exhibition installations and receptions, and reproductions of his collages in both print and 35mm slide format. Saholt's collage works are reproduced as color prints on paper, occasionally embellished with annotations and handwriting.
+
+ Three VHS video cassettes, housed in collaged covers, feature interviews with the artist giving insight into his childhood and artistic process. Saholt inscribed, altered, and collaged three books in the collection. A copy of The Wall: Images and Offerings from the Vietnam Veterans Memorial is altered using collaged newspaper and magazine clippings to highlight the horrors of war and its traumatic effect on veterans. Saholt inscribed the interior cover of Principles of General Psychology, which depicts and discusses a collage created while under psychiatric care. The scrapbook combines visual and textual collages layered with family pictures, exhibition photography, and portraits of the artist.
+
+ Press materials include newspapers, magazines, and exhibition catalogs related to Saholt's artwork and exhibitions published between 1985 and 2001. Additional newspaper clippings chronicle Saholt's publicized legal battles with the Veterans Affairs Office. A small collection of ephemera includes business and personal membership cards.</dc:description>
+          <dc:rights xmlns:dc="http://purl.org/dc/elements/1.1/">Here is a note. Something weird is happening with notes why is this text so low and why can't I see my cursor?It in
+
+
+It includes a number 7&amp;9 with an ampersand in between them. I don't understand hwat's happening.</dc:rights>
+          <dc:relation xmlns:dc="http://purl.org/dc/elements/1.1/">Richard Saholt Collection, A0058</dc:relation>
+        </oai_dc:dc>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:archivesspace:/repositories/2/archival_objects/8</identifier>
+        <datestamp>2025-11-11T00:31:42Z</datestamp>
+      </header>
+      <metadata>
+        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Allen Doe Research Center</dc:publisher>
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Parent-Institution-test</dc:publisher>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/ark:/99999/10033</dc:identifier>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/repositories/2/archival_objects/8</dc:identifier>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Saholt, Richard, (1924 - 2014)</dc:creator>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Bonesteel, Michael</dc:creator>
+          <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">Exhibition catalogs and brochures, 1974–1995</dc:title>
+          <dc:date xmlns:dc="http://purl.org/dc/elements/1.1/">1974–1995</dc:date>
+          <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">2.625 Linear Feet; 3 standard-size legal size document cases
+1 oversize flat case</dc:format>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">eng</dc:language>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">Latn</dc:language>
+          <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">The Richard Saholt Collection contains materials created by and about Richard Saholt, including correspondence, medical and military files, artwork reproductions, audiovisual materials, print and slide photography, a collaged artist's book, a scrapbook, and press materials related to Saholt's life and work. The collection was donated by Michael Bonesteel, a scholar and art historian, with whom Saholt began communication with in the 1990s. Following Saholt's death in 2014, Bonesteel inherited additional documents, correspondence, photography, videos, and books. The materials exemplify Saholt's artistic process, revealing the traumatic biographical events and motivations that informed the imagery in his work. The collection may be of interest to researchers studying self-taught art, outsider art, artists working with mental illnesses, artist veterans, collage, artists' books, military history, and Minneapolis-based artists. The materials within the collection date from 1922 to 2011.
+
+ The collection contains a significant amount of correspondence from Saholt to Michael Bonesteel from the mid-1990s through 2005. The correspondence comprises handwritten letters, facsimiles, annotated collage reproductions, and acknowledgments of artwork donations from Saholt to Bonesteel. These letters describe Saholt's desire to exhibit and publish his work and mention his interest in Bonesteel's scholarship on outsider art. While correspondence is primarily from Saholt to Michael Bonesteel, the collection does not contain Bonesteel's responses. Additional original handwritten letters and facsimiles document Saholt's ongoing legal battles with the Veterans Affairs Office requesting service-connected disability compensation. Correspondence relating to veterans affairs claims are housed within the same folder but pertain to various appeals made between 1945 and 2012. Correspondence and press packets from Saholt to journalists and publishers show additional intent to exhibit and publish his work. This folder contains both acceptance and rejection responses from writers and publishers. A small portion of the correspondence is letters from Saholt to family members including an endearing letter to his wife Doris.
+
+ Additional correspondence encompasses psychological evaluations; records relating to his military history; annotated and collaged court hearings and testimonies; biographical material, medical, and military documentation on Torfen Saholt, Richard Saholt's father. Medical documentation and psychological evaluations are restricted.
+
+ Photographic materials are undated and consist of personal family pictures and portraits of Saholt (from childhood through adult years), photography of exhibition installations and receptions, and reproductions of his collages in both print and 35mm slide format. Saholt's collage works are reproduced as color prints on paper, occasionally embellished with annotations and handwriting.
+
+ Three VHS video cassettes, housed in collaged covers, feature interviews with the artist giving insight into his childhood and artistic process. Saholt inscribed, altered, and collaged three books in the collection. A copy of The Wall: Images and Offerings from the Vietnam Veterans Memorial is altered using collaged newspaper and magazine clippings to highlight the horrors of war and its traumatic effect on veterans. Saholt inscribed the interior cover of Principles of General Psychology, which depicts and discusses a collage created while under psychiatric care. The scrapbook combines visual and textual collages layered with family pictures, exhibition photography, and portraits of the artist.
+
+ Press materials include newspapers, magazines, and exhibition catalogs related to Saholt's artwork and exhibitions published between 1985 and 2001. Additional newspaper clippings chronicle Saholt's publicized legal battles with the Veterans Affairs Office. A small collection of ephemera includes business and personal membership cards.</dc:description>
+          <dc:rights xmlns:dc="http://purl.org/dc/elements/1.1/">The collection is open for research. Medical documents are restricted.</dc:rights>
+          <dc:relation xmlns:dc="http://purl.org/dc/elements/1.1/">Richard Saholt Collection, A0058</dc:relation>
+        </oai_dc:dc>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:archivesspace:/repositories/2/archival_objects/9</identifier>
+        <datestamp>2025-11-11T00:31:42Z</datestamp>
+      </header>
+      <metadata>
+        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Allen Doe Research Center</dc:publisher>
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Parent-Institution-test</dc:publisher>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/ark:/99999/10034</dc:identifier>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/repositories/2/archival_objects/9</dc:identifier>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Saholt, Richard, (1924 - 2014)</dc:creator>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Bonesteel, Michael</dc:creator>
+          <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">Exhibition catalogs and brochures, 1996–2002</dc:title>
+          <dc:date xmlns:dc="http://purl.org/dc/elements/1.1/">1996–2002</dc:date>
+          <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">2.625 Linear Feet; 3 standard-size legal size document cases
+1 oversize flat case</dc:format>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">eng</dc:language>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">Latn</dc:language>
+          <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">The Richard Saholt Collection contains materials created by and about Richard Saholt, including correspondence, medical and military files, artwork reproductions, audiovisual materials, print and slide photography, a collaged artist's book, a scrapbook, and press materials related to Saholt's life and work. The collection was donated by Michael Bonesteel, a scholar and art historian, with whom Saholt began communication with in the 1990s. Following Saholt's death in 2014, Bonesteel inherited additional documents, correspondence, photography, videos, and books. The materials exemplify Saholt's artistic process, revealing the traumatic biographical events and motivations that informed the imagery in his work. The collection may be of interest to researchers studying self-taught art, outsider art, artists working with mental illnesses, artist veterans, collage, artists' books, military history, and Minneapolis-based artists. The materials within the collection date from 1922 to 2011.
+
+ The collection contains a significant amount of correspondence from Saholt to Michael Bonesteel from the mid-1990s through 2005. The correspondence comprises handwritten letters, facsimiles, annotated collage reproductions, and acknowledgments of artwork donations from Saholt to Bonesteel. These letters describe Saholt's desire to exhibit and publish his work and mention his interest in Bonesteel's scholarship on outsider art. While correspondence is primarily from Saholt to Michael Bonesteel, the collection does not contain Bonesteel's responses. Additional original handwritten letters and facsimiles document Saholt's ongoing legal battles with the Veterans Affairs Office requesting service-connected disability compensation. Correspondence relating to veterans affairs claims are housed within the same folder but pertain to various appeals made between 1945 and 2012. Correspondence and press packets from Saholt to journalists and publishers show additional intent to exhibit and publish his work. This folder contains both acceptance and rejection responses from writers and publishers. A small portion of the correspondence is letters from Saholt to family members including an endearing letter to his wife Doris.
+
+ Additional correspondence encompasses psychological evaluations; records relating to his military history; annotated and collaged court hearings and testimonies; biographical material, medical, and military documentation on Torfen Saholt, Richard Saholt's father. Medical documentation and psychological evaluations are restricted.
+
+ Photographic materials are undated and consist of personal family pictures and portraits of Saholt (from childhood through adult years), photography of exhibition installations and receptions, and reproductions of his collages in both print and 35mm slide format. Saholt's collage works are reproduced as color prints on paper, occasionally embellished with annotations and handwriting.
+
+ Three VHS video cassettes, housed in collaged covers, feature interviews with the artist giving insight into his childhood and artistic process. Saholt inscribed, altered, and collaged three books in the collection. A copy of The Wall: Images and Offerings from the Vietnam Veterans Memorial is altered using collaged newspaper and magazine clippings to highlight the horrors of war and its traumatic effect on veterans. Saholt inscribed the interior cover of Principles of General Psychology, which depicts and discusses a collage created while under psychiatric care. The scrapbook combines visual and textual collages layered with family pictures, exhibition photography, and portraits of the artist.
+
+ Press materials include newspapers, magazines, and exhibition catalogs related to Saholt's artwork and exhibitions published between 1985 and 2001. Additional newspaper clippings chronicle Saholt's publicized legal battles with the Veterans Affairs Office. A small collection of ephemera includes business and personal membership cards.</dc:description>
+          <dc:rights xmlns:dc="http://purl.org/dc/elements/1.1/">The collection is open for research. Medical documents are restricted.</dc:rights>
+          <dc:relation xmlns:dc="http://purl.org/dc/elements/1.1/">Richard Saholt Collection, A0058</dc:relation>
+        </oai_dc:dc>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:archivesspace:/repositories/2/archival_objects/10</identifier>
+        <datestamp>2025-11-11T00:31:42Z</datestamp>
+      </header>
+      <metadata>
+        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Allen Doe Research Center</dc:publisher>
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Parent-Institution-test</dc:publisher>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/ark:/99999/10035</dc:identifier>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/repositories/2/archival_objects/10</dc:identifier>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Saholt, Richard, (1924 - 2014)</dc:creator>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Bonesteel, Michael</dc:creator>
+          <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">Military journals and catalogs, 1974, 2005</dc:title>
+          <dc:date xmlns:dc="http://purl.org/dc/elements/1.1/">1974, 2005</dc:date>
+          <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">2.625 Linear Feet; 3 standard-size legal size document cases
+1 oversize flat case</dc:format>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">eng</dc:language>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">Latn</dc:language>
+          <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">The Richard Saholt Collection contains materials created by and about Richard Saholt, including correspondence, medical and military files, artwork reproductions, audiovisual materials, print and slide photography, a collaged artist's book, a scrapbook, and press materials related to Saholt's life and work. The collection was donated by Michael Bonesteel, a scholar and art historian, with whom Saholt began communication with in the 1990s. Following Saholt's death in 2014, Bonesteel inherited additional documents, correspondence, photography, videos, and books. The materials exemplify Saholt's artistic process, revealing the traumatic biographical events and motivations that informed the imagery in his work. The collection may be of interest to researchers studying self-taught art, outsider art, artists working with mental illnesses, artist veterans, collage, artists' books, military history, and Minneapolis-based artists. The materials within the collection date from 1922 to 2011.
+
+ The collection contains a significant amount of correspondence from Saholt to Michael Bonesteel from the mid-1990s through 2005. The correspondence comprises handwritten letters, facsimiles, annotated collage reproductions, and acknowledgments of artwork donations from Saholt to Bonesteel. These letters describe Saholt's desire to exhibit and publish his work and mention his interest in Bonesteel's scholarship on outsider art. While correspondence is primarily from Saholt to Michael Bonesteel, the collection does not contain Bonesteel's responses. Additional original handwritten letters and facsimiles document Saholt's ongoing legal battles with the Veterans Affairs Office requesting service-connected disability compensation. Correspondence relating to veterans affairs claims are housed within the same folder but pertain to various appeals made between 1945 and 2012. Correspondence and press packets from Saholt to journalists and publishers show additional intent to exhibit and publish his work. This folder contains both acceptance and rejection responses from writers and publishers. A small portion of the correspondence is letters from Saholt to family members including an endearing letter to his wife Doris.
+
+ Additional correspondence encompasses psychological evaluations; records relating to his military history; annotated and collaged court hearings and testimonies; biographical material, medical, and military documentation on Torfen Saholt, Richard Saholt's father. Medical documentation and psychological evaluations are restricted.
+
+ Photographic materials are undated and consist of personal family pictures and portraits of Saholt (from childhood through adult years), photography of exhibition installations and receptions, and reproductions of his collages in both print and 35mm slide format. Saholt's collage works are reproduced as color prints on paper, occasionally embellished with annotations and handwriting.
+
+ Three VHS video cassettes, housed in collaged covers, feature interviews with the artist giving insight into his childhood and artistic process. Saholt inscribed, altered, and collaged three books in the collection. A copy of The Wall: Images and Offerings from the Vietnam Veterans Memorial is altered using collaged newspaper and magazine clippings to highlight the horrors of war and its traumatic effect on veterans. Saholt inscribed the interior cover of Principles of General Psychology, which depicts and discusses a collage created while under psychiatric care. The scrapbook combines visual and textual collages layered with family pictures, exhibition photography, and portraits of the artist.
+
+ Press materials include newspapers, magazines, and exhibition catalogs related to Saholt's artwork and exhibitions published between 1985 and 2001. Additional newspaper clippings chronicle Saholt's publicized legal battles with the Veterans Affairs Office. A small collection of ephemera includes business and personal membership cards.</dc:description>
+          <dc:rights xmlns:dc="http://purl.org/dc/elements/1.1/">The collection is open for research. Medical documents are restricted.</dc:rights>
+          <dc:relation xmlns:dc="http://purl.org/dc/elements/1.1/">Richard Saholt Collection, A0058</dc:relation>
+        </oai_dc:dc>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:archivesspace:/repositories/2/archival_objects/11</identifier>
+        <datestamp>2025-11-11T00:31:42Z</datestamp>
+      </header>
+      <metadata>
+        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Allen Doe Research Center</dc:publisher>
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Parent-Institution-test</dc:publisher>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/ark:/99999/10036</dc:identifier>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/repositories/2/archival_objects/11</dc:identifier>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Saholt, Richard, (1924 - 2014)</dc:creator>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Bonesteel, Michael</dc:creator>
+          <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">Press and newspaper clippings, 1978–2014, undated</dc:title>
+          <dc:date xmlns:dc="http://purl.org/dc/elements/1.1/">1978–2014, undated</dc:date>
+          <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">2.625 Linear Feet; 3 standard-size legal size document cases
+1 oversize flat case</dc:format>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">eng</dc:language>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">Latn</dc:language>
+          <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">The Richard Saholt Collection contains materials created by and about Richard Saholt, including correspondence, medical and military files, artwork reproductions, audiovisual materials, print and slide photography, a collaged artist's book, a scrapbook, and press materials related to Saholt's life and work. The collection was donated by Michael Bonesteel, a scholar and art historian, with whom Saholt began communication with in the 1990s. Following Saholt's death in 2014, Bonesteel inherited additional documents, correspondence, photography, videos, and books. The materials exemplify Saholt's artistic process, revealing the traumatic biographical events and motivations that informed the imagery in his work. The collection may be of interest to researchers studying self-taught art, outsider art, artists working with mental illnesses, artist veterans, collage, artists' books, military history, and Minneapolis-based artists. The materials within the collection date from 1922 to 2011.
+
+ The collection contains a significant amount of correspondence from Saholt to Michael Bonesteel from the mid-1990s through 2005. The correspondence comprises handwritten letters, facsimiles, annotated collage reproductions, and acknowledgments of artwork donations from Saholt to Bonesteel. These letters describe Saholt's desire to exhibit and publish his work and mention his interest in Bonesteel's scholarship on outsider art. While correspondence is primarily from Saholt to Michael Bonesteel, the collection does not contain Bonesteel's responses. Additional original handwritten letters and facsimiles document Saholt's ongoing legal battles with the Veterans Affairs Office requesting service-connected disability compensation. Correspondence relating to veterans affairs claims are housed within the same folder but pertain to various appeals made between 1945 and 2012. Correspondence and press packets from Saholt to journalists and publishers show additional intent to exhibit and publish his work. This folder contains both acceptance and rejection responses from writers and publishers. A small portion of the correspondence is letters from Saholt to family members including an endearing letter to his wife Doris.
+
+ Additional correspondence encompasses psychological evaluations; records relating to his military history; annotated and collaged court hearings and testimonies; biographical material, medical, and military documentation on Torfen Saholt, Richard Saholt's father. Medical documentation and psychological evaluations are restricted.
+
+ Photographic materials are undated and consist of personal family pictures and portraits of Saholt (from childhood through adult years), photography of exhibition installations and receptions, and reproductions of his collages in both print and 35mm slide format. Saholt's collage works are reproduced as color prints on paper, occasionally embellished with annotations and handwriting.
+
+ Three VHS video cassettes, housed in collaged covers, feature interviews with the artist giving insight into his childhood and artistic process. Saholt inscribed, altered, and collaged three books in the collection. A copy of The Wall: Images and Offerings from the Vietnam Veterans Memorial is altered using collaged newspaper and magazine clippings to highlight the horrors of war and its traumatic effect on veterans. Saholt inscribed the interior cover of Principles of General Psychology, which depicts and discusses a collage created while under psychiatric care. The scrapbook combines visual and textual collages layered with family pictures, exhibition photography, and portraits of the artist.
+
+ Press materials include newspapers, magazines, and exhibition catalogs related to Saholt's artwork and exhibitions published between 1985 and 2001. Additional newspaper clippings chronicle Saholt's publicized legal battles with the Veterans Affairs Office. A small collection of ephemera includes business and personal membership cards.</dc:description>
+          <dc:rights xmlns:dc="http://purl.org/dc/elements/1.1/">The collection is open for research. Medical documents are restricted.</dc:rights>
+          <dc:relation xmlns:dc="http://purl.org/dc/elements/1.1/">Richard Saholt Collection, A0058</dc:relation>
+        </oai_dc:dc>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:archivesspace:/repositories/2/archival_objects/12</identifier>
+        <datestamp>2025-11-11T00:31:42Z</datestamp>
+      </header>
+      <metadata>
+        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Allen Doe Research Center</dc:publisher>
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Parent-Institution-test</dc:publisher>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/ark:/99999/10037</dc:identifier>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/repositories/2/archival_objects/12</dc:identifier>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Saholt, Richard, (1924 - 2014)</dc:creator>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Bonesteel, Michael</dc:creator>
+          <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">Photography, artwork reproductions prints, undated</dc:title>
+          <dc:date xmlns:dc="http://purl.org/dc/elements/1.1/">undated</dc:date>
+          <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">2.625 Linear Feet; 3 standard-size legal size document cases
+1 oversize flat case</dc:format>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">eng</dc:language>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">Latn</dc:language>
+          <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">The Richard Saholt Collection contains materials created by and about Richard Saholt, including correspondence, medical and military files, artwork reproductions, audiovisual materials, print and slide photography, a collaged artist's book, a scrapbook, and press materials related to Saholt's life and work. The collection was donated by Michael Bonesteel, a scholar and art historian, with whom Saholt began communication with in the 1990s. Following Saholt's death in 2014, Bonesteel inherited additional documents, correspondence, photography, videos, and books. The materials exemplify Saholt's artistic process, revealing the traumatic biographical events and motivations that informed the imagery in his work. The collection may be of interest to researchers studying self-taught art, outsider art, artists working with mental illnesses, artist veterans, collage, artists' books, military history, and Minneapolis-based artists. The materials within the collection date from 1922 to 2011.
+
+ The collection contains a significant amount of correspondence from Saholt to Michael Bonesteel from the mid-1990s through 2005. The correspondence comprises handwritten letters, facsimiles, annotated collage reproductions, and acknowledgments of artwork donations from Saholt to Bonesteel. These letters describe Saholt's desire to exhibit and publish his work and mention his interest in Bonesteel's scholarship on outsider art. While correspondence is primarily from Saholt to Michael Bonesteel, the collection does not contain Bonesteel's responses. Additional original handwritten letters and facsimiles document Saholt's ongoing legal battles with the Veterans Affairs Office requesting service-connected disability compensation. Correspondence relating to veterans affairs claims are housed within the same folder but pertain to various appeals made between 1945 and 2012. Correspondence and press packets from Saholt to journalists and publishers show additional intent to exhibit and publish his work. This folder contains both acceptance and rejection responses from writers and publishers. A small portion of the correspondence is letters from Saholt to family members including an endearing letter to his wife Doris.
+
+ Additional correspondence encompasses psychological evaluations; records relating to his military history; annotated and collaged court hearings and testimonies; biographical material, medical, and military documentation on Torfen Saholt, Richard Saholt's father. Medical documentation and psychological evaluations are restricted.
+
+ Photographic materials are undated and consist of personal family pictures and portraits of Saholt (from childhood through adult years), photography of exhibition installations and receptions, and reproductions of his collages in both print and 35mm slide format. Saholt's collage works are reproduced as color prints on paper, occasionally embellished with annotations and handwriting.
+
+ Three VHS video cassettes, housed in collaged covers, feature interviews with the artist giving insight into his childhood and artistic process. Saholt inscribed, altered, and collaged three books in the collection. A copy of The Wall: Images and Offerings from the Vietnam Veterans Memorial is altered using collaged newspaper and magazine clippings to highlight the horrors of war and its traumatic effect on veterans. Saholt inscribed the interior cover of Principles of General Psychology, which depicts and discusses a collage created while under psychiatric care. The scrapbook combines visual and textual collages layered with family pictures, exhibition photography, and portraits of the artist.
+
+ Press materials include newspapers, magazines, and exhibition catalogs related to Saholt's artwork and exhibitions published between 1985 and 2001. Additional newspaper clippings chronicle Saholt's publicized legal battles with the Veterans Affairs Office. A small collection of ephemera includes business and personal membership cards.</dc:description>
+          <dc:rights xmlns:dc="http://purl.org/dc/elements/1.1/">The collection is open for research. Medical documents are restricted.</dc:rights>
+          <dc:relation xmlns:dc="http://purl.org/dc/elements/1.1/">Richard Saholt Collection, A0058</dc:relation>
+        </oai_dc:dc>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:archivesspace:/repositories/2/archival_objects/13</identifier>
+        <datestamp>2025-11-11T00:31:42Z</datestamp>
+      </header>
+      <metadata>
+        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Allen Doe Research Center</dc:publisher>
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Parent-Institution-test</dc:publisher>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/ark:/99999/10038</dc:identifier>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/repositories/2/archival_objects/13</dc:identifier>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Saholt, Richard, (1924 - 2014)</dc:creator>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Bonesteel, Michael</dc:creator>
+          <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">Photography, artwork reproductions prints, 1978, undated</dc:title>
+          <dc:date xmlns:dc="http://purl.org/dc/elements/1.1/">1978, undated</dc:date>
+          <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">2.625 Linear Feet; 3 standard-size legal size document cases
+1 oversize flat case</dc:format>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">eng</dc:language>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">Latn</dc:language>
+          <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">The Richard Saholt Collection contains materials created by and about Richard Saholt, including correspondence, medical and military files, artwork reproductions, audiovisual materials, print and slide photography, a collaged artist's book, a scrapbook, and press materials related to Saholt's life and work. The collection was donated by Michael Bonesteel, a scholar and art historian, with whom Saholt began communication with in the 1990s. Following Saholt's death in 2014, Bonesteel inherited additional documents, correspondence, photography, videos, and books. The materials exemplify Saholt's artistic process, revealing the traumatic biographical events and motivations that informed the imagery in his work. The collection may be of interest to researchers studying self-taught art, outsider art, artists working with mental illnesses, artist veterans, collage, artists' books, military history, and Minneapolis-based artists. The materials within the collection date from 1922 to 2011.
+
+ The collection contains a significant amount of correspondence from Saholt to Michael Bonesteel from the mid-1990s through 2005. The correspondence comprises handwritten letters, facsimiles, annotated collage reproductions, and acknowledgments of artwork donations from Saholt to Bonesteel. These letters describe Saholt's desire to exhibit and publish his work and mention his interest in Bonesteel's scholarship on outsider art. While correspondence is primarily from Saholt to Michael Bonesteel, the collection does not contain Bonesteel's responses. Additional original handwritten letters and facsimiles document Saholt's ongoing legal battles with the Veterans Affairs Office requesting service-connected disability compensation. Correspondence relating to veterans affairs claims are housed within the same folder but pertain to various appeals made between 1945 and 2012. Correspondence and press packets from Saholt to journalists and publishers show additional intent to exhibit and publish his work. This folder contains both acceptance and rejection responses from writers and publishers. A small portion of the correspondence is letters from Saholt to family members including an endearing letter to his wife Doris.
+
+ Additional correspondence encompasses psychological evaluations; records relating to his military history; annotated and collaged court hearings and testimonies; biographical material, medical, and military documentation on Torfen Saholt, Richard Saholt's father. Medical documentation and psychological evaluations are restricted.
+
+ Photographic materials are undated and consist of personal family pictures and portraits of Saholt (from childhood through adult years), photography of exhibition installations and receptions, and reproductions of his collages in both print and 35mm slide format. Saholt's collage works are reproduced as color prints on paper, occasionally embellished with annotations and handwriting.
+
+ Three VHS video cassettes, housed in collaged covers, feature interviews with the artist giving insight into his childhood and artistic process. Saholt inscribed, altered, and collaged three books in the collection. A copy of The Wall: Images and Offerings from the Vietnam Veterans Memorial is altered using collaged newspaper and magazine clippings to highlight the horrors of war and its traumatic effect on veterans. Saholt inscribed the interior cover of Principles of General Psychology, which depicts and discusses a collage created while under psychiatric care. The scrapbook combines visual and textual collages layered with family pictures, exhibition photography, and portraits of the artist.
+
+ Press materials include newspapers, magazines, and exhibition catalogs related to Saholt's artwork and exhibitions published between 1985 and 2001. Additional newspaper clippings chronicle Saholt's publicized legal battles with the Veterans Affairs Office. A small collection of ephemera includes business and personal membership cards.</dc:description>
+          <dc:rights xmlns:dc="http://purl.org/dc/elements/1.1/">The collection is open for research. Medical documents are restricted.</dc:rights>
+          <dc:relation xmlns:dc="http://purl.org/dc/elements/1.1/">Richard Saholt Collection, A0058</dc:relation>
+        </oai_dc:dc>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:archivesspace:/repositories/2/archival_objects/14</identifier>
+        <datestamp>2025-11-11T00:31:42Z</datestamp>
+      </header>
+      <metadata>
+        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Allen Doe Research Center</dc:publisher>
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Parent-Institution-test</dc:publisher>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/ark:/99999/10039</dc:identifier>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/repositories/2/archival_objects/14</dc:identifier>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Saholt, Richard, (1924 - 2014)</dc:creator>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Bonesteel, Michael</dc:creator>
+          <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">Photography, artwork reproductions, slides, 1978, undated</dc:title>
+          <dc:date xmlns:dc="http://purl.org/dc/elements/1.1/">1978, undated</dc:date>
+          <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">2 file(s)</dc:format>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">eng</dc:language>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">Latn</dc:language>
+          <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">The Richard Saholt Collection contains materials created by and about Richard Saholt, including correspondence, medical and military files, artwork reproductions, audiovisual materials, print and slide photography, a collaged artist's book, a scrapbook, and press materials related to Saholt's life and work. The collection was donated by Michael Bonesteel, a scholar and art historian, with whom Saholt began communication with in the 1990s. Following Saholt's death in 2014, Bonesteel inherited additional documents, correspondence, photography, videos, and books. The materials exemplify Saholt's artistic process, revealing the traumatic biographical events and motivations that informed the imagery in his work. The collection may be of interest to researchers studying self-taught art, outsider art, artists working with mental illnesses, artist veterans, collage, artists' books, military history, and Minneapolis-based artists. The materials within the collection date from 1922 to 2011.
+
+ The collection contains a significant amount of correspondence from Saholt to Michael Bonesteel from the mid-1990s through 2005. The correspondence comprises handwritten letters, facsimiles, annotated collage reproductions, and acknowledgments of artwork donations from Saholt to Bonesteel. These letters describe Saholt's desire to exhibit and publish his work and mention his interest in Bonesteel's scholarship on outsider art. While correspondence is primarily from Saholt to Michael Bonesteel, the collection does not contain Bonesteel's responses. Additional original handwritten letters and facsimiles document Saholt's ongoing legal battles with the Veterans Affairs Office requesting service-connected disability compensation. Correspondence relating to veterans affairs claims are housed within the same folder but pertain to various appeals made between 1945 and 2012. Correspondence and press packets from Saholt to journalists and publishers show additional intent to exhibit and publish his work. This folder contains both acceptance and rejection responses from writers and publishers. A small portion of the correspondence is letters from Saholt to family members including an endearing letter to his wife Doris.
+
+ Additional correspondence encompasses psychological evaluations; records relating to his military history; annotated and collaged court hearings and testimonies; biographical material, medical, and military documentation on Torfen Saholt, Richard Saholt's father. Medical documentation and psychological evaluations are restricted.
+
+ Photographic materials are undated and consist of personal family pictures and portraits of Saholt (from childhood through adult years), photography of exhibition installations and receptions, and reproductions of his collages in both print and 35mm slide format. Saholt's collage works are reproduced as color prints on paper, occasionally embellished with annotations and handwriting.
+
+ Three VHS video cassettes, housed in collaged covers, feature interviews with the artist giving insight into his childhood and artistic process. Saholt inscribed, altered, and collaged three books in the collection. A copy of The Wall: Images and Offerings from the Vietnam Veterans Memorial is altered using collaged newspaper and magazine clippings to highlight the horrors of war and its traumatic effect on veterans. Saholt inscribed the interior cover of Principles of General Psychology, which depicts and discusses a collage created while under psychiatric care. The scrapbook combines visual and textual collages layered with family pictures, exhibition photography, and portraits of the artist.
+
+ Press materials include newspapers, magazines, and exhibition catalogs related to Saholt's artwork and exhibitions published between 1985 and 2001. Additional newspaper clippings chronicle Saholt's publicized legal battles with the Veterans Affairs Office. A small collection of ephemera includes business and personal membership cards.</dc:description>
+          <dc:rights xmlns:dc="http://purl.org/dc/elements/1.1/">The collection is open for research. Medical documents are restricted.</dc:rights>
+          <dc:relation xmlns:dc="http://purl.org/dc/elements/1.1/">Richard Saholt Collection, A0058</dc:relation>
+        </oai_dc:dc>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:archivesspace:/repositories/2/archival_objects/15</identifier>
+        <datestamp>2025-11-11T00:31:42Z</datestamp>
+      </header>
+      <metadata>
+        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Allen Doe Research Center</dc:publisher>
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Parent-Institution-test</dc:publisher>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/ark:/99999/10040</dc:identifier>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/repositories/2/archival_objects/15</dc:identifier>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Saholt, Richard, (1924 - 2014)</dc:creator>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Bonesteel, Michael</dc:creator>
+          <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">Photography, exhibitions, 2005, undated</dc:title>
+          <dc:date xmlns:dc="http://purl.org/dc/elements/1.1/">2005, undated</dc:date>
+          <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">2.625 Linear Feet; 3 standard-size legal size document cases
+1 oversize flat case</dc:format>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">eng</dc:language>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">Latn</dc:language>
+          <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">The Richard Saholt Collection contains materials created by and about Richard Saholt, including correspondence, medical and military files, artwork reproductions, audiovisual materials, print and slide photography, a collaged artist's book, a scrapbook, and press materials related to Saholt's life and work. The collection was donated by Michael Bonesteel, a scholar and art historian, with whom Saholt began communication with in the 1990s. Following Saholt's death in 2014, Bonesteel inherited additional documents, correspondence, photography, videos, and books. The materials exemplify Saholt's artistic process, revealing the traumatic biographical events and motivations that informed the imagery in his work. The collection may be of interest to researchers studying self-taught art, outsider art, artists working with mental illnesses, artist veterans, collage, artists' books, military history, and Minneapolis-based artists. The materials within the collection date from 1922 to 2011.
+
+ The collection contains a significant amount of correspondence from Saholt to Michael Bonesteel from the mid-1990s through 2005. The correspondence comprises handwritten letters, facsimiles, annotated collage reproductions, and acknowledgments of artwork donations from Saholt to Bonesteel. These letters describe Saholt's desire to exhibit and publish his work and mention his interest in Bonesteel's scholarship on outsider art. While correspondence is primarily from Saholt to Michael Bonesteel, the collection does not contain Bonesteel's responses. Additional original handwritten letters and facsimiles document Saholt's ongoing legal battles with the Veterans Affairs Office requesting service-connected disability compensation. Correspondence relating to veterans affairs claims are housed within the same folder but pertain to various appeals made between 1945 and 2012. Correspondence and press packets from Saholt to journalists and publishers show additional intent to exhibit and publish his work. This folder contains both acceptance and rejection responses from writers and publishers. A small portion of the correspondence is letters from Saholt to family members including an endearing letter to his wife Doris.
+
+ Additional correspondence encompasses psychological evaluations; records relating to his military history; annotated and collaged court hearings and testimonies; biographical material, medical, and military documentation on Torfen Saholt, Richard Saholt's father. Medical documentation and psychological evaluations are restricted.
+
+ Photographic materials are undated and consist of personal family pictures and portraits of Saholt (from childhood through adult years), photography of exhibition installations and receptions, and reproductions of his collages in both print and 35mm slide format. Saholt's collage works are reproduced as color prints on paper, occasionally embellished with annotations and handwriting.
+
+ Three VHS video cassettes, housed in collaged covers, feature interviews with the artist giving insight into his childhood and artistic process. Saholt inscribed, altered, and collaged three books in the collection. A copy of The Wall: Images and Offerings from the Vietnam Veterans Memorial is altered using collaged newspaper and magazine clippings to highlight the horrors of war and its traumatic effect on veterans. Saholt inscribed the interior cover of Principles of General Psychology, which depicts and discusses a collage created while under psychiatric care. The scrapbook combines visual and textual collages layered with family pictures, exhibition photography, and portraits of the artist.
+
+ Press materials include newspapers, magazines, and exhibition catalogs related to Saholt's artwork and exhibitions published between 1985 and 2001. Additional newspaper clippings chronicle Saholt's publicized legal battles with the Veterans Affairs Office. A small collection of ephemera includes business and personal membership cards.</dc:description>
+          <dc:rights xmlns:dc="http://purl.org/dc/elements/1.1/">The collection is open for research. Medical documents are restricted.</dc:rights>
+          <dc:relation xmlns:dc="http://purl.org/dc/elements/1.1/">Richard Saholt Collection, A0058</dc:relation>
+        </oai_dc:dc>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:archivesspace:/repositories/2/archival_objects/16</identifier>
+        <datestamp>2025-11-11T00:31:42Z</datestamp>
+      </header>
+      <metadata>
+        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Allen Doe Research Center</dc:publisher>
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Parent-Institution-test</dc:publisher>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/ark:/99999/10041</dc:identifier>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/repositories/2/archival_objects/16</dc:identifier>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Saholt, Richard, (1924 - 2014)</dc:creator>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Bonesteel, Michael</dc:creator>
+          <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">Photography, family and personal, c. 1924–2005</dc:title>
+          <dc:date xmlns:dc="http://purl.org/dc/elements/1.1/">c. 1924–2005</dc:date>
+          <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">2.625 Linear Feet; 3 standard-size legal size document cases
+1 oversize flat case</dc:format>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">eng</dc:language>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">Latn</dc:language>
+          <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">The Richard Saholt Collection contains materials created by and about Richard Saholt, including correspondence, medical and military files, artwork reproductions, audiovisual materials, print and slide photography, a collaged artist's book, a scrapbook, and press materials related to Saholt's life and work. The collection was donated by Michael Bonesteel, a scholar and art historian, with whom Saholt began communication with in the 1990s. Following Saholt's death in 2014, Bonesteel inherited additional documents, correspondence, photography, videos, and books. The materials exemplify Saholt's artistic process, revealing the traumatic biographical events and motivations that informed the imagery in his work. The collection may be of interest to researchers studying self-taught art, outsider art, artists working with mental illnesses, artist veterans, collage, artists' books, military history, and Minneapolis-based artists. The materials within the collection date from 1922 to 2011.
+
+ The collection contains a significant amount of correspondence from Saholt to Michael Bonesteel from the mid-1990s through 2005. The correspondence comprises handwritten letters, facsimiles, annotated collage reproductions, and acknowledgments of artwork donations from Saholt to Bonesteel. These letters describe Saholt's desire to exhibit and publish his work and mention his interest in Bonesteel's scholarship on outsider art. While correspondence is primarily from Saholt to Michael Bonesteel, the collection does not contain Bonesteel's responses. Additional original handwritten letters and facsimiles document Saholt's ongoing legal battles with the Veterans Affairs Office requesting service-connected disability compensation. Correspondence relating to veterans affairs claims are housed within the same folder but pertain to various appeals made between 1945 and 2012. Correspondence and press packets from Saholt to journalists and publishers show additional intent to exhibit and publish his work. This folder contains both acceptance and rejection responses from writers and publishers. A small portion of the correspondence is letters from Saholt to family members including an endearing letter to his wife Doris.
+
+ Additional correspondence encompasses psychological evaluations; records relating to his military history; annotated and collaged court hearings and testimonies; biographical material, medical, and military documentation on Torfen Saholt, Richard Saholt's father. Medical documentation and psychological evaluations are restricted.
+
+ Photographic materials are undated and consist of personal family pictures and portraits of Saholt (from childhood through adult years), photography of exhibition installations and receptions, and reproductions of his collages in both print and 35mm slide format. Saholt's collage works are reproduced as color prints on paper, occasionally embellished with annotations and handwriting.
+
+ Three VHS video cassettes, housed in collaged covers, feature interviews with the artist giving insight into his childhood and artistic process. Saholt inscribed, altered, and collaged three books in the collection. A copy of The Wall: Images and Offerings from the Vietnam Veterans Memorial is altered using collaged newspaper and magazine clippings to highlight the horrors of war and its traumatic effect on veterans. Saholt inscribed the interior cover of Principles of General Psychology, which depicts and discusses a collage created while under psychiatric care. The scrapbook combines visual and textual collages layered with family pictures, exhibition photography, and portraits of the artist.
+
+ Press materials include newspapers, magazines, and exhibition catalogs related to Saholt's artwork and exhibitions published between 1985 and 2001. Additional newspaper clippings chronicle Saholt's publicized legal battles with the Veterans Affairs Office. A small collection of ephemera includes business and personal membership cards.</dc:description>
+          <dc:rights xmlns:dc="http://purl.org/dc/elements/1.1/">The collection is open for research. Medical documents are restricted.</dc:rights>
+          <dc:relation xmlns:dc="http://purl.org/dc/elements/1.1/">Richard Saholt Collection, A0058</dc:relation>
+        </oai_dc:dc>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:archivesspace:/repositories/2/archival_objects/17</identifier>
+        <datestamp>2025-11-11T00:31:42Z</datestamp>
+      </header>
+      <metadata>
+        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Allen Doe Research Center</dc:publisher>
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Parent-Institution-test</dc:publisher>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/ark:/99999/10042</dc:identifier>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/repositories/2/archival_objects/17</dc:identifier>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Saholt, Richard, (1924 - 2014)</dc:creator>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Bonesteel, Michael</dc:creator>
+          <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">Business and membership cards, c. 1990–2001</dc:title>
+          <dc:date xmlns:dc="http://purl.org/dc/elements/1.1/">c. 1990–2001</dc:date>
+          <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">2.625 Linear Feet; 3 standard-size legal size document cases
+1 oversize flat case</dc:format>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">eng</dc:language>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">Latn</dc:language>
+          <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">The Richard Saholt Collection contains materials created by and about Richard Saholt, including correspondence, medical and military files, artwork reproductions, audiovisual materials, print and slide photography, a collaged artist's book, a scrapbook, and press materials related to Saholt's life and work. The collection was donated by Michael Bonesteel, a scholar and art historian, with whom Saholt began communication with in the 1990s. Following Saholt's death in 2014, Bonesteel inherited additional documents, correspondence, photography, videos, and books. The materials exemplify Saholt's artistic process, revealing the traumatic biographical events and motivations that informed the imagery in his work. The collection may be of interest to researchers studying self-taught art, outsider art, artists working with mental illnesses, artist veterans, collage, artists' books, military history, and Minneapolis-based artists. The materials within the collection date from 1922 to 2011.
+
+ The collection contains a significant amount of correspondence from Saholt to Michael Bonesteel from the mid-1990s through 2005. The correspondence comprises handwritten letters, facsimiles, annotated collage reproductions, and acknowledgments of artwork donations from Saholt to Bonesteel. These letters describe Saholt's desire to exhibit and publish his work and mention his interest in Bonesteel's scholarship on outsider art. While correspondence is primarily from Saholt to Michael Bonesteel, the collection does not contain Bonesteel's responses. Additional original handwritten letters and facsimiles document Saholt's ongoing legal battles with the Veterans Affairs Office requesting service-connected disability compensation. Correspondence relating to veterans affairs claims are housed within the same folder but pertain to various appeals made between 1945 and 2012. Correspondence and press packets from Saholt to journalists and publishers show additional intent to exhibit and publish his work. This folder contains both acceptance and rejection responses from writers and publishers. A small portion of the correspondence is letters from Saholt to family members including an endearing letter to his wife Doris.
+
+ Additional correspondence encompasses psychological evaluations; records relating to his military history; annotated and collaged court hearings and testimonies; biographical material, medical, and military documentation on Torfen Saholt, Richard Saholt's father. Medical documentation and psychological evaluations are restricted.
+
+ Photographic materials are undated and consist of personal family pictures and portraits of Saholt (from childhood through adult years), photography of exhibition installations and receptions, and reproductions of his collages in both print and 35mm slide format. Saholt's collage works are reproduced as color prints on paper, occasionally embellished with annotations and handwriting.
+
+ Three VHS video cassettes, housed in collaged covers, feature interviews with the artist giving insight into his childhood and artistic process. Saholt inscribed, altered, and collaged three books in the collection. A copy of The Wall: Images and Offerings from the Vietnam Veterans Memorial is altered using collaged newspaper and magazine clippings to highlight the horrors of war and its traumatic effect on veterans. Saholt inscribed the interior cover of Principles of General Psychology, which depicts and discusses a collage created while under psychiatric care. The scrapbook combines visual and textual collages layered with family pictures, exhibition photography, and portraits of the artist.
+
+ Press materials include newspapers, magazines, and exhibition catalogs related to Saholt's artwork and exhibitions published between 1985 and 2001. Additional newspaper clippings chronicle Saholt's publicized legal battles with the Veterans Affairs Office. A small collection of ephemera includes business and personal membership cards.</dc:description>
+          <dc:rights xmlns:dc="http://purl.org/dc/elements/1.1/">The collection is open for research. Medical documents are restricted.</dc:rights>
+          <dc:relation xmlns:dc="http://purl.org/dc/elements/1.1/">Richard Saholt Collection, A0058</dc:relation>
+        </oai_dc:dc>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:archivesspace:/repositories/2/archival_objects/18</identifier>
+        <datestamp>2025-11-11T00:31:42Z</datestamp>
+      </header>
+      <metadata>
+        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Allen Doe Research Center</dc:publisher>
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Parent-Institution-test</dc:publisher>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/ark:/99999/10043</dc:identifier>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/repositories/2/archival_objects/18</dc:identifier>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Saholt, Richard, (1924 - 2014)</dc:creator>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Bonesteel, Michael</dc:creator>
+          <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">VHS, The Life and Art of Richard Saholt, c. 1995</dc:title>
+          <dc:date xmlns:dc="http://purl.org/dc/elements/1.1/">c. 1995</dc:date>
+          <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">2.625 Linear Feet; 3 standard-size legal size document cases
+1 oversize flat case</dc:format>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">eng</dc:language>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">Latn</dc:language>
+          <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">The Richard Saholt Collection contains materials created by and about Richard Saholt, including correspondence, medical and military files, artwork reproductions, audiovisual materials, print and slide photography, a collaged artist's book, a scrapbook, and press materials related to Saholt's life and work. The collection was donated by Michael Bonesteel, a scholar and art historian, with whom Saholt began communication with in the 1990s. Following Saholt's death in 2014, Bonesteel inherited additional documents, correspondence, photography, videos, and books. The materials exemplify Saholt's artistic process, revealing the traumatic biographical events and motivations that informed the imagery in his work. The collection may be of interest to researchers studying self-taught art, outsider art, artists working with mental illnesses, artist veterans, collage, artists' books, military history, and Minneapolis-based artists. The materials within the collection date from 1922 to 2011.
+
+ The collection contains a significant amount of correspondence from Saholt to Michael Bonesteel from the mid-1990s through 2005. The correspondence comprises handwritten letters, facsimiles, annotated collage reproductions, and acknowledgments of artwork donations from Saholt to Bonesteel. These letters describe Saholt's desire to exhibit and publish his work and mention his interest in Bonesteel's scholarship on outsider art. While correspondence is primarily from Saholt to Michael Bonesteel, the collection does not contain Bonesteel's responses. Additional original handwritten letters and facsimiles document Saholt's ongoing legal battles with the Veterans Affairs Office requesting service-connected disability compensation. Correspondence relating to veterans affairs claims are housed within the same folder but pertain to various appeals made between 1945 and 2012. Correspondence and press packets from Saholt to journalists and publishers show additional intent to exhibit and publish his work. This folder contains both acceptance and rejection responses from writers and publishers. A small portion of the correspondence is letters from Saholt to family members including an endearing letter to his wife Doris.
+
+ Additional correspondence encompasses psychological evaluations; records relating to his military history; annotated and collaged court hearings and testimonies; biographical material, medical, and military documentation on Torfen Saholt, Richard Saholt's father. Medical documentation and psychological evaluations are restricted.
+
+ Photographic materials are undated and consist of personal family pictures and portraits of Saholt (from childhood through adult years), photography of exhibition installations and receptions, and reproductions of his collages in both print and 35mm slide format. Saholt's collage works are reproduced as color prints on paper, occasionally embellished with annotations and handwriting.
+
+ Three VHS video cassettes, housed in collaged covers, feature interviews with the artist giving insight into his childhood and artistic process. Saholt inscribed, altered, and collaged three books in the collection. A copy of The Wall: Images and Offerings from the Vietnam Veterans Memorial is altered using collaged newspaper and magazine clippings to highlight the horrors of war and its traumatic effect on veterans. Saholt inscribed the interior cover of Principles of General Psychology, which depicts and discusses a collage created while under psychiatric care. The scrapbook combines visual and textual collages layered with family pictures, exhibition photography, and portraits of the artist.
+
+ Press materials include newspapers, magazines, and exhibition catalogs related to Saholt's artwork and exhibitions published between 1985 and 2001. Additional newspaper clippings chronicle Saholt's publicized legal battles with the Veterans Affairs Office. A small collection of ephemera includes business and personal membership cards.</dc:description>
+          <dc:rights xmlns:dc="http://purl.org/dc/elements/1.1/">The collection is open for research. Medical documents are restricted.</dc:rights>
+          <dc:relation xmlns:dc="http://purl.org/dc/elements/1.1/">Richard Saholt Collection, A0058</dc:relation>
+        </oai_dc:dc>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:archivesspace:/repositories/2/archival_objects/19</identifier>
+        <datestamp>2025-11-11T00:31:42Z</datestamp>
+      </header>
+      <metadata>
+        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Allen Doe Research Center</dc:publisher>
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Parent-Institution-test</dc:publisher>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/ark:/99999/10044</dc:identifier>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/repositories/2/archival_objects/19</dc:identifier>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Saholt, Richard, (1924 - 2014)</dc:creator>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Bonesteel, Michael</dc:creator>
+          <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">VHS, The Tortuous Road, A Sordid Story, undated</dc:title>
+          <dc:date xmlns:dc="http://purl.org/dc/elements/1.1/">undated</dc:date>
+          <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">2.625 Linear Feet; 3 standard-size legal size document cases
+1 oversize flat case</dc:format>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">eng</dc:language>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">Latn</dc:language>
+          <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">The Richard Saholt Collection contains materials created by and about Richard Saholt, including correspondence, medical and military files, artwork reproductions, audiovisual materials, print and slide photography, a collaged artist's book, a scrapbook, and press materials related to Saholt's life and work. The collection was donated by Michael Bonesteel, a scholar and art historian, with whom Saholt began communication with in the 1990s. Following Saholt's death in 2014, Bonesteel inherited additional documents, correspondence, photography, videos, and books. The materials exemplify Saholt's artistic process, revealing the traumatic biographical events and motivations that informed the imagery in his work. The collection may be of interest to researchers studying self-taught art, outsider art, artists working with mental illnesses, artist veterans, collage, artists' books, military history, and Minneapolis-based artists. The materials within the collection date from 1922 to 2011.
+
+ The collection contains a significant amount of correspondence from Saholt to Michael Bonesteel from the mid-1990s through 2005. The correspondence comprises handwritten letters, facsimiles, annotated collage reproductions, and acknowledgments of artwork donations from Saholt to Bonesteel. These letters describe Saholt's desire to exhibit and publish his work and mention his interest in Bonesteel's scholarship on outsider art. While correspondence is primarily from Saholt to Michael Bonesteel, the collection does not contain Bonesteel's responses. Additional original handwritten letters and facsimiles document Saholt's ongoing legal battles with the Veterans Affairs Office requesting service-connected disability compensation. Correspondence relating to veterans affairs claims are housed within the same folder but pertain to various appeals made between 1945 and 2012. Correspondence and press packets from Saholt to journalists and publishers show additional intent to exhibit and publish his work. This folder contains both acceptance and rejection responses from writers and publishers. A small portion of the correspondence is letters from Saholt to family members including an endearing letter to his wife Doris.
+
+ Additional correspondence encompasses psychological evaluations; records relating to his military history; annotated and collaged court hearings and testimonies; biographical material, medical, and military documentation on Torfen Saholt, Richard Saholt's father. Medical documentation and psychological evaluations are restricted.
+
+ Photographic materials are undated and consist of personal family pictures and portraits of Saholt (from childhood through adult years), photography of exhibition installations and receptions, and reproductions of his collages in both print and 35mm slide format. Saholt's collage works are reproduced as color prints on paper, occasionally embellished with annotations and handwriting.
+
+ Three VHS video cassettes, housed in collaged covers, feature interviews with the artist giving insight into his childhood and artistic process. Saholt inscribed, altered, and collaged three books in the collection. A copy of The Wall: Images and Offerings from the Vietnam Veterans Memorial is altered using collaged newspaper and magazine clippings to highlight the horrors of war and its traumatic effect on veterans. Saholt inscribed the interior cover of Principles of General Psychology, which depicts and discusses a collage created while under psychiatric care. The scrapbook combines visual and textual collages layered with family pictures, exhibition photography, and portraits of the artist.
+
+ Press materials include newspapers, magazines, and exhibition catalogs related to Saholt's artwork and exhibitions published between 1985 and 2001. Additional newspaper clippings chronicle Saholt's publicized legal battles with the Veterans Affairs Office. A small collection of ephemera includes business and personal membership cards.</dc:description>
+          <dc:rights xmlns:dc="http://purl.org/dc/elements/1.1/">The collection is open for research. Medical documents are restricted.</dc:rights>
+          <dc:relation xmlns:dc="http://purl.org/dc/elements/1.1/">Richard Saholt Collection, A0058</dc:relation>
+        </oai_dc:dc>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:archivesspace:/repositories/2/archival_objects/20</identifier>
+        <datestamp>2025-11-11T00:31:42Z</datestamp>
+      </header>
+      <metadata>
+        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Allen Doe Research Center</dc:publisher>
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Parent-Institution-test</dc:publisher>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/ark:/99999/10045</dc:identifier>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/repositories/2/archival_objects/20</dc:identifier>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Saholt, Richard, (1924 - 2014)</dc:creator>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Bonesteel, Michael</dc:creator>
+          <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">VHS, Rhapsody in Red, undated</dc:title>
+          <dc:date xmlns:dc="http://purl.org/dc/elements/1.1/">undated</dc:date>
+          <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">2.625 Linear Feet; 3 standard-size legal size document cases
+1 oversize flat case</dc:format>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">eng</dc:language>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">Latn</dc:language>
+          <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">The Richard Saholt Collection contains materials created by and about Richard Saholt, including correspondence, medical and military files, artwork reproductions, audiovisual materials, print and slide photography, a collaged artist's book, a scrapbook, and press materials related to Saholt's life and work. The collection was donated by Michael Bonesteel, a scholar and art historian, with whom Saholt began communication with in the 1990s. Following Saholt's death in 2014, Bonesteel inherited additional documents, correspondence, photography, videos, and books. The materials exemplify Saholt's artistic process, revealing the traumatic biographical events and motivations that informed the imagery in his work. The collection may be of interest to researchers studying self-taught art, outsider art, artists working with mental illnesses, artist veterans, collage, artists' books, military history, and Minneapolis-based artists. The materials within the collection date from 1922 to 2011.
+
+ The collection contains a significant amount of correspondence from Saholt to Michael Bonesteel from the mid-1990s through 2005. The correspondence comprises handwritten letters, facsimiles, annotated collage reproductions, and acknowledgments of artwork donations from Saholt to Bonesteel. These letters describe Saholt's desire to exhibit and publish his work and mention his interest in Bonesteel's scholarship on outsider art. While correspondence is primarily from Saholt to Michael Bonesteel, the collection does not contain Bonesteel's responses. Additional original handwritten letters and facsimiles document Saholt's ongoing legal battles with the Veterans Affairs Office requesting service-connected disability compensation. Correspondence relating to veterans affairs claims are housed within the same folder but pertain to various appeals made between 1945 and 2012. Correspondence and press packets from Saholt to journalists and publishers show additional intent to exhibit and publish his work. This folder contains both acceptance and rejection responses from writers and publishers. A small portion of the correspondence is letters from Saholt to family members including an endearing letter to his wife Doris.
+
+ Additional correspondence encompasses psychological evaluations; records relating to his military history; annotated and collaged court hearings and testimonies; biographical material, medical, and military documentation on Torfen Saholt, Richard Saholt's father. Medical documentation and psychological evaluations are restricted.
+
+ Photographic materials are undated and consist of personal family pictures and portraits of Saholt (from childhood through adult years), photography of exhibition installations and receptions, and reproductions of his collages in both print and 35mm slide format. Saholt's collage works are reproduced as color prints on paper, occasionally embellished with annotations and handwriting.
+
+ Three VHS video cassettes, housed in collaged covers, feature interviews with the artist giving insight into his childhood and artistic process. Saholt inscribed, altered, and collaged three books in the collection. A copy of The Wall: Images and Offerings from the Vietnam Veterans Memorial is altered using collaged newspaper and magazine clippings to highlight the horrors of war and its traumatic effect on veterans. Saholt inscribed the interior cover of Principles of General Psychology, which depicts and discusses a collage created while under psychiatric care. The scrapbook combines visual and textual collages layered with family pictures, exhibition photography, and portraits of the artist.
+
+ Press materials include newspapers, magazines, and exhibition catalogs related to Saholt's artwork and exhibitions published between 1985 and 2001. Additional newspaper clippings chronicle Saholt's publicized legal battles with the Veterans Affairs Office. A small collection of ephemera includes business and personal membership cards.</dc:description>
+          <dc:rights xmlns:dc="http://purl.org/dc/elements/1.1/">The collection is open for research. Medical documents are restricted.</dc:rights>
+          <dc:relation xmlns:dc="http://purl.org/dc/elements/1.1/">Richard Saholt Collection, A0058</dc:relation>
+        </oai_dc:dc>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:archivesspace:/repositories/2/archival_objects/21</identifier>
+        <datestamp>2025-11-11T00:31:42Z</datestamp>
+      </header>
+      <metadata>
+        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Allen Doe Research Center</dc:publisher>
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Parent-Institution-test</dc:publisher>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/ark:/99999/10046</dc:identifier>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/repositories/2/archival_objects/21</dc:identifier>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Saholt, Richard, (1924 - 2014)</dc:creator>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Bonesteel, Michael</dc:creator>
+          <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">Principles of General Psychology, c. 1980</dc:title>
+          <dc:date xmlns:dc="http://purl.org/dc/elements/1.1/">c. 1980</dc:date>
+          <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">2.625 Linear Feet; 3 standard-size legal size document cases
+1 oversize flat case</dc:format>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">eng</dc:language>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">Latn</dc:language>
+          <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">The Richard Saholt Collection contains materials created by and about Richard Saholt, including correspondence, medical and military files, artwork reproductions, audiovisual materials, print and slide photography, a collaged artist's book, a scrapbook, and press materials related to Saholt's life and work. The collection was donated by Michael Bonesteel, a scholar and art historian, with whom Saholt began communication with in the 1990s. Following Saholt's death in 2014, Bonesteel inherited additional documents, correspondence, photography, videos, and books. The materials exemplify Saholt's artistic process, revealing the traumatic biographical events and motivations that informed the imagery in his work. The collection may be of interest to researchers studying self-taught art, outsider art, artists working with mental illnesses, artist veterans, collage, artists' books, military history, and Minneapolis-based artists. The materials within the collection date from 1922 to 2011.
+
+ The collection contains a significant amount of correspondence from Saholt to Michael Bonesteel from the mid-1990s through 2005. The correspondence comprises handwritten letters, facsimiles, annotated collage reproductions, and acknowledgments of artwork donations from Saholt to Bonesteel. These letters describe Saholt's desire to exhibit and publish his work and mention his interest in Bonesteel's scholarship on outsider art. While correspondence is primarily from Saholt to Michael Bonesteel, the collection does not contain Bonesteel's responses. Additional original handwritten letters and facsimiles document Saholt's ongoing legal battles with the Veterans Affairs Office requesting service-connected disability compensation. Correspondence relating to veterans affairs claims are housed within the same folder but pertain to various appeals made between 1945 and 2012. Correspondence and press packets from Saholt to journalists and publishers show additional intent to exhibit and publish his work. This folder contains both acceptance and rejection responses from writers and publishers. A small portion of the correspondence is letters from Saholt to family members including an endearing letter to his wife Doris.
+
+ Additional correspondence encompasses psychological evaluations; records relating to his military history; annotated and collaged court hearings and testimonies; biographical material, medical, and military documentation on Torfen Saholt, Richard Saholt's father. Medical documentation and psychological evaluations are restricted.
+
+ Photographic materials are undated and consist of personal family pictures and portraits of Saholt (from childhood through adult years), photography of exhibition installations and receptions, and reproductions of his collages in both print and 35mm slide format. Saholt's collage works are reproduced as color prints on paper, occasionally embellished with annotations and handwriting.
+
+ Three VHS video cassettes, housed in collaged covers, feature interviews with the artist giving insight into his childhood and artistic process. Saholt inscribed, altered, and collaged three books in the collection. A copy of The Wall: Images and Offerings from the Vietnam Veterans Memorial is altered using collaged newspaper and magazine clippings to highlight the horrors of war and its traumatic effect on veterans. Saholt inscribed the interior cover of Principles of General Psychology, which depicts and discusses a collage created while under psychiatric care. The scrapbook combines visual and textual collages layered with family pictures, exhibition photography, and portraits of the artist.
+
+ Press materials include newspapers, magazines, and exhibition catalogs related to Saholt's artwork and exhibitions published between 1985 and 2001. Additional newspaper clippings chronicle Saholt's publicized legal battles with the Veterans Affairs Office. A small collection of ephemera includes business and personal membership cards.</dc:description>
+          <dc:rights xmlns:dc="http://purl.org/dc/elements/1.1/">The collection is open for research. Medical documents are restricted.</dc:rights>
+          <dc:relation xmlns:dc="http://purl.org/dc/elements/1.1/">Richard Saholt Collection, A0058</dc:relation>
+        </oai_dc:dc>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:archivesspace:/repositories/2/archival_objects/22</identifier>
+        <datestamp>2025-11-11T00:31:42Z</datestamp>
+      </header>
+      <metadata>
+        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Allen Doe Research Center</dc:publisher>
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Parent-Institution-test</dc:publisher>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/ark:/99999/10047</dc:identifier>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/repositories/2/archival_objects/22</dc:identifier>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Saholt, Richard, (1924 - 2014)</dc:creator>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Bonesteel, Michael</dc:creator>
+          <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">Photography, artwork reproductions prints oversized, undated</dc:title>
+          <dc:date xmlns:dc="http://purl.org/dc/elements/1.1/">undated</dc:date>
+          <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">2.625 Linear Feet; 3 standard-size legal size document cases
+1 oversize flat case</dc:format>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">eng</dc:language>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">Latn</dc:language>
+          <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">The Richard Saholt Collection contains materials created by and about Richard Saholt, including correspondence, medical and military files, artwork reproductions, audiovisual materials, print and slide photography, a collaged artist's book, a scrapbook, and press materials related to Saholt's life and work. The collection was donated by Michael Bonesteel, a scholar and art historian, with whom Saholt began communication with in the 1990s. Following Saholt's death in 2014, Bonesteel inherited additional documents, correspondence, photography, videos, and books. The materials exemplify Saholt's artistic process, revealing the traumatic biographical events and motivations that informed the imagery in his work. The collection may be of interest to researchers studying self-taught art, outsider art, artists working with mental illnesses, artist veterans, collage, artists' books, military history, and Minneapolis-based artists. The materials within the collection date from 1922 to 2011.
+
+ The collection contains a significant amount of correspondence from Saholt to Michael Bonesteel from the mid-1990s through 2005. The correspondence comprises handwritten letters, facsimiles, annotated collage reproductions, and acknowledgments of artwork donations from Saholt to Bonesteel. These letters describe Saholt's desire to exhibit and publish his work and mention his interest in Bonesteel's scholarship on outsider art. While correspondence is primarily from Saholt to Michael Bonesteel, the collection does not contain Bonesteel's responses. Additional original handwritten letters and facsimiles document Saholt's ongoing legal battles with the Veterans Affairs Office requesting service-connected disability compensation. Correspondence relating to veterans affairs claims are housed within the same folder but pertain to various appeals made between 1945 and 2012. Correspondence and press packets from Saholt to journalists and publishers show additional intent to exhibit and publish his work. This folder contains both acceptance and rejection responses from writers and publishers. A small portion of the correspondence is letters from Saholt to family members including an endearing letter to his wife Doris.
+
+ Additional correspondence encompasses psychological evaluations; records relating to his military history; annotated and collaged court hearings and testimonies; biographical material, medical, and military documentation on Torfen Saholt, Richard Saholt's father. Medical documentation and psychological evaluations are restricted.
+
+ Photographic materials are undated and consist of personal family pictures and portraits of Saholt (from childhood through adult years), photography of exhibition installations and receptions, and reproductions of his collages in both print and 35mm slide format. Saholt's collage works are reproduced as color prints on paper, occasionally embellished with annotations and handwriting.
+
+ Three VHS video cassettes, housed in collaged covers, feature interviews with the artist giving insight into his childhood and artistic process. Saholt inscribed, altered, and collaged three books in the collection. A copy of The Wall: Images and Offerings from the Vietnam Veterans Memorial is altered using collaged newspaper and magazine clippings to highlight the horrors of war and its traumatic effect on veterans. Saholt inscribed the interior cover of Principles of General Psychology, which depicts and discusses a collage created while under psychiatric care. The scrapbook combines visual and textual collages layered with family pictures, exhibition photography, and portraits of the artist.
+
+ Press materials include newspapers, magazines, and exhibition catalogs related to Saholt's artwork and exhibitions published between 1985 and 2001. Additional newspaper clippings chronicle Saholt's publicized legal battles with the Veterans Affairs Office. A small collection of ephemera includes business and personal membership cards.</dc:description>
+          <dc:rights xmlns:dc="http://purl.org/dc/elements/1.1/">The collection is open for research. Medical documents are restricted.</dc:rights>
+          <dc:relation xmlns:dc="http://purl.org/dc/elements/1.1/">Richard Saholt Collection, A0058</dc:relation>
+        </oai_dc:dc>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:archivesspace:/repositories/2/archival_objects/23</identifier>
+        <datestamp>2025-11-11T00:31:42Z</datestamp>
+      </header>
+      <metadata>
+        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Allen Doe Research Center</dc:publisher>
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Parent-Institution-test</dc:publisher>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/ark:/99999/10048</dc:identifier>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/repositories/2/archival_objects/23</dc:identifier>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Saholt, Richard, (1924 - 2014)</dc:creator>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Bonesteel, Michael</dc:creator>
+          <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">Artist's Book, The Wall: Offerings from the Vietnam Veterans Memorial, 1987</dc:title>
+          <dc:date xmlns:dc="http://purl.org/dc/elements/1.1/">1987</dc:date>
+          <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">2.625 Linear Feet; 3 standard-size legal size document cases
+1 oversize flat case</dc:format>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">eng</dc:language>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">Latn</dc:language>
+          <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">The Richard Saholt Collection contains materials created by and about Richard Saholt, including correspondence, medical and military files, artwork reproductions, audiovisual materials, print and slide photography, a collaged artist's book, a scrapbook, and press materials related to Saholt's life and work. The collection was donated by Michael Bonesteel, a scholar and art historian, with whom Saholt began communication with in the 1990s. Following Saholt's death in 2014, Bonesteel inherited additional documents, correspondence, photography, videos, and books. The materials exemplify Saholt's artistic process, revealing the traumatic biographical events and motivations that informed the imagery in his work. The collection may be of interest to researchers studying self-taught art, outsider art, artists working with mental illnesses, artist veterans, collage, artists' books, military history, and Minneapolis-based artists. The materials within the collection date from 1922 to 2011.
+
+ The collection contains a significant amount of correspondence from Saholt to Michael Bonesteel from the mid-1990s through 2005. The correspondence comprises handwritten letters, facsimiles, annotated collage reproductions, and acknowledgments of artwork donations from Saholt to Bonesteel. These letters describe Saholt's desire to exhibit and publish his work and mention his interest in Bonesteel's scholarship on outsider art. While correspondence is primarily from Saholt to Michael Bonesteel, the collection does not contain Bonesteel's responses. Additional original handwritten letters and facsimiles document Saholt's ongoing legal battles with the Veterans Affairs Office requesting service-connected disability compensation. Correspondence relating to veterans affairs claims are housed within the same folder but pertain to various appeals made between 1945 and 2012. Correspondence and press packets from Saholt to journalists and publishers show additional intent to exhibit and publish his work. This folder contains both acceptance and rejection responses from writers and publishers. A small portion of the correspondence is letters from Saholt to family members including an endearing letter to his wife Doris.
+
+ Additional correspondence encompasses psychological evaluations; records relating to his military history; annotated and collaged court hearings and testimonies; biographical material, medical, and military documentation on Torfen Saholt, Richard Saholt's father. Medical documentation and psychological evaluations are restricted.
+
+ Photographic materials are undated and consist of personal family pictures and portraits of Saholt (from childhood through adult years), photography of exhibition installations and receptions, and reproductions of his collages in both print and 35mm slide format. Saholt's collage works are reproduced as color prints on paper, occasionally embellished with annotations and handwriting.
+
+ Three VHS video cassettes, housed in collaged covers, feature interviews with the artist giving insight into his childhood and artistic process. Saholt inscribed, altered, and collaged three books in the collection. A copy of The Wall: Images and Offerings from the Vietnam Veterans Memorial is altered using collaged newspaper and magazine clippings to highlight the horrors of war and its traumatic effect on veterans. Saholt inscribed the interior cover of Principles of General Psychology, which depicts and discusses a collage created while under psychiatric care. The scrapbook combines visual and textual collages layered with family pictures, exhibition photography, and portraits of the artist.
+
+ Press materials include newspapers, magazines, and exhibition catalogs related to Saholt's artwork and exhibitions published between 1985 and 2001. Additional newspaper clippings chronicle Saholt's publicized legal battles with the Veterans Affairs Office. A small collection of ephemera includes business and personal membership cards.</dc:description>
+          <dc:rights xmlns:dc="http://purl.org/dc/elements/1.1/">The collection is open for research. Medical documents are restricted.</dc:rights>
+          <dc:relation xmlns:dc="http://purl.org/dc/elements/1.1/">Richard Saholt Collection, A0058</dc:relation>
+        </oai_dc:dc>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:archivesspace:/repositories/2/archival_objects/24</identifier>
+        <datestamp>2025-11-11T00:31:42Z</datestamp>
+      </header>
+      <metadata>
+        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Allen Doe Research Center</dc:publisher>
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Parent-Institution-test</dc:publisher>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/ark:/99999/10049</dc:identifier>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/repositories/2/archival_objects/24</dc:identifier>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Saholt, Richard, (1924 - 2014)</dc:creator>
+          <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Bonesteel, Michael</dc:creator>
+          <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">Scrapbook, A Tortuous Road, undated</dc:title>
+          <dc:date xmlns:dc="http://purl.org/dc/elements/1.1/">undated</dc:date>
+          <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">2.625 Linear Feet; 3 standard-size legal size document cases
+1 oversize flat case</dc:format>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">eng</dc:language>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">Latn</dc:language>
+          <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">The Richard Saholt Collection contains materials created by and about Richard Saholt, including correspondence, medical and military files, artwork reproductions, audiovisual materials, print and slide photography, a collaged artist's book, a scrapbook, and press materials related to Saholt's life and work. The collection was donated by Michael Bonesteel, a scholar and art historian, with whom Saholt began communication with in the 1990s. Following Saholt's death in 2014, Bonesteel inherited additional documents, correspondence, photography, videos, and books. The materials exemplify Saholt's artistic process, revealing the traumatic biographical events and motivations that informed the imagery in his work. The collection may be of interest to researchers studying self-taught art, outsider art, artists working with mental illnesses, artist veterans, collage, artists' books, military history, and Minneapolis-based artists. The materials within the collection date from 1922 to 2011.
+
+ The collection contains a significant amount of correspondence from Saholt to Michael Bonesteel from the mid-1990s through 2005. The correspondence comprises handwritten letters, facsimiles, annotated collage reproductions, and acknowledgments of artwork donations from Saholt to Bonesteel. These letters describe Saholt's desire to exhibit and publish his work and mention his interest in Bonesteel's scholarship on outsider art. While correspondence is primarily from Saholt to Michael Bonesteel, the collection does not contain Bonesteel's responses. Additional original handwritten letters and facsimiles document Saholt's ongoing legal battles with the Veterans Affairs Office requesting service-connected disability compensation. Correspondence relating to veterans affairs claims are housed within the same folder but pertain to various appeals made between 1945 and 2012. Correspondence and press packets from Saholt to journalists and publishers show additional intent to exhibit and publish his work. This folder contains both acceptance and rejection responses from writers and publishers. A small portion of the correspondence is letters from Saholt to family members including an endearing letter to his wife Doris.
+
+ Additional correspondence encompasses psychological evaluations; records relating to his military history; annotated and collaged court hearings and testimonies; biographical material, medical, and military documentation on Torfen Saholt, Richard Saholt's father. Medical documentation and psychological evaluations are restricted.
+
+ Photographic materials are undated and consist of personal family pictures and portraits of Saholt (from childhood through adult years), photography of exhibition installations and receptions, and reproductions of his collages in both print and 35mm slide format. Saholt's collage works are reproduced as color prints on paper, occasionally embellished with annotations and handwriting.
+
+ Three VHS video cassettes, housed in collaged covers, feature interviews with the artist giving insight into his childhood and artistic process. Saholt inscribed, altered, and collaged three books in the collection. A copy of The Wall: Images and Offerings from the Vietnam Veterans Memorial is altered using collaged newspaper and magazine clippings to highlight the horrors of war and its traumatic effect on veterans. Saholt inscribed the interior cover of Principles of General Psychology, which depicts and discusses a collage created while under psychiatric care. The scrapbook combines visual and textual collages layered with family pictures, exhibition photography, and portraits of the artist.
+
+ Press materials include newspapers, magazines, and exhibition catalogs related to Saholt's artwork and exhibitions published between 1985 and 2001. Additional newspaper clippings chronicle Saholt's publicized legal battles with the Veterans Affairs Office. A small collection of ephemera includes business and personal membership cards.</dc:description>
+          <dc:rights xmlns:dc="http://purl.org/dc/elements/1.1/">The collection is open for research. Medical documents are restricted.</dc:rights>
+          <dc:relation xmlns:dc="http://purl.org/dc/elements/1.1/">Richard Saholt Collection, A0058</dc:relation>
+        </oai_dc:dc>
+      </metadata>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:archivesspace:/repositories/2/archival_objects/25</identifier>
+        <datestamp>2025-11-11T00:31:37Z</datestamp>
+      </header>
+      <metadata>
+        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Allen Doe Research Center</dc:publisher>
+          <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Parent-Institution-test</dc:publisher>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/ark:/99999/10050</dc:identifier>
+          <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/">https://test.archivesspace.org/repositories/2/archival_objects/25</dc:identifier>
+          <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">Slides of Elijah Pierce works and in his studio</dc:title>
+          <dc:date xmlns:dc="http://purl.org/dc/elements/1.1/">1974</dc:date>
+          <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">1 file(s)</dc:format>
+          <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">4 reel(s)</dc:format>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">eng</dc:language>
+          <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">English.</dc:language>
+          <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">The material includes about 70 slides of Pierce in his studio and barbershop, as well as images of his work. The slides were taken with an art historian's camera.
+
+There are also four reels of audio recordings. One has an interview between Henry and Pierce, the next has notes that Henry made to herself about the visit. The other two were given along with the collection, but it is suspected they are both blank reels. The audio reels have been digitized.</dc:description>
+          <dc:rights xmlns:dc="http://purl.org/dc/elements/1.1/">The collection is open for research. Access to sensitive materials may be restricted at the discretion of the American Folk Art Museum.</dc:rights>
+          <dc:relation xmlns:dc="http://purl.org/dc/elements/1.1/">Sara Lynn Henry collection related to Elijah Pierce, A0050</dc:relation>
+        </oai_dc:dc>
+      </metadata>
+    </record>
+    <resumptionToken>eyJtZXRhZGF0YV9wcmVmaXgiOiJvYWlfZGMiLCJmcm9tIjoiMTk3MC0wMS0wMSAwMDowMDowMCBVVEMiLCJ1bnRpbCI6IjIwMjUtMTEtMjcgMDI6MTA6MDYgVVRDIiwic3RhdGUiOiJwcm9kdWNpbmdfcmVjb3JkcyIsImxhc3RfZGVsZXRlX2lkIjowLCJyZW1haW5pbmdfdHlwZXMiOnsiUmVzb3VyY2UiOjAsIkFyY2hpdmFsT2JqZWN0IjoyNX0sImlzc3VlX3RpbWUiOjE3NjQyMDk0MDc3MzN9</resumptionToken>
+  </ListRecords>
+</OAI-PMH>

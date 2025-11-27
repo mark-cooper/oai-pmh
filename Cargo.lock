@@ -648,6 +648,7 @@ dependencies = [
  "anyhow",
  "mockito",
  "quick-xml",
+ "regex",
  "reqwest",
  "serde",
  "serde_qs",

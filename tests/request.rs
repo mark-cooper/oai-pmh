@@ -21,7 +21,7 @@ mod tests {
                 Matcher::UrlEncoded("metadataPrefix".into(), metadata_prefix.into()),
             ]))
             .with_status(200)
-            .with_header("content-type", "application/xml")
+            .with_header("content-type", "text/xml")
             .with_body(xml)
             .create();
 
