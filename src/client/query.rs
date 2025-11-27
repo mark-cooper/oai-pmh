@@ -13,7 +13,7 @@ pub struct Query<T> {
 impl<T> Query<T> {
     pub fn new(verb: Verb, args: T) -> Self {
         Self {
-            verb: verb.as_param().into(),
+            verb: verb.to_string(),
             args,
         }
     }

@@ -1,3 +1,5 @@
+use std::fmt;
+
 pub mod client;
 
 #[derive(Clone, Copy)]
@@ -10,15 +12,15 @@ pub enum Verb {
     ListSets,
 }
 
-impl Verb {
-    pub fn as_param(&self) -> &'static str {
+impl fmt::Display for Verb {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            Verb::GetRecord => "GetRecord",
-            Verb::Identify => "Identify",
-            Verb::ListIdentifiers => "ListIdentifiers",
-            Verb::ListMetaDataFormats => "ListMetaDataFormats",
-            Verb::ListRecords => "ListRecords",
-            Verb::ListSets => "ListSets",
+            Verb::GetRecord => write!(f, "GetRecord"),
+            Verb::Identify => write!(f, "Identify"),
+            Verb::ListIdentifiers => write!(f, "ListIdentifiers"),
+            Verb::ListMetaDataFormats => write!(f, "ListMetaDataFormats"),
+            Verb::ListRecords => write!(f, "ListRecords"),
+            Verb::ListSets => write!(f, "ListSets"),
         }
     }
 }
@@ -28,8 +30,8 @@ mod tests {
     use crate::Verb;
 
     #[test]
-    fn converts_verb_to_param_string() {
+    fn converts_verb_to_param() {
         let verb = Verb::GetRecord;
-        assert_eq!("GetRecord", verb.as_param());
+        assert_eq!("GetRecord", verb.to_string());
     }
 }
