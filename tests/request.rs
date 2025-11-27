@@ -1,7 +1,10 @@
 #[cfg(test)]
 mod tests {
     use mockito::{Matcher, ServerGuard};
-    use oai_pmh::client::{Client, query::GetRecordArgs};
+    use oai_pmh::client::{
+        Client,
+        query::{GetRecordArgs, ListRecordsArgs},
+    };
 
     fn setup_mock_server(
         server: &mut ServerGuard,
@@ -59,6 +62,34 @@ mod tests {
 
         let client = Client::new(&server.url()).unwrap();
         let _ = client.identify().unwrap();
+
+        mock.assert();
+    }
+
+    #[test]
+    fn test_list_records() {
+        let metadata_prefix = "oai_dc";
+
+        let mut server = mockito::Server::new();
+
+        let mock = setup_mock_server(
+            &mut server,
+            "tests/fixtures/list_records.xml",
+            vec![
+                Matcher::UrlEncoded("verb".into(), "ListRecords".into()),
+                Matcher::UrlEncoded("metadataPrefix".into(), metadata_prefix.into()),
+            ],
+        );
+
+        let args = ListRecordsArgs {
+            metadata_prefix: metadata_prefix.into(),
+            from: None,
+            until: None,
+            set: None,
+        };
+
+        let client = Client::new(&server.url()).unwrap();
+        let _ = client.list_records(args).unwrap();
 
         mock.assert();
     }

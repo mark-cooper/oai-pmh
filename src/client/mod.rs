@@ -2,8 +2,8 @@ pub mod metadata;
 pub mod query;
 pub mod response;
 use crate::Verb;
-use crate::client::query::{GetRecordArgs, Query};
-use crate::client::response::{GetRecordResponse, IdentifyResponse};
+use crate::client::query::{GetRecordArgs, ListRecordsArgs, Query};
+use crate::client::response::{GetRecordResponse, IdentifyResponse, ListRecordsResponse};
 
 use anyhow::{Result, bail};
 use serde::Serialize;
@@ -40,6 +40,12 @@ impl Client {
     pub fn identify(&self) -> Result<IdentifyResponse> {
         let xml = self.do_query(Query::new(Verb::Identify, ()))?;
         let response = IdentifyResponse::new(xml)?;
+        Ok(response)
+    }
+
+    pub fn list_records(&self, args: ListRecordsArgs) -> Result<ListRecordsResponse> {
+        let xml = self.do_query(Query::new(Verb::ListRecords, args))?;
+        let response = ListRecordsResponse::new(xml)?;
         Ok(response)
     }
 
@@ -101,12 +107,12 @@ mod tests {
             },
         );
         let url = client.build_url(query).unwrap();
-        let actual = Url::parse(&url).unwrap();
+        let parsed_url = Url::parse(&url).unwrap();
 
-        assert!(actual.host_str() == Some("test.archivesspace.org"));
-        assert!(actual.path() == "/oai");
+        assert!(parsed_url.host_str() == Some("test.archivesspace.org"));
+        assert!(parsed_url.path() == "/oai");
         assert!(
-            actual.query()
+            parsed_url.query()
                 == Some(
                     "verb=GetRecord&identifier=oai%3Aarchivesspace%3A%2Frepositories%2F2%2Fresources%2F2&metadataPrefix=oai_ead"
                 )
@@ -119,10 +125,10 @@ mod tests {
         let client = Client::new(endpoint).unwrap();
         let query = Query::new(Verb::Identify, ());
         let url = client.build_url(query).unwrap();
-        let actual = Url::parse(&url).unwrap();
+        let parsed_url = Url::parse(&url).unwrap();
 
-        assert!(actual.host_str() == Some("test.archivesspace.org"));
-        assert!(actual.path() == "/oai");
-        assert!(actual.query() == Some("verb=Identify"));
+        assert!(parsed_url.host_str() == Some("test.archivesspace.org"));
+        assert!(parsed_url.path() == "/oai");
+        assert!(parsed_url.query() == Some("verb=Identify"));
     }
 }

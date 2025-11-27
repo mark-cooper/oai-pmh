@@ -26,6 +26,21 @@ pub struct GetRecordArgs {
     pub metadata_prefix: String,
 }
 
+#[derive(Debug, PartialEq, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ListRecordsArgs {
+    pub metadata_prefix: String,
+    pub from: Option<String>,
+    pub until: Option<String>,
+    pub set: Option<String>,
+}
+
+#[derive(Debug, PartialEq, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ResumableArgs {
+    pub resumption_token: String,
+}
+
 #[cfg(test)]
 mod tests {
     use crate::{
@@ -41,8 +56,8 @@ mod tests {
             metadata_prefix: "oai_ead".into(),
         };
 
-        let expected: Query<GetRecordArgs> = Query::new(Verb::GetRecord, args);
-        let actual: Query<GetRecordArgs> = serde_qs::from_str(q).unwrap();
-        assert_eq!(expected, actual);
+        let query = Query::new(Verb::GetRecord, args);
+        let from_qs = serde_qs::from_str(q).unwrap();
+        assert_eq!(query, from_qs);
     }
 }
