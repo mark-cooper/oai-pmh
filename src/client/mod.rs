@@ -3,7 +3,7 @@ pub mod query;
 pub mod response;
 use crate::Verb;
 use crate::client::query::{GetRecordArgs, Query};
-use crate::client::response::GetRecordResponse;
+use crate::client::response::{GetRecordResponse, IdentifyResponse};
 
 use anyhow::{Result, bail};
 use serde::Serialize;
@@ -32,15 +32,14 @@ impl Client {
     }
 
     pub fn get_record(&self, args: GetRecordArgs) -> Result<GetRecordResponse> {
-        let query: Query<GetRecordArgs> = Query::new(Verb::GetRecord, args);
-        let url = self.build_url(query)?;
-        let xml = self
-            .client
-            .get(url)
-            .header("Accept", "text/xml")
-            .send()?
-            .text()?;
+        let xml = self.do_query(Query::new(Verb::GetRecord, args))?;
         let response = GetRecordResponse::new(xml)?;
+        Ok(response)
+    }
+
+    pub fn identify(&self) -> Result<IdentifyResponse> {
+        let xml = self.do_query(Query::new(Verb::Identify, ()))?;
+        let response = IdentifyResponse::new(xml)?;
         Ok(response)
     }
 
@@ -48,6 +47,17 @@ impl Client {
         let query = serde_qs::to_string(&query)?;
         let url = format!("{}?{query}", self.endpoint);
         Ok(url)
+    }
+
+    fn do_query<T: Serialize>(&self, query: Query<T>) -> Result<String> {
+        let url = self.build_url(query)?;
+        let xml = self
+            .client
+            .get(url)
+            .header("Accept", "text/xml")
+            .send()?
+            .text()?;
+        Ok(xml)
     }
 }
 
@@ -83,7 +93,7 @@ mod tests {
     fn client_build_get_record_query_url() {
         let endpoint = "https://test.archivesspace.org/oai";
         let client = Client::new(endpoint).unwrap();
-        let query: Query<GetRecordArgs> = Query::new(
+        let query = Query::new(
             Verb::GetRecord,
             GetRecordArgs {
                 identifier: "oai:archivesspace:/repositories/2/resources/2".into(),
@@ -101,5 +111,18 @@ mod tests {
                     "verb=GetRecord&identifier=oai%3Aarchivesspace%3A%2Frepositories%2F2%2Fresources%2F2&metadataPrefix=oai_ead"
                 )
         );
+    }
+
+    #[test]
+    fn client_build_identify_query_url() {
+        let endpoint = "https://test.archivesspace.org/oai";
+        let client = Client::new(endpoint).unwrap();
+        let query = Query::new(Verb::Identify, ());
+        let url = client.build_url(query).unwrap();
+        let actual = Url::parse(&url).unwrap();
+
+        assert!(actual.host_str() == Some("test.archivesspace.org"));
+        assert!(actual.path() == "/oai");
+        assert!(actual.query() == Some("verb=Identify"));
     }
 }
