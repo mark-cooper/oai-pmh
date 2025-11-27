@@ -4,6 +4,7 @@ use std::fmt;
 
 use crate::client::metadata;
 
+// Response error implementation
 #[derive(Debug, Deserialize)]
 pub struct ResponseError {
     #[serde(rename = "@code")]
@@ -21,7 +22,7 @@ impl fmt::Display for ResponseError {
     }
 }
 
-// Error codes
+// Response error codes
 #[derive(Debug, Deserialize, Clone, Copy, PartialEq, Eq)]
 pub enum ErrorCode {
     #[serde(rename = "badArgument")]
@@ -57,21 +58,33 @@ impl fmt::Display for ErrorCode {
     }
 }
 
-// GetRecord implementation
-#[derive(Debug, Deserialize)]
-#[serde(rename = "OAI-PMH")]
-#[serde(rename_all = "camelCase")]
-pub struct GetRecordResponse {
-    pub response_date: String,
-    pub request: String,
+// Generate common response structure
+// (preferring this to generics ['cus deserialization issues] and no direct struct embed)
+macro_rules! response {
+    ($name:ident, $payload_name:literal, $payload_type:ty) => {
+        #[derive(Debug, Deserialize)]
+        #[serde(rename = "OAI-PMH")]
+        #[serde(rename_all = "camelCase")]
+        pub struct $name {
+            pub response_date: String,
+            pub request: String,
 
-    #[serde(default)]
-    pub error: Option<ResponseError>,
+            #[serde(default)]
+            pub error: Option<ResponseError>,
 
-    #[serde(rename = "GetRecord", default)]
-    pub payload: Option<GetRecord>,
+            #[serde(rename = $payload_name, default)]
+            pub payload: Option<$payload_type>,
+        }
+
+        impl $name {
+            pub fn is_err(&self) -> bool {
+                self.error.is_some()
+            }
+        }
+    };
 }
 
+response!(GetRecordResponse, "GetRecord", GetRecord);
 impl GetRecordResponse {
     pub fn new(xml: String) -> Result<Self> {
         let mut response: Self = quick_xml::de::from_str(xml.as_str())?;
@@ -87,10 +100,6 @@ impl GetRecordResponse {
 
         Ok(response)
     }
-
-    pub fn is_err(&self) -> bool {
-        self.error.is_some()
-    }
 }
 
 #[derive(Debug, Deserialize)]
@@ -100,28 +109,11 @@ pub struct GetRecord {
 }
 
 // Identify implementation
-#[derive(Debug, Deserialize)]
-#[serde(rename = "OAI-PMH")]
-#[serde(rename_all = "camelCase")]
-pub struct IdentifyResponse {
-    pub response_date: String,
-    pub request: String,
-
-    #[serde(default)]
-    pub error: Option<ResponseError>,
-
-    #[serde(rename = "Identify", default)]
-    pub payload: Option<Identify>,
-}
-
+response!(IdentifyResponse, "Identify", Identify);
 impl IdentifyResponse {
     pub fn new(xml: String) -> Result<Self> {
         let response: Self = quick_xml::de::from_str(xml.as_str())?;
         Ok(response)
-    }
-
-    pub fn is_err(&self) -> bool {
-        self.error.is_some()
     }
 }
 
