@@ -78,6 +78,20 @@ mod tests {
     }
 
     #[test]
+    fn test_extract_metadata_with_newlines() {
+        let xml = r#"<OAI-PMH><ListRecords><record><header></header><metadata>
+<ead xmlns="test">
+  <content>here</content>
+</ead>
+</metadata></record></ListRecords></OAI-PMH>"#;
+
+        let results = extract_metadata(xml);
+        assert_eq!(results.len(), 1);
+        assert!(results[0].contains("<ead"));
+        assert!(results[0].contains("</ead>"));
+    }
+
+    #[test]
     fn test_extract_metadata_multiple_records() {
         let xml = r#"
         <OAI-PMH>

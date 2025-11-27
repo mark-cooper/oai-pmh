@@ -117,6 +117,7 @@ mod tests {
 
             // Break immediately after verifying test cases
             // This keeps us on the first page and avoids resumption token request
+            // Refer to the examples for use of resumption tokens
             if idx >= test_cases.len() - 1 {
                 break;
             }
