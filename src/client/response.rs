@@ -135,7 +135,30 @@ pub struct Identify {
     pub compression: Vec<String>,
 
     #[serde(skip)]
-    pub description: String,
+    pub description: Vec<String>,
+}
+
+response!(ListRecordsResponse, "ListRecords", ListRecords);
+impl ListRecordsResponse {
+    pub fn new(xml: String) -> Result<Self> {
+        let mut response: Self = quick_xml::de::from_str(xml.as_str())?;
+
+        let metadata = metadata::extract_metadata(xml.as_str());
+
+        if let Some(ref mut payload) = response.payload {
+            for (record, meta) in payload.record.iter_mut().zip(metadata) {
+                record.metadata = meta;
+            }
+        }
+
+        Ok(response)
+    }
+}
+
+#[derive(Debug, Deserialize)]
+pub struct ListRecords {
+    #[serde(rename = "record")]
+    pub record: Vec<Record>,
 }
 
 // General elements
@@ -257,5 +280,49 @@ mod tests {
         assert_eq!(payload.deleted_record, "persistent");
         assert_eq!(payload.granularity, "YYYY-MM-DDThh:mm:ssZ");
         assert!(payload.compression.is_empty());
+    }
+
+    #[test]
+    fn test_list_records_success() {
+        let xml = std::fs::read_to_string("tests/fixtures/list_records.xml")
+            .expect("Failed to load fixture");
+
+        let response = ListRecordsResponse::new(xml).unwrap();
+        assert!(!response.is_err());
+        assert_eq!(response.response_date, "2025-11-27T02:10:07Z");
+        assert_eq!(response.request, "https://test.archivesspace.org");
+
+        let payload = response.payload.unwrap();
+        assert!(payload.record.len() > 1);
+
+        // Verify each record has correct metadata pairing
+        let test_cases = [
+            (
+                "oai:archivesspace:/repositories/2/archival_objects/1",
+                "Correspondence about art, 1974–2014",
+            ),
+            (
+                "oai:archivesspace:/repositories/2/archival_objects/2",
+                "Correspondence about Veterans Affairs appeals, 1945–2012",
+            ),
+            (
+                "oai:archivesspace:/repositories/2/archival_objects/3",
+                "Correspondence relating to family, 1922–1972, undated",
+            ),
+        ];
+
+        for (idx, (expected_id, expected_title)) in test_cases.iter().enumerate() {
+            let record = &payload.record[idx];
+            assert_eq!(record.header.identifier, *expected_id);
+            assert_eq!(record.header.datestamp, "2025-11-11T00:31:42Z");
+            assert!(record.metadata.contains("<oai_dc:dc"));
+            assert!(record.metadata.contains(expected_title));
+        }
+
+        // Ensure all records have non-empty metadata
+        for record in &payload.record {
+            assert!(!record.metadata.is_empty());
+            assert!(record.metadata.contains("<oai_dc:dc"));
+        }
     }
 }
