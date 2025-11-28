@@ -36,13 +36,13 @@ impl Client {
 
     pub fn get_record(&self, args: GetRecordArgs) -> Result<GetRecordResponse> {
         let xml = self.do_query(Query::new(Verb::GetRecord, args))?;
-        let response = GetRecordResponse::new(xml)?;
+        let response = GetRecordResponse::new(&xml)?;
         Ok(response)
     }
 
     pub fn identify(&self) -> Result<IdentifyResponse> {
         let xml = self.do_query(Query::new(Verb::Identify, ()))?;
-        let response = IdentifyResponse::new(xml)?;
+        let response = IdentifyResponse::new(&xml)?;
         Ok(response)
     }
 

@@ -86,10 +86,10 @@ macro_rules! response {
 
 response!(GetRecordResponse, "GetRecord", GetRecord);
 impl GetRecordResponse {
-    pub fn new(xml: String) -> Result<Self> {
-        let mut response: Self = quick_xml::de::from_str(xml.as_str())?;
+    pub fn new(xml: &str) -> Result<Self> {
+        let mut response: Self = quick_xml::de::from_str(xml)?;
 
-        let metadata = metadata::extract_metadata(xml.as_str())
+        let metadata = metadata::extract_metadata(xml)
             .into_iter()
             .next()
             .unwrap_or_default();
@@ -111,8 +111,8 @@ pub struct GetRecord {
 // Identify implementation
 response!(IdentifyResponse, "Identify", Identify);
 impl IdentifyResponse {
-    pub fn new(xml: String) -> Result<Self> {
-        let response: Self = quick_xml::de::from_str(xml.as_str())?;
+    pub fn new(xml: &str) -> Result<Self> {
+        let response: Self = quick_xml::de::from_str(xml)?;
         Ok(response)
     }
 }
@@ -141,10 +141,10 @@ pub struct Identify {
 // ListRecords implementation
 response!(ListRecordsResponse, "ListRecords", ListRecords);
 impl ListRecordsResponse {
-    pub fn new(xml: String) -> Result<Self> {
-        let mut response: Self = quick_xml::de::from_str(xml.as_str())?;
+    pub fn new(xml: &str) -> Result<Self> {
+        let mut response: Self = quick_xml::de::from_str(xml)?;
 
-        let metadata = metadata::extract_metadata(xml.as_str());
+        let metadata = metadata::extract_metadata(xml);
 
         if let Some(ref mut payload) = response.payload {
             for (record, meta) in payload.record.iter_mut().zip(metadata) {
@@ -216,7 +216,7 @@ mod tests {
         let xml = std::fs::read_to_string("tests/fixtures/err_bad_prefix.xml")
             .expect("Failed to load fixture");
 
-        let response = GetRecordResponse::new(xml).unwrap();
+        let response = GetRecordResponse::new(&xml).unwrap();
         assert!(response.is_err());
 
         let error = response.error.unwrap();
@@ -232,7 +232,7 @@ mod tests {
         let xml = std::fs::read_to_string("tests/fixtures/err_not_found.xml")
             .expect("Failed to load fixture");
 
-        let response = GetRecordResponse::new(xml).unwrap();
+        let response = GetRecordResponse::new(&xml).unwrap();
         assert!(response.is_err());
 
         let error = response.error.unwrap();
@@ -248,7 +248,7 @@ mod tests {
         let xml = std::fs::read_to_string("tests/fixtures/get_record.xml")
             .expect("Failed to load fixture");
 
-        let response = GetRecordResponse::new(xml).unwrap();
+        let response = GetRecordResponse::new(&xml).unwrap();
         assert!(!response.is_err());
         assert_eq!(response.response_date, "2025-11-26T19:16:06Z");
         assert_eq!(response.request, "https://test.archivesspace.org");
@@ -271,7 +271,7 @@ mod tests {
         let xml =
             std::fs::read_to_string("tests/fixtures/identify.xml").expect("Failed to load fixture");
 
-        let response = IdentifyResponse::new(xml).unwrap();
+        let response = IdentifyResponse::new(&xml).unwrap();
         assert!(!response.is_err());
         assert_eq!(response.response_date, "2025-11-26T21:49:54Z");
         assert_eq!(response.request, "https://test.archivesspace.org");
@@ -292,7 +292,7 @@ mod tests {
         let xml = std::fs::read_to_string("tests/fixtures/list_records.xml")
             .expect("Failed to load fixture");
 
-        let response = ListRecordsResponse::new(xml).unwrap();
+        let response = ListRecordsResponse::new(&xml).unwrap();
         assert!(!response.is_err());
         assert_eq!(response.response_date, "2025-11-27T02:10:07Z");
         assert_eq!(response.request, "https://test.archivesspace.org");

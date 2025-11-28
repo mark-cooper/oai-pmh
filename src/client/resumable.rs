@@ -10,7 +10,7 @@ use crate::client::response::{ListRecordsResponse, Record};
 pub trait ResumableResponse: Sized {
     type Item;
 
-    fn from_xml(xml: String) -> Result<Self>;
+    fn from_xml(xml: &str) -> Result<Self>;
     fn into_parts(self) -> (Vec<Self::Item>, Option<String>);
 }
 
@@ -32,7 +32,7 @@ where
         Args: Serialize,
     {
         let xml = client.do_query(Query::new(verb, args))?;
-        let response = R::from_xml(xml)?;
+        let response = R::from_xml(&xml)?;
 
         let (items_vec, resumption_token) = response.into_parts();
         let items = items_vec.into_iter();
@@ -56,7 +56,7 @@ where
             .client
             .do_query(Query::new(self.verb, ResumableArgs::new(token)))?;
 
-        let response = R::from_xml(xml)?;
+        let response = R::from_xml(&xml)?;
         let (items_vec, resumption_token) = response.into_parts();
         self.items = items_vec.into_iter();
         self.resumption_token = resumption_token;
@@ -93,7 +93,7 @@ where
 impl ResumableResponse for ListRecordsResponse {
     type Item = Record;
 
-    fn from_xml(xml: String) -> Result<Self> {
+    fn from_xml(xml: &str) -> Result<Self> {
         ListRecordsResponse::new(xml)
     }
 
