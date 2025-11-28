@@ -1,4 +1,11 @@
+use once_cell::sync::Lazy;
 use regex::Regex;
+
+// Match content between <metadata> and </metadata> tags
+// Using non-greedy match (.*?) to handle multiple metadata elements
+// (?s) flag makes . match newlines (dotall mode)
+static METADATA_RE: Lazy<Regex> =
+    Lazy::new(|| Regex::new(r"(?s)<metadata>(.*?)</metadata>").unwrap());
 
 /// Extract all metadata elements from an OAI-PMH response
 ///
@@ -32,12 +39,8 @@ use regex::Regex;
 /// assert!(results[1].contains("content2"));
 /// ```
 pub fn extract_metadata(xml: &str) -> Vec<String> {
-    // Match content between <metadata> and </metadata> tags
-    // Using non-greedy match (.*?) to handle multiple metadata elements
-    // (?s) flag makes . match newlines (dotall mode)
-    let re = Regex::new(r"(?s)<metadata>(.*?)</metadata>").unwrap();
-
-    re.captures_iter(xml)
+    METADATA_RE
+        .captures_iter(xml)
         .filter_map(|cap| cap.get(1).map(|m| m.as_str().to_string()))
         .collect()
 }

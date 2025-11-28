@@ -647,6 +647,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "mockito",
+ "once_cell",
  "quick-xml",
  "regex",
  "reqwest",
