@@ -8,23 +8,6 @@ use crate::client::response::{
     Header, ListIdentifiersResponse, ListRecordsResponse, Record, ResumptionToken,
 };
 
-/// Trait for OAI-PMH responses that support resumption tokens
-pub trait ResumableResponse: Sized {
-    type Item;
-
-    fn from_xml(xml: &str) -> Result<Self>;
-    fn into_parts(self) -> (Vec<Self::Item>, Option<String>);
-    fn try_token(token: Option<ResumptionToken>) -> Option<String> {
-        token.and_then(|t| {
-            if !t.token.is_empty() {
-                Some(t.token)
-            } else {
-                None
-            }
-        })
-    }
-}
-
 /// Iterator for OAI-PMH verbs that support resumption tokens
 pub struct ResumableIter<'a, T, R> {
     client: &'a Client,
@@ -97,6 +80,23 @@ where
         } else {
             None
         }
+    }
+}
+
+/// Trait for OAI-PMH responses that support resumption tokens
+pub trait ResumableResponse: Sized {
+    type Item;
+
+    fn from_xml(xml: &str) -> Result<Self>;
+    fn into_parts(self) -> (Vec<Self::Item>, Option<String>);
+    fn try_token(token: Option<ResumptionToken>) -> Option<String> {
+        token.and_then(|t| {
+            if !t.token.is_empty() {
+                Some(t.token)
+            } else {
+                None
+            }
+        })
     }
 }
 
