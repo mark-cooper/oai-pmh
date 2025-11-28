@@ -138,6 +138,7 @@ pub struct Identify {
     pub description: Vec<String>,
 }
 
+// ListRecords implementation
 response!(ListRecordsResponse, "ListRecords", ListRecords);
 impl ListRecordsResponse {
     pub fn new(xml: String) -> Result<Self> {
