@@ -49,6 +49,10 @@ cargo run --example list_records https://test.archivesspace.org oai_dc
 # Specify number of records to fetch
 cargo run --example list_records https://test.archivesspace.org oai_dc 25
 
-# Specify a different server and metadata format
+# Specify a different endpoint and metadata format
 cargo run --example list_records https://demo.archivesspace.org/oai oai_ead 5
+
+# Basic profiling
+cargo build --release --example list_records
+/usr/bin/time -v cargo run --example list_records -- https://test.archivesspace.org/oai oai_ead 500
 ```
