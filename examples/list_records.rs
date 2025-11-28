@@ -16,13 +16,7 @@ fn main() -> Result<()> {
     println!();
 
     let client = Client::new(&endpoint)?;
-
-    let args = ListRecordsArgs {
-        metadata_prefix,
-        from: None,
-        until: None,
-        set: None,
-    };
+    let args = ListRecordsArgs::new(metadata_prefix);
 
     let mut count = 0;
     let limit = std::env::args()

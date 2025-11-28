@@ -39,11 +39,7 @@ mod tests {
             ],
         );
 
-        let args = GetRecordArgs {
-            identifier: identifier.into(),
-            metadata_prefix: metadata_prefix.into(),
-        };
-
+        let args = GetRecordArgs::new(identifier, metadata_prefix);
         let client = Client::new(&server.url()).unwrap();
         let _ = client.get_record(args).unwrap();
 
@@ -81,13 +77,7 @@ mod tests {
             ],
         );
 
-        let args = ListRecordsArgs {
-            metadata_prefix: metadata_prefix.into(),
-            from: None,
-            until: None,
-            set: None,
-        };
-
+        let args = ListRecordsArgs::new(metadata_prefix);
         let client = Client::new(&server.url()).unwrap();
 
         // Test cases for records from first page

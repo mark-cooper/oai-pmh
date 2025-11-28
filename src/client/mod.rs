@@ -107,10 +107,7 @@ mod tests {
         let client = Client::new(endpoint).unwrap();
         let query = Query::new(
             Verb::GetRecord,
-            GetRecordArgs {
-                identifier: "oai:archivesspace:/repositories/2/resources/2".into(),
-                metadata_prefix: "oai_ead".into(),
-            },
+            GetRecordArgs::new("oai:archivesspace:/repositories/2/resources/2", "oai_ead"),
         );
         let url = client.build_url(query).unwrap();
         let parsed_url = Url::parse(&url).unwrap();

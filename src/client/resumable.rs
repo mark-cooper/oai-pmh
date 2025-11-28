@@ -52,12 +52,9 @@ where
             .take()
             .ok_or_else(|| anyhow::anyhow!("No resumption token available"))?;
 
-        let xml = self.client.do_query(Query::new(
-            self.verb,
-            ResumableArgs {
-                resumption_token: token,
-            },
-        ))?;
+        let xml = self
+            .client
+            .do_query(Query::new(self.verb, ResumableArgs::new(token)))?;
 
         let response = R::from_xml(xml)?;
         let (items_vec, resumption_token) = response.into_parts();
