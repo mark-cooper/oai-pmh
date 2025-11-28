@@ -2,7 +2,7 @@
 
 Rust library for the [Open Archives Initiative Protocol for Metadata Harvesting](https://www.openarchives.org/OAI/openarchivesprotocol.html).
 
-*The immediate need and focus is for a client only. Repository may come later.*
+*The immediate need and focus is for a client only. A repository may come later.*
 
 ## Usage
 
@@ -38,6 +38,28 @@ Queries that support resumption tokens return an iterator, as in `client.list_re
 To provide flexibilty metadata is not parsed by this library. The OAI response metadata element/s are captured as strings. The expectation is you "bring your own parser" to handle whatever metadata format is supported by the server and requested via the client.
 
 ## Runnable Examples
+
+List identifiers:
+
+```bash
+# Use defaults (test.archivesspace.org, oai_ead, 10 headers)
+cargo run --example list_identifiers
+
+# Specify endpoint and metadata prefix
+cargo run --example list_identifiers https://test.archivesspace.org oai_ead
+
+# Specify number of records to fetch
+cargo run --example list_identifiers https://test.archivesspace.org oai_ead 200
+
+# Specify a different endpoint and metadata format
+cargo run --example list_identifiers https://demo.archivesspace.org/oai oai_dc 5
+
+# Basic profiling
+cargo build --release --example list_identifiers
+/usr/bin/time -v cargo run --example list_identifiers -- https://test.archivesspace.org/oai oai_ead 500
+```
+
+List records:
 
 ```bash
 # Use defaults (test.archivesspace.org, oai_dc, 10 records)

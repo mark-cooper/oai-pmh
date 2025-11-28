@@ -4,7 +4,9 @@ use serde::Serialize;
 use crate::Verb;
 use crate::client::Client;
 use crate::client::query::{Query, ResumableArgs};
-use crate::client::response::{ListRecordsResponse, Record};
+use crate::client::response::{
+    Header, ListIdentifiersResponse, ListRecordsResponse, Record, ResumptionToken,
+};
 
 /// Trait for OAI-PMH responses that support resumption tokens
 pub trait ResumableResponse: Sized {
@@ -12,6 +14,15 @@ pub trait ResumableResponse: Sized {
 
     fn from_xml(xml: &str) -> Result<Self>;
     fn into_parts(self) -> (Vec<Self::Item>, Option<String>);
+    fn try_token(token: Option<ResumptionToken>) -> Option<String> {
+        token.and_then(|t| {
+            if !t.token.is_empty() {
+                Some(t.token)
+            } else {
+                None
+            }
+        })
+    }
 }
 
 /// Iterator for OAI-PMH verbs that support resumption tokens
@@ -89,6 +100,25 @@ where
     }
 }
 
+// Trait implementation for ListIdentifiersResponse
+impl ResumableResponse for ListIdentifiersResponse {
+    type Item = Header;
+
+    fn from_xml(xml: &str) -> Result<Self> {
+        ListIdentifiersResponse::new(xml)
+    }
+
+    fn into_parts(self) -> (Vec<Self::Item>, Option<String>) {
+        match self.payload {
+            Some(payload) => {
+                let items = payload.header;
+                (items, Self::try_token(payload.resumption_token))
+            }
+            None => (Vec::new(), None),
+        }
+    }
+}
+
 // Trait implementation for ListRecordsResponse
 impl ResumableResponse for ListRecordsResponse {
     type Item = Record;
@@ -101,14 +131,7 @@ impl ResumableResponse for ListRecordsResponse {
         match self.payload {
             Some(payload) => {
                 let items = payload.record;
-                let token = payload.resumption_token.and_then(|t| {
-                    if t.token.is_empty() {
-                        None
-                    } else {
-                        Some(t.token)
-                    }
-                });
-                (items, token)
+                (items, Self::try_token(payload.resumption_token))
             }
             None => (Vec::new(), None),
         }

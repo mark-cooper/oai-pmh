@@ -31,16 +31,16 @@ fn main() -> Result<()> {
             Ok(record) => {
                 count += 1;
                 println!("Record #{}", count);
-                println!("\tIdentifier: {}", record.header.identifier);
-                println!("\tDatestamp:  {}", record.header.datestamp);
+                println!("\t{:<12} {}", "Identifier:", record.header.identifier);
+                println!("\t{:<12} {}", "Datestamp:", record.header.datestamp);
 
                 if let Some(status) = &record.header.status {
-                    println!("\tStatus:     {}", status);
+                    println!("\t{:<12} {}", "Status:", status);
                 }
 
                 // Show first 200 chars of metadata (or indicate if empty)
                 if record.metadata.is_empty() {
-                    println!("\tMetadata:   (empty)");
+                    println!("\t{:<12} {}", "Metadata:", "(empty)");
                 } else {
                     let metadata_preview = if record.metadata.len() > 200 {
                         format!("{}...", &record.metadata[..200])
@@ -52,7 +52,7 @@ fn main() -> Result<()> {
                         .lines()
                         .find(|line| !line.trim().is_empty())
                         .unwrap_or("(no content)");
-                    println!("\tMetadata:   {}", first_line);
+                    println!("\t{:<12} {}", "Metadata:", first_line);
                 }
                 println!();
 

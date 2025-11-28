@@ -138,6 +138,25 @@ pub struct Identify {
     pub description: Vec<String>,
 }
 
+// ListIdentifiers implementation
+response!(ListIdentifiersResponse, "ListIdentifiers", ListIdentifiers);
+impl ListIdentifiersResponse {
+    pub fn new(xml: &str) -> Result<Self> {
+        let response: Self = quick_xml::de::from_str(xml)?;
+        Ok(response)
+    }
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ListIdentifiers {
+    #[serde(rename = "header")]
+    pub header: Vec<Header>,
+
+    #[serde(default)]
+    pub resumption_token: Option<ResumptionToken>,
+}
+
 // ListRecords implementation
 response!(ListRecordsResponse, "ListRecords", ListRecords);
 impl ListRecordsResponse {
@@ -285,6 +304,38 @@ mod tests {
         assert_eq!(payload.deleted_record, "persistent");
         assert_eq!(payload.granularity, "YYYY-MM-DDThh:mm:ssZ");
         assert!(payload.compression.is_empty());
+    }
+
+    #[test]
+    fn test_list_identifiers_success() {
+        let xml = std::fs::read_to_string("tests/fixtures/list_identifiers.xml")
+            .expect("Failed to load fixture");
+
+        let response = ListIdentifiersResponse::new(&xml).unwrap();
+        assert!(!response.is_err());
+        assert_eq!(response.response_date, "2025-11-26T21:58:16Z");
+        assert_eq!(response.request, "https://test.archivesspace.org");
+
+        let payload = response.payload.unwrap();
+
+        let token = payload.resumption_token.as_ref().unwrap();
+        assert_eq!(
+            token.token,
+            "eyJtZXRhZGF0YV9wcmVmaXgiOiJvYWlfZWFkIiwiZnJvbSI6IjE5NzAtMDEtMDEgMDA6MDA6MDAgVVRDIiwidW50aWwiOiIyMDI1LTExLTI2IDIxOjU4OjE1IFVUQyIsInN0YXRlIjoicHJvZHVjaW5nX3JlY29yZHMiLCJsYXN0X2RlbGV0ZV9pZCI6MCwicmVtYWluaW5nX3R5cGVzIjp7IlJlc291cmNlIjoyfSwiaXNzdWVfdGltZSI6MTc2NDE5NDI5NjA2Mn0="
+        );
+
+        assert!(payload.header.len() > 0);
+
+        let test_cases = [(
+            "oai:archivesspace:/repositories/2/resources/2",
+            "2025-11-11T14:28:08Z",
+        )];
+
+        for (idx, (expected_id, expected_datestamp)) in test_cases.iter().enumerate() {
+            let header = &payload.header[idx];
+            assert_eq!(header.identifier, *expected_id);
+            assert_eq!(header.datestamp, *expected_datestamp);
+        }
     }
 
     #[test]

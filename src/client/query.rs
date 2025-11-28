@@ -19,6 +19,36 @@ impl<T> Query<T> {
     }
 }
 
+macro_rules! metadata_prefix_list_args {
+    ($name:ident) => {
+        impl $name {
+            pub fn new(metadata_prefix: impl Into<String>) -> Self {
+                Self {
+                    metadata_prefix: metadata_prefix.into(),
+                    from: None,
+                    until: None,
+                    set: None,
+                }
+            }
+
+            pub fn from(mut self, from: impl Into<String>) -> Self {
+                self.from = Some(from.into());
+                self
+            }
+
+            pub fn until(mut self, until: impl Into<String>) -> Self {
+                self.until = Some(until.into());
+                self
+            }
+
+            pub fn set(mut self, set: impl Into<String>) -> Self {
+                self.set = Some(set.into());
+                self
+            }
+        }
+    };
+}
+
 #[derive(Debug, PartialEq, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct GetRecordArgs {
@@ -35,6 +65,16 @@ impl GetRecordArgs {
     }
 }
 
+#[derive(Debug, PartialEq, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ListIdentifiersArgs {
+    metadata_prefix: String,
+    from: Option<String>,
+    until: Option<String>,
+    set: Option<String>,
+}
+metadata_prefix_list_args!(ListIdentifiersArgs);
+
 // TODO: ISO8601 (consider chrono in the future for stricter from/until handling)
 #[derive(Debug, PartialEq, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -44,32 +84,7 @@ pub struct ListRecordsArgs {
     until: Option<String>,
     set: Option<String>,
 }
-
-impl ListRecordsArgs {
-    pub fn new(metadata_prefix: impl Into<String>) -> Self {
-        Self {
-            metadata_prefix: metadata_prefix.into(),
-            from: None,
-            until: None,
-            set: None,
-        }
-    }
-
-    pub fn from(mut self, from: impl Into<String>) -> Self {
-        self.from = Some(from.into());
-        self
-    }
-
-    pub fn until(mut self, until: impl Into<String>) -> Self {
-        self.until = Some(until.into());
-        self
-    }
-
-    pub fn set(mut self, set: impl Into<String>) -> Self {
-        self.set = Some(set.into());
-        self
-    }
-}
+metadata_prefix_list_args!(ListRecordsArgs);
 
 #[derive(Debug, PartialEq, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -89,7 +104,7 @@ impl ResumableArgs {
 mod tests {
     use crate::{
         Verb,
-        client::query::{GetRecordArgs, ListRecordsArgs, Query},
+        client::query::{GetRecordArgs, ListIdentifiersArgs, ListRecordsArgs, Query},
     };
 
     #[test]
@@ -107,6 +122,19 @@ mod tests {
         let q = "verb=Identify";
 
         let query = Query::new(Verb::Identify, ());
+        let from_qs = serde_qs::from_str(q).unwrap();
+        assert_eq!(query, from_qs);
+    }
+
+    #[test]
+    fn construct_list_identifiers_query() {
+        let q = "verb=ListIdentifiers&metadataPrefix=oai_ead&from=2000-01-01&until=2025-01-01&set=speccol";
+        let args = ListIdentifiersArgs::new("oai_ead")
+            .from("2000-01-01")
+            .until("2025-01-01")
+            .set("speccol");
+
+        let query = Query::new(Verb::ListIdentifiers, args);
         let from_qs = serde_qs::from_str(q).unwrap();
         assert_eq!(query, from_qs);
     }

@@ -4,8 +4,11 @@ pub mod response;
 pub(crate) mod resumable;
 
 use crate::Verb;
-use crate::client::query::{GetRecordArgs, ListRecordsArgs, Query};
-use crate::client::response::{GetRecordResponse, IdentifyResponse, ListRecordsResponse, Record};
+use crate::client::query::{GetRecordArgs, ListIdentifiersArgs, ListRecordsArgs, Query};
+use crate::client::response::{
+    GetRecordResponse, Header, IdentifyResponse, ListIdentifiersResponse, ListRecordsResponse,
+    Record,
+};
 use crate::client::resumable::ResumableIter;
 
 use anyhow::{Result, bail};
@@ -46,6 +49,13 @@ impl Client {
         Ok(response)
     }
 
+    pub fn list_identifiers(
+        &self,
+        args: ListIdentifiersArgs,
+    ) -> Result<ResumableIter<'_, Header, ListIdentifiersResponse>> {
+        ResumableIter::new(self, Verb::ListIdentifiers, args)
+    }
+
     pub fn list_records(
         &self,
         args: ListRecordsArgs,
@@ -79,7 +89,7 @@ mod tests {
 
     use crate::Verb;
     use crate::client::Client;
-    use crate::client::query::{GetRecordArgs, Query};
+    use crate::client::query::{GetRecordArgs, ListIdentifiersArgs, ListRecordsArgs, Query};
 
     #[test]
     fn create_client_with_valid_url() {
@@ -133,5 +143,36 @@ mod tests {
         assert!(parsed_url.host_str() == Some("test.archivesspace.org"));
         assert!(parsed_url.path() == "/oai");
         assert!(parsed_url.query() == Some("verb=Identify"));
+    }
+
+    #[test]
+    fn client_build_list_identifiers_query_url() {
+        let endpoint = "https://test.archivesspace.org/oai";
+        let client = Client::new(endpoint).unwrap();
+        let query = Query::new(
+            Verb::ListIdentifiers,
+            ListIdentifiersArgs::new("oai_ead").set("speccol"),
+        );
+        let url = client.build_url(query).unwrap();
+        let parsed_url = Url::parse(&url).unwrap();
+
+        assert!(parsed_url.host_str() == Some("test.archivesspace.org"));
+        assert!(parsed_url.path() == "/oai");
+        assert!(
+            parsed_url.query() == Some("verb=ListIdentifiers&metadataPrefix=oai_ead&set=speccol")
+        );
+    }
+
+    #[test]
+    fn client_build_list_records_query_url() {
+        let endpoint = "https://test.archivesspace.org/oai";
+        let client = Client::new(endpoint).unwrap();
+        let query = Query::new(Verb::ListRecords, ListRecordsArgs::new("oai_ead"));
+        let url = client.build_url(query).unwrap();
+        let parsed_url = Url::parse(&url).unwrap();
+
+        assert!(parsed_url.host_str() == Some("test.archivesspace.org"));
+        assert!(parsed_url.path() == "/oai");
+        assert!(parsed_url.query() == Some("verb=ListRecords&metadataPrefix=oai_ead"));
     }
 }

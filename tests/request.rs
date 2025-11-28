@@ -3,7 +3,7 @@ mod tests {
     use mockito::{Matcher, ServerGuard};
     use oai_pmh::client::{
         Client,
-        query::{GetRecordArgs, ListRecordsArgs},
+        query::{GetRecordArgs, ListIdentifiersArgs, ListRecordsArgs},
     };
 
     fn setup_mock_server(
@@ -63,6 +63,46 @@ mod tests {
     }
 
     #[test]
+    fn test_list_identifiers() {
+        let metadata_prefix = "oai_ead";
+
+        let mut server = mockito::Server::new();
+
+        let mock = setup_mock_server(
+            &mut server,
+            "tests/fixtures/list_identifiers.xml",
+            vec![
+                Matcher::UrlEncoded("verb".into(), "ListIdentifiers".into()),
+                Matcher::UrlEncoded("metadataPrefix".into(), metadata_prefix.into()),
+            ],
+        );
+
+        let args = ListIdentifiersArgs::new(metadata_prefix);
+        let client = Client::new(&server.url()).unwrap();
+
+        // Test cases for headers from first page
+        let test_cases = [(
+            "oai:archivesspace:/repositories/2/resources/2",
+            "2025-11-11T14:28:08Z",
+        )];
+
+        for (idx, header) in client.list_identifiers(args).unwrap().enumerate() {
+            let header = header.unwrap();
+
+            if idx < test_cases.len() {
+                let (expected_id, expected_datestamp) = test_cases[idx];
+                assert_eq!(header.identifier, expected_id);
+                assert_eq!(header.datestamp, expected_datestamp);
+            }
+
+            // Break immediately, we only have 1 header in the fixture
+            break;
+        }
+
+        mock.assert();
+    }
+
+    #[test]
     fn test_list_records() {
         let metadata_prefix = "oai_dc";
 
@@ -107,7 +147,7 @@ mod tests {
 
             // Break immediately after verifying test cases
             // This keeps us on the first page and avoids resumption token request
-            // Refer to the examples for use of resumption tokens
+            // Refer to the examples for iterating with resumable requests
             if idx >= test_cases.len() - 1 {
                 break;
             }
