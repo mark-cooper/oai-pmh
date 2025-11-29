@@ -23,8 +23,8 @@ fn main() -> Result<()> {
     println!("{:?}", response.payload);
 
     let args = ListRecordsArgs::new("oai_dc");
-    for record in client.list_records(args)? {
-        println!("{:?}", record);
+    for response in client.list_records(args)? {
+        println!("{:?}", response);
     }
 
     Ok(())
@@ -42,39 +42,39 @@ To provide flexibilty metadata is not parsed by this library. The OAI response m
 List identifiers:
 
 ```bash
-# Use defaults (test.archivesspace.org, oai_ead, 10 headers)
+# Use defaults (test.archivesspace.org, oai_ead, 5 responses/pages)
 cargo run --example list_identifiers
 
 # Specify endpoint and metadata prefix
 cargo run --example list_identifiers https://test.archivesspace.org oai_ead
 
-# Specify number of records to fetch
-cargo run --example list_identifiers https://test.archivesspace.org oai_ead 200
+# Specify number of respones/pages to fetch
+cargo run --example list_identifiers https://test.archivesspace.org oai_ead 100
 
 # Specify a different endpoint and metadata format
 cargo run --example list_identifiers https://demo.archivesspace.org/oai oai_dc 5
 
 # Basic profiling
 cargo build --release --example list_identifiers
-/usr/bin/time -v cargo run --example list_identifiers -- https://test.archivesspace.org/oai oai_ead 500
+/usr/bin/time -v cargo run --example list_identifiers -- https://test.archivesspace.org/oai oai_ead 200
 ```
 
 List records:
 
 ```bash
-# Use defaults (test.archivesspace.org, oai_dc, 10 records)
+# Use defaults (test.archivesspace.org, oai_dc, 5 responses/pages)
 cargo run --example list_records
 
 # Specify endpoint and metadata prefix
 cargo run --example list_records https://test.archivesspace.org oai_dc
 
-# Specify number of records to fetch
-cargo run --example list_records https://test.archivesspace.org oai_dc 25
+# Specify number of responses/pages to fetch
+cargo run --example list_records https://test.archivesspace.org oai_dc 5
 
 # Specify a different endpoint and metadata format
 cargo run --example list_records https://demo.archivesspace.org/oai oai_ead 5
 
 # Basic profiling
 cargo build --release --example list_records
-/usr/bin/time -v cargo run --example list_records -- https://test.archivesspace.org/oai oai_ead 500
+/usr/bin/time -v cargo run --example list_records -- https://test.archivesspace.org/oai oai_ead 200
 ```

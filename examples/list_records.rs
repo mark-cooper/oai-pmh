@@ -22,53 +22,63 @@ fn main() -> Result<()> {
     let limit = std::env::args()
         .nth(3)
         .and_then(|s| s.parse::<usize>().ok())
-        .unwrap_or(10); // Default to first 10 records
+        .unwrap_or(5); // Default to first 5 responses
 
-    println!("Fetching first {} records...\n", limit);
+    println!("Fetching first {} responses...\n", limit);
 
-    for record in client.list_records(args)? {
-        match record {
-            Ok(record) => {
-                count += 1;
-                println!("Record #{}", count);
-                println!("\t{:<12} {}", "Identifier:", record.header.identifier);
-                println!("\t{:<12} {}", "Datestamp:", record.header.datestamp);
+    for response in client.list_records(args)? {
+        count += 1;
+        println!("Response #{}\n", count);
 
-                if let Some(status) = &record.header.status {
-                    println!("\t{:<12} {}", "Status:", status);
+        match response {
+            Ok(response) => {
+                if let Some(error) = response.error {
+                    eprintln!("\t{:<12} {}\n", "OAI-PMH error:", error);
+                    continue;
                 }
 
-                // Show first 200 chars of metadata (or indicate if empty)
-                if record.metadata.is_empty() {
-                    println!("\t{:<12} {}", "Metadata:", "(empty)");
-                } else {
-                    let metadata_preview = if record.metadata.len() > 200 {
-                        format!("{}...", &record.metadata[..200])
-                    } else {
-                        record.metadata.clone()
-                    };
-                    // Find first non-empty line
-                    let first_line = metadata_preview
-                        .lines()
-                        .find(|line| !line.trim().is_empty())
-                        .unwrap_or("(no content)");
-                    println!("\t{:<12} {}", "Metadata:", first_line);
+                if let Some(payload) = response.payload {
+                    for record in payload.record {
+                        println!("\t{:<12} {}", "Identifier:", record.header.identifier);
+                        println!("\t{:<12} {}", "Datestamp:", record.header.datestamp);
+
+                        if let Some(status) = &record.header.status {
+                            println!("\t{:<12} {}", "Status:", status);
+                        }
+
+                        // Show first 50 chars of metadata (or indicate if empty)
+                        if record.metadata.is_empty() {
+                            println!("\t{:<12} {}", "Metadata:", "(empty)");
+                        } else {
+                            let metadata_preview = if record.metadata.len() > 50 {
+                                format!("{}...", &record.metadata[..50])
+                            } else {
+                                record.metadata.clone()
+                            };
+                            // Find first non-empty line
+                            let first_line = metadata_preview
+                                .lines()
+                                .find(|line| !line.trim().is_empty())
+                                .unwrap_or("(no content)");
+                            println!("\t{:<12} {}", "Metadata:", first_line);
+                        }
+
+                        println!();
+                    }
                 }
-                println!();
 
                 if count >= limit {
-                    println!("Reached limit of {} records", limit);
                     break;
                 }
             }
             Err(e) => {
-                eprintln!("Error fetching record: {}", e);
+                eprintln!("\t{:<12} {}\n", "Request error:", e);
                 break;
             }
         }
     }
 
-    println!("Total records processed: {}", count);
+    println!("Total responses processed: {}", count);
 
     Ok(())
 }

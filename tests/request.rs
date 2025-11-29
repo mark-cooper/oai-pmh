@@ -86,17 +86,18 @@ mod tests {
             "2025-11-11T14:28:08Z",
         )];
 
-        for (idx, header) in client.list_identifiers(args).unwrap().enumerate() {
-            let header = header.unwrap();
+        for response in client.list_identifiers(args).unwrap() {
+            let response = response.unwrap();
+            let headers = response.payload.unwrap().header;
 
-            if idx < test_cases.len() {
+            for idx in 0..test_cases.len() {
+                let header = &headers[idx];
                 let (expected_id, expected_datestamp) = test_cases[idx];
                 assert_eq!(header.identifier, expected_id);
                 assert_eq!(header.datestamp, expected_datestamp);
             }
 
-            // Break immediately, we only have 1 header in the fixture
-            break;
+            break; // No pagination
         }
 
         mock.assert();
@@ -136,21 +137,18 @@ mod tests {
             ),
         ];
 
-        for (idx, record) in client.list_records(args).unwrap().enumerate() {
-            let record = record.unwrap();
+        for response in client.list_records(args).unwrap() {
+            let response = response.unwrap();
+            let records = response.payload.unwrap().record;
 
-            if idx < test_cases.len() {
+            for idx in 0..test_cases.len() {
+                let record = &records[idx];
                 let (expected_id, expected_title) = test_cases[idx];
                 assert_eq!(record.header.identifier, expected_id);
                 assert!(record.metadata.contains(expected_title));
             }
 
-            // Break immediately after verifying test cases
-            // This keeps us on the first page and avoids resumption token request
-            // Refer to the examples for iterating with resumable requests
-            if idx >= test_cases.len() - 1 {
-                break;
-            }
+            break; // No pagination
         }
 
         mock.assert();

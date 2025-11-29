@@ -22,37 +22,46 @@ fn main() -> Result<()> {
     let limit = std::env::args()
         .nth(3)
         .and_then(|s| s.parse::<usize>().ok())
-        .unwrap_or(10); // Default to first 10 headers
+        .unwrap_or(5); // Default to first 5 responses
 
-    println!("Fetching first {} headers...\n", limit);
+    println!("Fetching first {} responses...\n", limit);
 
-    for header in client.list_identifiers(args)? {
-        match header {
-            Ok(header) => {
-                count += 1;
-                println!("Header #{}", count);
-                println!("\t{:<12} {}", "Identifier:", header.identifier);
-                println!("\t{:<12} {}", "Datestamp:", header.datestamp);
+    for response in client.list_identifiers(args)? {
+        count += 1;
+        println!("Response #{}", count);
 
-                if let Some(status) = &header.status {
-                    println!("\t{:<12} {}", "Status:", status);
+        match response {
+            Ok(response) => {
+                if let Some(error) = response.error {
+                    eprintln!("\t{:<12} {}\n", "OAI-PMH error:", error);
+                    continue;
                 }
 
-                println!();
+                if let Some(payload) = response.payload {
+                    for header in payload.header {
+                        println!("\t{:<12} {}", "Identifier:", header.identifier);
+                        println!("\t{:<12} {}", "Datestamp:", header.datestamp);
+
+                        if let Some(status) = header.status {
+                            println!("\t{:<12} {}", "Status:", status);
+                        }
+
+                        println!();
+                    }
+                }
 
                 if count >= limit {
-                    println!("Reached limit of {} headers", limit);
                     break;
                 }
             }
             Err(e) => {
-                eprintln!("Error fetching record: {}", e);
+                eprintln!("\t{:<12} {}\n", "Request error:", e);
                 break;
             }
         }
     }
 
-    println!("Total headers processed: {}", count);
+    println!("Total responses processed: {}", count);
 
     Ok(())
 }

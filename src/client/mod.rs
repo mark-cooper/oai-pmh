@@ -6,8 +6,7 @@ pub(crate) mod resumable;
 use crate::Verb;
 use crate::client::query::{GetRecordArgs, ListIdentifiersArgs, ListRecordsArgs, Query};
 use crate::client::response::{
-    GetRecordResponse, Header, IdentifyResponse, ListIdentifiersResponse, ListRecordsResponse,
-    Record,
+    GetRecordResponse, IdentifyResponse, ListIdentifiersResponse, ListRecordsResponse,
 };
 use crate::client::resumable::ResumableIter;
 
@@ -52,14 +51,14 @@ impl Client {
     pub fn list_identifiers(
         &self,
         args: ListIdentifiersArgs,
-    ) -> Result<ResumableIter<'_, Header, ListIdentifiersResponse>> {
+    ) -> Result<ResumableIter<'_, ListIdentifiersResponse>> {
         ResumableIter::new(self, Verb::ListIdentifiers, args)
     }
 
     pub fn list_records(
         &self,
         args: ListRecordsArgs,
-    ) -> Result<ResumableIter<'_, Record, ListRecordsResponse>> {
+    ) -> Result<ResumableIter<'_, ListRecordsResponse>> {
         ResumableIter::new(self, Verb::ListRecords, args)
     }
 
