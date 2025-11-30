@@ -25,6 +25,7 @@ fn main() -> Result<()> {
     let args = ListRecordsArgs::new("oai_dc");
     for response in client.list_records(args)? {
         println!("{:?}", response);
+        break;
     }
 
     Ok(())
