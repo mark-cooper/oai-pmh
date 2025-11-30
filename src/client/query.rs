@@ -75,6 +75,20 @@ pub struct ListIdentifiersArgs {
 }
 metadata_prefix_list_args!(ListIdentifiersArgs);
 
+#[derive(Debug, PartialEq, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ListMetadataFormatsArgs {
+    identifier: String,
+}
+
+impl ListMetadataFormatsArgs {
+    pub fn new(identifier: impl Into<String>) -> Self {
+        Self {
+            identifier: identifier.into(),
+        }
+    }
+}
+
 // TODO: ISO8601 (consider chrono in the future for stricter from/until handling)
 #[derive(Debug, PartialEq, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -104,7 +118,9 @@ impl ResumableArgs {
 mod tests {
     use crate::{
         Verb,
-        client::query::{GetRecordArgs, ListIdentifiersArgs, ListRecordsArgs, Query},
+        client::query::{
+            GetRecordArgs, ListIdentifiersArgs, ListMetadataFormatsArgs, ListRecordsArgs, Query,
+        },
     };
 
     #[test]
@@ -135,6 +151,16 @@ mod tests {
             .set("speccol");
 
         let query = Query::new(Verb::ListIdentifiers, args);
+        let from_qs = serde_qs::from_str(q).unwrap();
+        assert_eq!(query, from_qs);
+    }
+
+    #[test]
+    fn construct_list_metadata_formats_query() {
+        let q = "verb=ListMetadataFormats&identifier=oai:archivesspace:/repositories/2/resources/2";
+        let args = ListMetadataFormatsArgs::new("oai:archivesspace:/repositories/2/resources/2");
+
+        let query = Query::new(Verb::ListMetadataFormats, args);
         let from_qs = serde_qs::from_str(q).unwrap();
         assert_eq!(query, from_qs);
     }

@@ -7,7 +7,7 @@ pub enum Verb {
     GetRecord,
     Identify,
     ListIdentifiers,
-    ListMetaDataFormats,
+    ListMetadataFormats,
     ListRecords,
     ListSets,
 }
@@ -18,7 +18,7 @@ impl fmt::Display for Verb {
             Verb::GetRecord => write!(f, "GetRecord"),
             Verb::Identify => write!(f, "Identify"),
             Verb::ListIdentifiers => write!(f, "ListIdentifiers"),
-            Verb::ListMetaDataFormats => write!(f, "ListMetaDataFormats"),
+            Verb::ListMetadataFormats => write!(f, "ListMetadataFormats"),
             Verb::ListRecords => write!(f, "ListRecords"),
             Verb::ListSets => write!(f, "ListSets"),
         }

@@ -4,9 +4,12 @@ pub mod response;
 pub(crate) mod resumable;
 
 use crate::Verb;
-use crate::client::query::{GetRecordArgs, ListIdentifiersArgs, ListRecordsArgs, Query};
+use crate::client::query::{
+    GetRecordArgs, ListIdentifiersArgs, ListMetadataFormatsArgs, ListRecordsArgs, Query,
+};
 use crate::client::response::{
-    GetRecordResponse, IdentifyResponse, ListIdentifiersResponse, ListRecordsResponse,
+    GetRecordResponse, IdentifyResponse, ListIdentifiersResponse, ListMetadataFormatsResponse,
+    ListRecordsResponse,
 };
 use crate::client::resumable::ResumableIter;
 
@@ -55,6 +58,15 @@ impl Client {
         ResumableIter::new(self, Verb::ListIdentifiers, args)
     }
 
+    pub fn list_metadata_formats(
+        &self,
+        args: Option<ListMetadataFormatsArgs>,
+    ) -> Result<ListMetadataFormatsResponse> {
+        let xml = self.do_query(Query::new(Verb::ListMetadataFormats, args))?;
+        let response = ListMetadataFormatsResponse::new(&xml)?;
+        Ok(response)
+    }
+
     pub fn list_records(
         &self,
         args: ListRecordsArgs,
@@ -88,7 +100,9 @@ mod tests {
 
     use crate::Verb;
     use crate::client::Client;
-    use crate::client::query::{GetRecordArgs, ListIdentifiersArgs, ListRecordsArgs, Query};
+    use crate::client::query::{
+        GetRecordArgs, ListIdentifiersArgs, ListMetadataFormatsArgs, ListRecordsArgs, Query,
+    };
 
     #[test]
     fn create_client_with_valid_url() {
@@ -160,6 +174,19 @@ mod tests {
         assert!(
             parsed_url.query() == Some("verb=ListIdentifiers&metadataPrefix=oai_ead&set=speccol")
         );
+    }
+
+    #[test]
+    fn client_build_list_metadata_formats_query_url() {
+        let endpoint = "https://test.archivesspace.org/oai";
+        let client = Client::new(endpoint).unwrap();
+        let query = Query::new(Verb::ListMetadataFormats, None::<ListMetadataFormatsArgs>);
+        let url = client.build_url(query).unwrap();
+        let parsed_url = Url::parse(&url).unwrap();
+
+        assert!(parsed_url.host_str() == Some("test.archivesspace.org"));
+        assert!(parsed_url.path() == "/oai");
+        assert!(parsed_url.query() == Some("verb=ListMetadataFormats"));
     }
 
     #[test]

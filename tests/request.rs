@@ -3,7 +3,7 @@ mod tests {
     use mockito::{Matcher, ServerGuard};
     use oai_pmh::client::{
         Client,
-        query::{GetRecordArgs, ListIdentifiersArgs, ListRecordsArgs},
+        query::{GetRecordArgs, ListIdentifiersArgs, ListMetadataFormatsArgs, ListRecordsArgs},
     };
 
     fn setup_mock_server(
@@ -98,6 +98,49 @@ mod tests {
             }
 
             break; // No pagination
+        }
+
+        mock.assert();
+    }
+
+    #[test]
+    fn test_list_metadata_formats() {
+        let mut server = mockito::Server::new();
+
+        let mock = setup_mock_server(
+            &mut server,
+            "tests/fixtures/list_metadata_formats.xml",
+            vec![Matcher::UrlEncoded(
+                "verb".into(),
+                "ListMetadataFormats".into(),
+            )],
+        );
+
+        let args = None::<ListMetadataFormatsArgs>;
+        let client = Client::new(&server.url()).unwrap();
+
+        let test_cases = [
+            (
+                "oai_dc",
+                "http://www.openarchives.org/OAI/2.0/oai_dc.xsd",
+                "http://www.openarchives.org/OAI/2.0/oai_dc/",
+            ),
+            (
+                "oai_ead",
+                "https://www.loc.gov/ead/ead.xsd",
+                "http://www.loc.gov/ead/",
+            ),
+        ];
+
+        let response = client.list_metadata_formats(args).unwrap();
+        let metadata_formats = response.payload.unwrap().metadata_format;
+
+        for idx in 0..test_cases.len() {
+            let format = &metadata_formats[idx];
+            let (expected_prefix, expected_schema, expected_namespace) = test_cases[idx];
+            assert_eq!(format.metadata_prefix, expected_prefix);
+            assert_eq!(format.schema, expected_schema);
+            assert_eq!(format.metadata_namespace, expected_namespace);
         }
 
         mock.assert();

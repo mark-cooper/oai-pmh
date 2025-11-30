@@ -157,6 +157,26 @@ pub struct ListIdentifiers {
     pub resumption_token: Option<ResumptionToken>,
 }
 
+// ListMetadataFormats implementation
+response!(
+    ListMetadataFormatsResponse,
+    "ListMetadataFormats",
+    ListMetadataFormats
+);
+impl ListMetadataFormatsResponse {
+    pub fn new(xml: &str) -> Result<Self> {
+        let response: Self = quick_xml::de::from_str(xml)?;
+        Ok(response)
+    }
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ListMetadataFormats {
+    #[serde(rename = "metadataFormat")]
+    pub metadata_format: Vec<MetadataFormat>,
+}
+
 // ListRecords implementation
 response!(ListRecordsResponse, "ListRecords", ListRecords);
 impl ListRecordsResponse {
@@ -197,6 +217,14 @@ pub struct Header {
 
     #[serde(default)]
     pub set_spec: Vec<String>,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct MetadataFormat {
+    pub metadata_prefix: String,
+    pub metadata_namespace: String,
+    pub schema: String,
 }
 
 #[derive(Debug, Deserialize)]
@@ -335,6 +363,31 @@ mod tests {
             let header = &payload.header[idx];
             assert_eq!(header.identifier, *expected_id);
             assert_eq!(header.datestamp, *expected_datestamp);
+        }
+    }
+
+    #[test]
+    fn test_list_metadata_formats_success() {
+        let xml = std::fs::read_to_string("tests/fixtures/list_metadata_formats.xml")
+            .expect("Failed to load fixture");
+
+        let response = ListMetadataFormatsResponse::new(&xml).unwrap();
+        assert!(!response.is_err());
+        assert_eq!(response.response_date, "2025-11-27T05:39:57Z");
+        assert_eq!(response.request, "https://test.archivesspace.org");
+
+        let payload = response.payload.unwrap();
+        for format in payload.metadata_format {
+            assert_eq!(format.metadata_prefix, "oai_dc");
+            assert_eq!(
+                format.metadata_namespace,
+                "http://www.openarchives.org/OAI/2.0/oai_dc/"
+            );
+            assert_eq!(
+                format.schema,
+                "http://www.openarchives.org/OAI/2.0/oai_dc.xsd"
+            );
+            break;
         }
     }
 
