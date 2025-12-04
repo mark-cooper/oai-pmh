@@ -1,5 +1,5 @@
 use anyhow::Result;
-use oai_pmh::client::{Client, query::ListIdentifiersArgs};
+use oai_pmh::{Client, ListIdentifiersArgs};
 
 fn main() -> Result<()> {
     // Default to test server, or use first arg

@@ -1,7 +1,7 @@
 use std::process;
 
 use anyhow::Result;
-use oai_pmh::client::Client;
+use oai_pmh::Client;
 
 fn main() -> Result<()> {
     let client = Client::new("https://demo.archivesspace.org/oai")?;

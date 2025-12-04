@@ -14,7 +14,7 @@ The standard practice will be to:
 
 ```rust
 use anyhow::Result;
-use oai_pmh::client::{Client, query::ListRecordsArgs};
+use oai_pmh::{Client, ListRecordsArgs};
 
 fn main() -> Result<()> {
     let client = Client::new("https://demo.archivesspace.org/oai")?;

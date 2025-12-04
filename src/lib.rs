@@ -1,6 +1,12 @@
+//! oai-pmh
+//!
+//! Rust library for the [Open Archives Initiative Protocol for Metadata Harvesting](https://www.openarchives.org/OAI/openarchivesprotocol.html).
+
 use std::fmt;
 
 pub mod client;
+pub use client::Client;
+pub use client::query::*;
 
 #[derive(Clone, Copy)]
 pub enum Verb {
