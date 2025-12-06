@@ -5,17 +5,14 @@ use crate::Verb;
 #[derive(Debug, PartialEq, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Query<T> {
-    verb: String,
+    verb: Verb,
     #[serde(flatten)]
     args: T,
 }
 
 impl<T> Query<T> {
     pub fn new(verb: Verb, args: T) -> Self {
-        Self {
-            verb: verb.to_string(),
-            args,
-        }
+        Self { verb, args }
     }
 }
 

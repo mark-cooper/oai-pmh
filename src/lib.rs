@@ -2,13 +2,14 @@
 //!
 //! Rust library for the [Open Archives Initiative Protocol for Metadata Harvesting](https://www.openarchives.org/OAI/openarchivesprotocol.html).
 
+use serde::{Deserialize, Serialize};
 use std::fmt;
 
 pub mod client;
 pub use client::Client;
 pub use client::query::*;
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Debug, PartialEq, Deserialize, Serialize)]
 pub enum Verb {
     GetRecord,
     Identify,
