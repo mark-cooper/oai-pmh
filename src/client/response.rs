@@ -205,6 +205,24 @@ pub struct ListRecords {
     pub resumption_token: Option<ResumptionToken>,
 }
 
+// ListSets implementation
+response!(ListSetsResponse, "ListSets", ListSets);
+impl ListSetsResponse {
+    pub fn new(xml: &str) -> Result<Self> {
+        let response: Self = quick_xml::de::from_str(xml)?;
+        Ok(response)
+    }
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ListSets {
+    pub set: Vec<Set>,
+
+    #[serde(default)]
+    pub resumption_token: Option<ResumptionToken>,
+}
+
 // General elements
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -252,6 +270,16 @@ pub struct ResumptionToken {
 
     #[serde(rename = "@cursor", default)]
     pub cursor: Option<u64>,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Set {
+    pub set_spec: String,
+    pub set_name: String,
+
+    #[serde(skip)]
+    pub set_description: Vec<String>,
 }
 
 #[cfg(test)]
@@ -439,6 +467,29 @@ mod tests {
         for record in &payload.record {
             assert!(!record.metadata.is_empty());
             assert!(record.metadata.contains("<oai_dc:dc"));
+        }
+    }
+
+    #[test]
+    fn test_list_sets_success() {
+        let xml = std::fs::read_to_string("tests/fixtures/list_sets.xml")
+            .expect("Failed to load fixture");
+
+        let response = ListSetsResponse::new(&xml).unwrap();
+        assert!(!response.is_err());
+        assert_eq!(response.response_date, "2025-11-27T05:38:04Z");
+        assert_eq!(response.request, "https://test.archivesspace.org");
+
+        let payload = response.payload.unwrap();
+
+        assert!(payload.set.len() > 0);
+
+        let test_cases = ["class", "collection", "file"];
+
+        for (idx, expected) in test_cases.iter().enumerate() {
+            let set = &payload.set[idx];
+            assert_eq!(set.set_spec, *expected);
+            assert_eq!(set.set_name, *expected);
         }
     }
 }

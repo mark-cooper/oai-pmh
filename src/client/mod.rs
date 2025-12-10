@@ -9,7 +9,7 @@ use crate::client::query::{
 };
 use crate::client::response::{
     GetRecordResponse, IdentifyResponse, ListIdentifiersResponse, ListMetadataFormatsResponse,
-    ListRecordsResponse,
+    ListRecordsResponse, ListSetsResponse,
 };
 use crate::client::resumable::ResumableIter;
 
@@ -72,6 +72,10 @@ impl Client {
         args: ListRecordsArgs,
     ) -> Result<ResumableIter<'_, ListRecordsResponse>> {
         ResumableIter::new(self, Verb::ListRecords, args)
+    }
+
+    pub fn list_sets(&self) -> Result<ResumableIter<'_, ListSetsResponse>> {
+        ResumableIter::new(self, Verb::ListSets, ())
     }
 
     fn build_url<T: Serialize>(&self, query: Query<T>) -> Result<String> {
@@ -200,5 +204,18 @@ mod tests {
         assert!(parsed_url.host_str() == Some("test.archivesspace.org"));
         assert!(parsed_url.path() == "/oai");
         assert!(parsed_url.query() == Some("verb=ListRecords&metadataPrefix=oai_ead"));
+    }
+
+    #[test]
+    fn client_build_list_sets_query_url() {
+        let endpoint = "https://test.archivesspace.org/oai";
+        let client = Client::new(endpoint).unwrap();
+        let query = Query::new(Verb::ListSets, ());
+        let url = client.build_url(query).unwrap();
+        let parsed_url = Url::parse(&url).unwrap();
+
+        assert!(parsed_url.host_str() == Some("test.archivesspace.org"));
+        assert!(parsed_url.path() == "/oai");
+        assert!(parsed_url.query() == Some("verb=ListSets"));
     }
 }

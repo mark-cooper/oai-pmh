@@ -4,7 +4,9 @@ use serde::Serialize;
 use crate::Verb;
 use crate::client::Client;
 use crate::client::query::{Query, ResumableArgs};
-use crate::client::response::{ListIdentifiersResponse, ListRecordsResponse, ResumptionToken};
+use crate::client::response::{
+    ListIdentifiersResponse, ListRecordsResponse, ListSetsResponse, ResumptionToken,
+};
 
 /// Iterator for OAI-PMH verbs that support resumption tokens
 pub struct ResumableIter<'a, R> {
@@ -109,3 +111,4 @@ macro_rules! resumable {
 
 resumable!(ListIdentifiersResponse);
 resumable!(ListRecordsResponse);
+resumable!(ListSetsResponse);

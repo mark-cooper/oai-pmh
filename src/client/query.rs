@@ -173,4 +173,13 @@ mod tests {
         let from_qs = serde_qs::from_str(q).unwrap();
         assert_eq!(query, from_qs);
     }
+
+    #[test]
+    fn construct_list_sets_query() {
+        let q = "verb=ListSets";
+
+        let query = Query::new(Verb::ListSets, ());
+        let from_qs = serde_qs::from_str(q).unwrap();
+        assert_eq!(query, from_qs);
+    }
 }
