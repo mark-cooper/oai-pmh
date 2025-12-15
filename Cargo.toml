@@ -2,6 +2,9 @@
 name = "oai-pmh"
 version = "0.1.0"
 edition = "2024"
+authors = ["Mark Cooper <gh.aftermath967@passinbox.com>"]
+description = "Rust library for the Open Archives Initiative Protocol for Metadata Harvesting"
+license = "MIT OR Apache-2.0"
 
 [dependencies]
 anyhow = "1.0.100"
