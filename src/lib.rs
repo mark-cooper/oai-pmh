@@ -1,6 +1,4 @@
-//! oai-pmh
-//!
-//! Rust library for the [Open Archives Initiative Protocol for Metadata Harvesting](https://www.openarchives.org/OAI/openarchivesprotocol.html).
+#![doc = include_str!("../README.md")]
 
 use serde::{Deserialize, Serialize};
 use std::fmt;
