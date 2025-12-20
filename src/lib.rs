@@ -4,8 +4,11 @@ use serde::{Deserialize, Serialize};
 use std::fmt;
 
 pub mod client;
+pub mod error;
+
 pub use client::Client;
 pub use client::query::*;
+pub use error::{Error, Result};
 
 #[derive(Clone, Copy, Debug, PartialEq, Deserialize, Serialize)]
 pub enum Verb {

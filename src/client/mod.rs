@@ -13,11 +13,12 @@ use crate::client::response::{
 };
 use crate::client::resumable::ResumableIter;
 
-use anyhow::{Result, bail};
+use crate::error::{Error, Result};
 use serde::Serialize;
 use url::Url;
 
 const REQUIRED_SCHEME: &str = "http";
+const REQUIRED_CONTENT_TYPE: &str = "text/xml";
 
 pub struct Client {
     client: reqwest::blocking::Client,
@@ -29,7 +30,9 @@ impl Client {
         let endpoint = Url::parse(endpoint)?;
 
         if !endpoint.scheme().contains(REQUIRED_SCHEME) {
-            bail!("Endpoint must be an http or https url, given: {endpoint}")
+            return Err(Error::InvalidEndpoint(format!(
+                "Endpoint must be an http or https url, given: {endpoint}"
+            )));
         }
 
         let client = Self {
@@ -84,17 +87,43 @@ impl Client {
         Ok(url)
     }
 
+    /// Truncate a string to a maximum length
+    fn truncate_body(s: &str, max_len: usize) -> String {
+        if s.len() <= max_len {
+            s.to_string()
+        } else {
+            format!("{}...", &s[..max_len])
+        }
+    }
+
     pub(crate) fn do_query<T: Serialize>(&self, query: Query<T>) -> Result<String> {
         let url = self.build_url(query)?;
         let user_agent = format!("oai-pmh-rs/{}", env!("CARGO_PKG_VERSION"));
-        let xml = self
+        let response = self
             .client
             .get(url)
-            .header("Accept", "text/xml")
+            .header("Accept", REQUIRED_CONTENT_TYPE)
             .header("User-Agent", user_agent)
-            .send()?
-            .text()?;
-        Ok(xml)
+            .send()?;
+
+        let content_type = response
+            .headers()
+            .get(reqwest::header::CONTENT_TYPE)
+            .and_then(|v| v.to_str().ok())
+            .map(|s| s.to_string());
+
+        let body = response.text()?;
+
+        // Check that response looks like XML
+        let trimmed = body.trim_start();
+        if !trimmed.starts_with("<?xml") {
+            return Err(Error::UnexpectedResponse {
+                content_type,
+                body: Self::truncate_body(&body, 200),
+            });
+        }
+
+        Ok(body)
     }
 }
 

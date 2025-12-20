@@ -1,13 +1,12 @@
 [package]
 name = "oai-pmh"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2024"
 authors = ["Mark Cooper <gh.aftermath967@passinbox.com>"]
 description = "Rust library for the Open Archives Initiative Protocol for Metadata Harvesting"
 license = "MIT OR Apache-2.0"
 
 [dependencies]
-anyhow = "1.0.100"
 once_cell = "1.21.3"
 quick-xml = { version = "0.38.4", features = ["serialize"] }
 regex = "1.12.2"

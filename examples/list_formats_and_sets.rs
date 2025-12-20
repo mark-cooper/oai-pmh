@@ -1,5 +1,4 @@
-use anyhow::Result;
-use oai_pmh::{Client, ListMetadataFormatsArgs};
+use oai_pmh::{Client, ListMetadataFormatsArgs, Result};
 
 fn main() -> Result<()> {
     let client = Client::new("https://demo.archivesspace.org/oai")?;
