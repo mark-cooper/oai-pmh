@@ -1,7 +1,7 @@
 use oai_pmh::{Client, Error};
 
 fn main() {
-    let client = match Client::new("https://no.such.domain/oai") {
+    let client = match Client::new("https://example.org/oai") {
         Ok(c) => c,
         Err(Error::InvalidEndpoint(msg)) => {
             eprintln!("Bad endpoint: {msg}");
