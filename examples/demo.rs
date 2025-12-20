@@ -1,5 +1,4 @@
-use anyhow::Result;
-use oai_pmh::{Client, ListRecordsArgs};
+use oai_pmh::{Client, ListRecordsArgs, Result};
 
 fn main() -> Result<()> {
     let client = Client::new("https://demo.archivesspace.org/oai")?;

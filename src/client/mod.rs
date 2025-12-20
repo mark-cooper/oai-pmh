@@ -13,7 +13,7 @@ use crate::client::response::{
 };
 use crate::client::resumable::ResumableIter;
 
-use anyhow::{Result, bail};
+use crate::error::{Error, Result};
 use serde::Serialize;
 use url::Url;
 
@@ -29,7 +29,9 @@ impl Client {
         let endpoint = Url::parse(endpoint)?;
 
         if !endpoint.scheme().contains(REQUIRED_SCHEME) {
-            bail!("Endpoint must be an http or https url, given: {endpoint}")
+            return Err(Error::InvalidEndpoint(format!(
+                "Endpoint must be an http or https url, given: {endpoint}"
+            )));
         }
 
         let client = Self {

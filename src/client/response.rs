@@ -1,4 +1,4 @@
-use anyhow::Result;
+use crate::error::Result;
 use serde::Deserialize;
 use std::fmt;
 

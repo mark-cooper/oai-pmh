@@ -1,5 +1,4 @@
-use anyhow::Result;
-use oai_pmh::{Client, ListRecordsArgs};
+use oai_pmh::{Client, ListRecordsArgs, Result};
 
 fn main() -> Result<()> {
     // Default to test server, or use first arg

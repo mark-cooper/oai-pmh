@@ -13,8 +13,7 @@ The standard practice will be to:
 - Run the query
 
 ```rust
-use anyhow::Result;
-use oai_pmh::{Client, ListRecordsArgs};
+use oai_pmh::{Client, ListRecordsArgs, Result};
 
 fn main() -> Result<()> {
     let client = Client::new("https://demo.archivesspace.org/oai")?;
@@ -60,22 +59,7 @@ cargo build --release --example list_identifiers
 /usr/bin/time -v cargo run --example list_identifiers -- https://test.archivesspace.org/oai oai_ead 200
 ```
 
-List records:
+Other examples include:
 
-```bash
-# Use defaults (test.archivesspace.org, oai_dc, 5 responses/pages)
-cargo run --example list_records
-
-# Specify endpoint and metadata prefix
-cargo run --example list_records https://test.archivesspace.org oai_dc
-
-# Specify number of responses/pages to fetch
-cargo run --example list_records https://test.archivesspace.org oai_dc 5
-
-# Specify a different endpoint and metadata format
-cargo run --example list_records https://demo.archivesspace.org/oai oai_ead 5
-
-# Basic profiling
-cargo build --release --example list_records
-/usr/bin/time -v cargo run --example list_records -- https://test.archivesspace.org/oai oai_ead 200
-```
+- List formats and sets
+- List records

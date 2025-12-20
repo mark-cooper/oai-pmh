@@ -1,4 +1,4 @@
-use anyhow::Result;
+use crate::error::{Error, Result};
 use serde::Serialize;
 
 use crate::Verb;
@@ -40,7 +40,7 @@ where
         let token = self
             .resumption_token
             .take()
-            .ok_or_else(|| anyhow::anyhow!("No resumption token available"))?;
+            .ok_or(Error::NoResumptionToken)?;
 
         let xml = self
             .client
