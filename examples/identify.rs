@@ -2,10 +2,11 @@ use std::process;
 
 use oai_pmh::{Client, Result};
 
-fn main() -> Result<()> {
+#[tokio::main]
+async fn main() -> Result<()> {
     let client = Client::new("https://demo.archivesspace.org/oai")?;
 
-    let response = client.identify()?;
+    let response = client.identify().await?;
 
     println!("Response:\n");
 

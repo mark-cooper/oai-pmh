@@ -1,10 +1,12 @@
 use oai_pmh::{Client, ListMetadataFormatsArgs, Result};
 
-fn main() -> Result<()> {
+#[tokio::main]
+async fn main() -> Result<()> {
     let client = Client::new("https://demo.archivesspace.org/oai")?;
 
     let format_names: Vec<String> = client
-        .list_metadata_formats(None::<ListMetadataFormatsArgs>)?
+        .list_metadata_formats(None::<ListMetadataFormatsArgs>)
+        .await?
         .payload
         .unwrap()
         .metadata_format
@@ -19,11 +21,16 @@ fn main() -> Result<()> {
 
     println!();
 
-    let set_names: Vec<String> = client
-        .list_sets()?
-        .flat_map(|response| response.unwrap().payload.unwrap().set)
-        .map(|set| set.set_name)
-        .collect();
+    let mut set_names: Vec<String> = Vec::new();
+    let mut stream = client.list_sets().await?;
+    while let Some(response) = stream.next().await {
+        let response = response?;
+        if let Some(payload) = response.payload {
+            for set in payload.set {
+                set_names.push(set.set_name);
+            }
+        }
+    }
 
     println!("Found {} sets:\n", set_names.len());
     for name in &set_names {

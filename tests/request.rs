@@ -22,12 +22,12 @@ mod tests {
             .create()
     }
 
-    #[test]
-    fn test_get_record() {
+    #[tokio::test]
+    async fn test_get_record() {
         let identifier = "oai:archivesspace:/repositories/2/resources/2";
         let metadata_prefix = "oai_ead";
 
-        let mut server = mockito::Server::new();
+        let mut server = mockito::Server::new_async().await;
 
         let mock = setup_mock_server(
             &mut server,
@@ -41,14 +41,14 @@ mod tests {
 
         let args = GetRecordArgs::new(identifier, metadata_prefix);
         let client = Client::new(&server.url()).unwrap();
-        let _ = client.get_record(args).unwrap();
+        let _ = client.get_record(args).await.unwrap();
 
         mock.assert();
     }
 
-    #[test]
-    fn test_identify() {
-        let mut server = mockito::Server::new();
+    #[tokio::test]
+    async fn test_identify() {
+        let mut server = mockito::Server::new_async().await;
 
         let mock = setup_mock_server(
             &mut server,
@@ -57,16 +57,16 @@ mod tests {
         );
 
         let client = Client::new(&server.url()).unwrap();
-        let _ = client.identify().unwrap();
+        let _ = client.identify().await.unwrap();
 
         mock.assert();
     }
 
-    #[test]
-    fn test_list_identifiers() {
+    #[tokio::test]
+    async fn test_list_identifiers() {
         let metadata_prefix = "oai_ead";
 
-        let mut server = mockito::Server::new();
+        let mut server = mockito::Server::new_async().await;
 
         let mock = setup_mock_server(
             &mut server,
@@ -86,7 +86,8 @@ mod tests {
             "2025-11-11T14:28:08Z",
         )];
 
-        for response in client.list_identifiers(args).unwrap() {
+        let mut stream = client.list_identifiers(args).await.unwrap();
+        while let Some(response) = stream.next().await {
             let response = response.unwrap();
             let headers = response.payload.unwrap().header;
 
@@ -103,9 +104,9 @@ mod tests {
         mock.assert();
     }
 
-    #[test]
-    fn test_list_metadata_formats() {
-        let mut server = mockito::Server::new();
+    #[tokio::test]
+    async fn test_list_metadata_formats() {
+        let mut server = mockito::Server::new_async().await;
 
         let mock = setup_mock_server(
             &mut server,
@@ -132,7 +133,7 @@ mod tests {
             ),
         ];
 
-        let response = client.list_metadata_formats(args).unwrap();
+        let response = client.list_metadata_formats(args).await.unwrap();
         let metadata_formats = response.payload.unwrap().metadata_format;
 
         for idx in 0..test_cases.len() {
@@ -146,11 +147,11 @@ mod tests {
         mock.assert();
     }
 
-    #[test]
-    fn test_list_records() {
+    #[tokio::test]
+    async fn test_list_records() {
         let metadata_prefix = "oai_dc";
 
-        let mut server = mockito::Server::new();
+        let mut server = mockito::Server::new_async().await;
 
         let mock = setup_mock_server(
             &mut server,
@@ -180,7 +181,8 @@ mod tests {
             ),
         ];
 
-        for response in client.list_records(args).unwrap() {
+        let mut stream = client.list_records(args).await.unwrap();
+        while let Some(response) = stream.next().await {
             let response = response.unwrap();
             let records = response.payload.unwrap().record;
 

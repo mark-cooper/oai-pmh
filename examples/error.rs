@@ -1,6 +1,7 @@
 use oai_pmh::{Client, Error};
 
-fn main() {
+#[tokio::main]
+async fn main() {
     let client = match Client::new("https://example.org/oai") {
         Ok(c) => c,
         Err(Error::InvalidEndpoint(msg)) => {
@@ -13,7 +14,7 @@ fn main() {
         }
     };
 
-    match client.identify() {
+    match client.identify().await {
         Ok(response) => println!("{:?}", response.payload),
         Err(Error::Http(e)) => eprintln!("Network error: {e}"),
         Err(Error::XmlParse(e)) => eprintln!("Invalid XML response: {e}"),

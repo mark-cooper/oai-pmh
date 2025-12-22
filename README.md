@@ -15,14 +15,16 @@ The standard practice will be to:
 ```rust
 use oai_pmh::{Client, ListRecordsArgs, Result};
 
-fn main() -> Result<()> {
+#[tokio::main]
+async fn main() -> Result<()> {
     let client = Client::new("https://demo.archivesspace.org/oai")?;
 
-    let response = client.identify()?;
+    let response = client.identify().await?;
     println!("{:?}", response.payload);
 
     let args = ListRecordsArgs::new("oai_dc");
-    for response in client.list_records(args)? {
+    let mut stream = client.list_records(args).await?;
+    while let Some(response) = stream.next().await {
         println!("{:?}", response);
         break;
     }
@@ -31,7 +33,7 @@ fn main() -> Result<()> {
 }
 ```
 
-Queries that support resumption tokens return an iterator, as in `client.list_records` in the example.
+Queries that support resumption tokens return an async stream, as in `client.list_records` in the example.
 
 ## Metadata
 

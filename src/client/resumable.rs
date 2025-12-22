@@ -1,4 +1,4 @@
-use crate::error::{Error, Result};
+use crate::error::Result;
 use serde::Serialize;
 
 use crate::Verb;
@@ -8,23 +8,23 @@ use crate::client::response::{
     ListIdentifiersResponse, ListRecordsResponse, ListSetsResponse, ResumptionToken,
 };
 
-/// Iterator for OAI-PMH verbs that support resumption tokens
-pub struct ResumableIter<'a, R> {
+/// Async stream for OAI-PMH verbs that support resumption tokens
+pub struct ResumableStream<'a, R> {
     client: &'a Client,
     verb: Verb,
     current_response: Option<R>,
     resumption_token: Option<String>,
 }
 
-impl<'a, R> ResumableIter<'a, R>
+impl<'a, R> ResumableStream<'a, R>
 where
     R: ResumableResponse,
 {
-    pub(crate) fn new<Args>(client: &'a Client, verb: Verb, args: Args) -> Result<Self>
+    pub(crate) async fn new<Args>(client: &'a Client, verb: Verb, args: Args) -> Result<Self>
     where
         Args: Serialize,
     {
-        let xml = client.do_query(Query::new(verb, args))?;
+        let xml = client.do_query(Query::new(verb, args)).await?;
         let response = R::from_xml(&xml)?;
         let resumption_token = response.resumption_token();
 
@@ -36,42 +36,30 @@ where
         })
     }
 
-    fn fetch_next(&mut self) -> Result<()> {
-        let token = self
-            .resumption_token
-            .take()
-            .ok_or(Error::NoResumptionToken)?;
+    async fn fetch_next(&mut self) -> Result<R> {
+        let token = self.resumption_token.take().expect("called without token");
 
         let xml = self
             .client
-            .do_query(Query::new(self.verb, ResumableArgs::new(token)))?;
+            .do_query(Query::new(self.verb, ResumableArgs::new(token)))
+            .await?;
 
         let response = R::from_xml(&xml)?;
         self.resumption_token = response.resumption_token();
-        self.current_response = Some(response);
 
-        Ok(())
+        Ok(response)
     }
-}
 
-impl<'a, R> Iterator for ResumableIter<'a, R>
-where
-    R: ResumableResponse,
-{
-    type Item = Result<R>;
-
-    fn next(&mut self) -> Option<Self::Item> {
-        // Return current response if we have one
+    /// Returns the next response, or None if out.
+    pub async fn next(&mut self) -> Option<Result<R>> {
+        // Return buffered response if we have one
         if let Some(response) = self.current_response.take() {
             return Some(Ok(response));
         }
 
-        // Try to fetch next batch if we have a resumption token
+        // Fetch next page if we have a resumption token
         if self.resumption_token.is_some() {
-            Some(match self.fetch_next() {
-                Ok(()) => Ok(self.current_response.take()?),
-                Err(e) => Err(e),
-            })
+            Some(self.fetch_next().await)
         } else {
             None
         }
@@ -83,7 +71,6 @@ pub trait ResumableResponse: Sized {
     fn from_xml(xml: &str) -> Result<Self>;
     fn resumption_token(&self) -> Option<String>;
 
-    /// Helper to extract non-empty token string from ResumptionToken
     fn extract_token(token: Option<&ResumptionToken>) -> Option<String> {
         token
             .filter(|t| !t.token.is_empty())
