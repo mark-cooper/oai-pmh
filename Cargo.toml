@@ -16,5 +16,5 @@ serde_qs = "0.15.0"
 url = "2.5.7"
 
 [dev-dependencies]
-mockito = "1.7.0"
+mockito = "1.7.1"
 tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
