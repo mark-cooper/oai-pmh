@@ -1,6 +1,7 @@
 use oai_pmh::{Client, ListIdentifiersArgs, Result};
 
-fn main() -> Result<()> {
+#[tokio::main]
+async fn main() -> Result<()> {
     // Default to test server, or use first arg
     let endpoint = std::env::args()
         .nth(1)
@@ -25,7 +26,8 @@ fn main() -> Result<()> {
 
     println!("Fetching first {} responses...\n", limit);
 
-    for response in client.list_identifiers(args)? {
+    let mut stream = client.list_identifiers(args).await?;
+    while let Some(response) = stream.next().await {
         count += 1;
         println!("Response #{}", count);
 

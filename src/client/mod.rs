@@ -11,7 +11,7 @@ use crate::client::response::{
     GetRecordResponse, IdentifyResponse, ListIdentifiersResponse, ListMetadataFormatsResponse,
     ListRecordsResponse, ListSetsResponse,
 };
-use crate::client::resumable::ResumableIter;
+use crate::client::resumable::ResumableStream;
 
 use crate::error::{Error, Result};
 use serde::Serialize;
@@ -21,7 +21,7 @@ const REQUIRED_SCHEME: &str = "http";
 const REQUIRED_CONTENT_TYPE: &str = "text/xml";
 
 pub struct Client {
-    client: reqwest::blocking::Client,
+    client: reqwest::Client,
     endpoint: Url,
 }
 
@@ -36,49 +36,51 @@ impl Client {
         }
 
         let client = Self {
-            client: reqwest::blocking::Client::new(),
+            client: reqwest::Client::new(),
             endpoint,
         };
         Ok(client)
     }
 
-    pub fn get_record(&self, args: GetRecordArgs) -> Result<GetRecordResponse> {
-        let xml = self.do_query(Query::new(Verb::GetRecord, args))?;
+    pub async fn get_record(&self, args: GetRecordArgs) -> Result<GetRecordResponse> {
+        let xml = self.do_query(Query::new(Verb::GetRecord, args)).await?;
         let response = GetRecordResponse::new(&xml)?;
         Ok(response)
     }
 
-    pub fn identify(&self) -> Result<IdentifyResponse> {
-        let xml = self.do_query(Query::new(Verb::Identify, ()))?;
+    pub async fn identify(&self) -> Result<IdentifyResponse> {
+        let xml = self.do_query(Query::new(Verb::Identify, ())).await?;
         let response = IdentifyResponse::new(&xml)?;
         Ok(response)
     }
 
-    pub fn list_identifiers(
+    pub async fn list_identifiers(
         &self,
         args: ListIdentifiersArgs,
-    ) -> Result<ResumableIter<'_, ListIdentifiersResponse>> {
-        ResumableIter::new(self, Verb::ListIdentifiers, args)
+    ) -> Result<ResumableStream<'_, ListIdentifiersResponse>> {
+        ResumableStream::new(self, Verb::ListIdentifiers, args).await
     }
 
-    pub fn list_metadata_formats(
+    pub async fn list_metadata_formats(
         &self,
         args: Option<ListMetadataFormatsArgs>,
     ) -> Result<ListMetadataFormatsResponse> {
-        let xml = self.do_query(Query::new(Verb::ListMetadataFormats, args))?;
+        let xml = self
+            .do_query(Query::new(Verb::ListMetadataFormats, args))
+            .await?;
         let response = ListMetadataFormatsResponse::new(&xml)?;
         Ok(response)
     }
 
-    pub fn list_records(
+    pub async fn list_records(
         &self,
         args: ListRecordsArgs,
-    ) -> Result<ResumableIter<'_, ListRecordsResponse>> {
-        ResumableIter::new(self, Verb::ListRecords, args)
+    ) -> Result<ResumableStream<'_, ListRecordsResponse>> {
+        ResumableStream::new(self, Verb::ListRecords, args).await
     }
 
-    pub fn list_sets(&self) -> Result<ResumableIter<'_, ListSetsResponse>> {
-        ResumableIter::new(self, Verb::ListSets, ())
+    pub async fn list_sets(&self) -> Result<ResumableStream<'_, ListSetsResponse>> {
+        ResumableStream::new(self, Verb::ListSets, ()).await
     }
 
     fn build_url<T: Serialize>(&self, query: Query<T>) -> Result<String> {
@@ -87,16 +89,16 @@ impl Client {
         Ok(url)
     }
 
-    /// Truncate a string to a maximum length
-    fn truncate_body(s: &str, max_len: usize) -> String {
-        if s.len() <= max_len {
-            s.to_string()
+    fn truncate_body(s: &str, max_chars: usize) -> String {
+        let truncated: String = s.chars().take(max_chars).collect();
+        if truncated.len() < s.len() {
+            format!("{truncated}...")
         } else {
-            format!("{}...", &s[..max_len])
+            truncated
         }
     }
 
-    pub(crate) fn do_query<T: Serialize>(&self, query: Query<T>) -> Result<String> {
+    pub(crate) async fn do_query<T: Serialize>(&self, query: Query<T>) -> Result<String> {
         let url = self.build_url(query)?;
         let user_agent = format!("oai-pmh-rs/{}", env!("CARGO_PKG_VERSION"));
         let response = self
@@ -104,7 +106,8 @@ impl Client {
             .get(url)
             .header("Accept", REQUIRED_CONTENT_TYPE)
             .header("User-Agent", user_agent)
-            .send()?;
+            .send()
+            .await?;
 
         let content_type = response
             .headers()
@@ -112,7 +115,7 @@ impl Client {
             .and_then(|v| v.to_str().ok())
             .map(|s| s.to_string());
 
-        let body = response.text()?;
+        let body = response.text().await?;
 
         // Check that response looks like XML
         let trimmed = body.trim_start();
@@ -168,13 +171,13 @@ mod tests {
         let url = client.build_url(query).unwrap();
         let parsed_url = Url::parse(&url).unwrap();
 
-        assert!(parsed_url.host_str() == Some("test.archivesspace.org"));
-        assert!(parsed_url.path() == "/oai");
-        assert!(
-            parsed_url.query()
-                == Some(
-                    "verb=GetRecord&identifier=oai%3Aarchivesspace%3A%2Frepositories%2F2%2Fresources%2F2&metadataPrefix=oai_ead"
-                )
+        assert_eq!(parsed_url.host_str(), Some("test.archivesspace.org"));
+        assert_eq!(parsed_url.path(), "/oai");
+        assert_eq!(
+            parsed_url.query(),
+            Some(
+                "verb=GetRecord&identifier=oai%3Aarchivesspace%3A%2Frepositories%2F2%2Fresources%2F2&metadataPrefix=oai_ead"
+            )
         );
     }
 
@@ -186,9 +189,9 @@ mod tests {
         let url = client.build_url(query).unwrap();
         let parsed_url = Url::parse(&url).unwrap();
 
-        assert!(parsed_url.host_str() == Some("test.archivesspace.org"));
-        assert!(parsed_url.path() == "/oai");
-        assert!(parsed_url.query() == Some("verb=Identify"));
+        assert_eq!(parsed_url.host_str(), Some("test.archivesspace.org"));
+        assert_eq!(parsed_url.path(), "/oai");
+        assert_eq!(parsed_url.query(), Some("verb=Identify"));
     }
 
     #[test]
@@ -202,10 +205,11 @@ mod tests {
         let url = client.build_url(query).unwrap();
         let parsed_url = Url::parse(&url).unwrap();
 
-        assert!(parsed_url.host_str() == Some("test.archivesspace.org"));
-        assert!(parsed_url.path() == "/oai");
-        assert!(
-            parsed_url.query() == Some("verb=ListIdentifiers&metadataPrefix=oai_ead&set=speccol")
+        assert_eq!(parsed_url.host_str(), Some("test.archivesspace.org"));
+        assert_eq!(parsed_url.path(), "/oai");
+        assert_eq!(
+            parsed_url.query(),
+            Some("verb=ListIdentifiers&metadataPrefix=oai_ead&set=speccol")
         );
     }
 
@@ -217,9 +221,9 @@ mod tests {
         let url = client.build_url(query).unwrap();
         let parsed_url = Url::parse(&url).unwrap();
 
-        assert!(parsed_url.host_str() == Some("test.archivesspace.org"));
-        assert!(parsed_url.path() == "/oai");
-        assert!(parsed_url.query() == Some("verb=ListMetadataFormats"));
+        assert_eq!(parsed_url.host_str(), Some("test.archivesspace.org"));
+        assert_eq!(parsed_url.path(), "/oai");
+        assert_eq!(parsed_url.query(), Some("verb=ListMetadataFormats"));
     }
 
     #[test]
@@ -230,9 +234,12 @@ mod tests {
         let url = client.build_url(query).unwrap();
         let parsed_url = Url::parse(&url).unwrap();
 
-        assert!(parsed_url.host_str() == Some("test.archivesspace.org"));
-        assert!(parsed_url.path() == "/oai");
-        assert!(parsed_url.query() == Some("verb=ListRecords&metadataPrefix=oai_ead"));
+        assert_eq!(parsed_url.host_str(), Some("test.archivesspace.org"));
+        assert_eq!(parsed_url.path(), "/oai");
+        assert_eq!(
+            parsed_url.query(),
+            Some("verb=ListRecords&metadataPrefix=oai_ead")
+        );
     }
 
     #[test]
@@ -243,8 +250,8 @@ mod tests {
         let url = client.build_url(query).unwrap();
         let parsed_url = Url::parse(&url).unwrap();
 
-        assert!(parsed_url.host_str() == Some("test.archivesspace.org"));
-        assert!(parsed_url.path() == "/oai");
-        assert!(parsed_url.query() == Some("verb=ListSets"));
+        assert_eq!(parsed_url.host_str(), Some("test.archivesspace.org"));
+        assert_eq!(parsed_url.path(), "/oai");
+        assert_eq!(parsed_url.query(), Some("verb=ListSets"));
     }
 }
