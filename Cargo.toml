@@ -10,7 +10,7 @@ license = "MIT OR Apache-2.0"
 once_cell = "1.21.3"
 quick-xml = { version = "0.38.4", features = ["serialize"] }
 regex = "1.12.2"
-reqwest = "0.12.26"
+reqwest = "0.12.28"
 serde = {version = "1.0.228", features = ["derive"]}
 serde_qs = "0.15.0"
 url = "2.5.7"
