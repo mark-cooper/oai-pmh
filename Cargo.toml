@@ -8,7 +8,7 @@ license = "MIT OR Apache-2.0"
 
 [dependencies]
 once_cell = "1.21.3"
-quick-xml = { version = "0.38.4", features = ["serialize"] }
+quick-xml = { version = "0.39.0", features = ["serialize"] }
 regex = "1.12.2"
 reqwest = "0.12.28"
 serde = {version = "1.0.228", features = ["derive"]}
