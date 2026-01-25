@@ -380,7 +380,7 @@ mod tests {
             "eyJtZXRhZGF0YV9wcmVmaXgiOiJvYWlfZWFkIiwiZnJvbSI6IjE5NzAtMDEtMDEgMDA6MDA6MDAgVVRDIiwidW50aWwiOiIyMDI1LTExLTI2IDIxOjU4OjE1IFVUQyIsInN0YXRlIjoicHJvZHVjaW5nX3JlY29yZHMiLCJsYXN0X2RlbGV0ZV9pZCI6MCwicmVtYWluaW5nX3R5cGVzIjp7IlJlc291cmNlIjoyfSwiaXNzdWVfdGltZSI6MTc2NDE5NDI5NjA2Mn0="
         );
 
-        assert!(payload.header.len() > 0);
+        assert!(!payload.header.is_empty());
 
         let test_cases = [(
             "oai:archivesspace:/repositories/2/resources/2",
@@ -405,7 +405,7 @@ mod tests {
         assert_eq!(response.request, "https://test.archivesspace.org");
 
         let payload = response.payload.unwrap();
-        for format in payload.metadata_format {
+        if let Some(format) = payload.metadata_format.into_iter().next() {
             assert_eq!(format.metadata_prefix, "oai_dc");
             assert_eq!(
                 format.metadata_namespace,
@@ -415,7 +415,6 @@ mod tests {
                 format.schema,
                 "http://www.openarchives.org/OAI/2.0/oai_dc.xsd"
             );
-            break;
         }
     }
 
@@ -482,7 +481,7 @@ mod tests {
 
         let payload = response.payload.unwrap();
 
-        assert!(payload.set.len() > 0);
+        assert!(!payload.set.is_empty());
 
         let test_cases = ["class", "collection", "file"];
 

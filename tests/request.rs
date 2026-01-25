@@ -87,7 +87,7 @@ mod tests {
         )];
 
         let mut stream = client.list_identifiers(args).await.unwrap();
-        while let Some(response) = stream.next().await {
+        if let Some(response) = stream.next().await {
             let response = response.unwrap();
             let headers = response.payload.unwrap().header;
 
@@ -97,8 +97,6 @@ mod tests {
                 assert_eq!(header.identifier, expected_id);
                 assert_eq!(header.datestamp, expected_datestamp);
             }
-
-            break; // No pagination
         }
 
         mock.assert();
@@ -182,7 +180,7 @@ mod tests {
         ];
 
         let mut stream = client.list_records(args).await.unwrap();
-        while let Some(response) = stream.next().await {
+        if let Some(response) = stream.next().await {
             let response = response.unwrap();
             let records = response.payload.unwrap().record;
 
@@ -192,8 +190,6 @@ mod tests {
                 assert_eq!(record.header.identifier, expected_id);
                 assert!(record.metadata.contains(expected_title));
             }
-
-            break; // No pagination
         }
 
         mock.assert();

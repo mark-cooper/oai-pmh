@@ -49,7 +49,7 @@ async fn main() -> Result<()> {
 
                         // Show first 50 chars of metadata (or indicate if empty)
                         if record.metadata.is_empty() {
-                            println!("\t{:<12} {}", "Metadata:", "(empty)");
+                            println!("\t{:<12} (empty)", "Metadata:");
                         } else {
                             let metadata_preview = if record.metadata.len() > 50 {
                                 format!("{}...", &record.metadata[..50])
