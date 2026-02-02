@@ -12,7 +12,7 @@ quick-xml = { version = "0.39.0", features = ["serialize"] }
 regex = "1.12.2"
 reqwest = "0.13.1"
 serde = {version = "1.0.228", features = ["derive"]}
-serde_qs = "0.15.0"
+serde_qs = "1.0.0"
 url = "2.5.8"
 
 [dev-dependencies]
