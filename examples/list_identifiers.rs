@@ -27,38 +27,30 @@ async fn main() -> Result<()> {
     println!("Fetching first {} responses...\n", limit);
 
     let mut stream = client.list_identifiers(args).await?;
-    while let Some(response) = stream.next().await {
+    while let Some(response) = stream.try_next().await? {
         count += 1;
         println!("Response #{}", count);
 
-        match response {
-            Ok(response) => {
-                if let Some(error) = response.error {
-                    eprintln!("\t{:<12} {}\n", "OAI-PMH error:", error);
-                    continue;
+        if let Some(error) = response.error {
+            eprintln!("\t{:<12} {}\n", "OAI-PMH error:", error);
+            continue;
+        }
+
+        if let Some(payload) = response.payload {
+            for header in payload.header {
+                println!("\t{:<12} {}", "Identifier:", header.identifier);
+                println!("\t{:<12} {}", "Datestamp:", header.datestamp);
+
+                if let Some(status) = header.status {
+                    println!("\t{:<12} {}", "Status:", status);
                 }
 
-                if let Some(payload) = response.payload {
-                    for header in payload.header {
-                        println!("\t{:<12} {}", "Identifier:", header.identifier);
-                        println!("\t{:<12} {}", "Datestamp:", header.datestamp);
-
-                        if let Some(status) = header.status {
-                            println!("\t{:<12} {}", "Status:", status);
-                        }
-
-                        println!();
-                    }
-                }
-
-                if count >= limit {
-                    break;
-                }
+                println!();
             }
-            Err(e) => {
-                eprintln!("\t{:<12} {}\n", "Request error:", e);
-                break;
-            }
+        }
+
+        if count >= limit {
+            break;
         }
     }
 

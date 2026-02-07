@@ -35,35 +35,33 @@ pub(crate) fn extract_record_metadata(xml: &str) -> Result<Vec<Option<String>>> 
                     b"GetRecord" | b"ListRecords" if payload_depth.is_none() => {
                         payload_depth = Some(stack.len());
                     }
-                    b"record"
-                        if payload_depth.is_some()
-                            && record_depth.is_none()
-                            && stack.len() == payload_depth.unwrap() + 1 =>
-                    {
-                        record_depth = Some(stack.len());
-                        let idx = results.len();
-                        results.push(None);
-                        current_record = Some(idx);
-                    }
-                    b"metadata"
-                        if current_record.is_some()
-                            && record_depth.is_some()
-                            && stack.len() == record_depth.unwrap() + 1 =>
-                    {
-                        let span = reader
-                            .read_to_end_into(e.name(), &mut skip_buf)
-                            .map_err(|err| Error::XmlParse(err.into()))?;
-                        let start = span.start as usize;
-                        let end = span.end as usize;
-                        let inner_xml = xml.get(start..end).unwrap_or_default().to_string();
-
-                        if let Some(idx) = current_record {
-                            results[idx] = Some(inner_xml);
+                    b"record" if record_depth.is_none() => match payload_depth {
+                        Some(pd) if stack.len() == pd + 1 => {
+                            record_depth = Some(stack.len());
+                            let idx = results.len();
+                            results.push(None);
+                            current_record = Some(idx);
                         }
+                        _ => (),
+                    },
+                    b"metadata" => {
+                        match (current_record, record_depth) {
+                            (Some(idx), Some(rd)) if stack.len() == rd + 1 => {
+                                let span = reader
+                                    .read_to_end_into(e.name(), &mut skip_buf)
+                                    .map_err(|err| Error::XmlParse(err.into()))?;
+                                let start = span.start as usize;
+                                let end = span.end as usize;
+                                let inner_xml = xml.get(start..end).unwrap_or_default().to_string();
 
-                        // `read_to_end_into` consumes the corresponding `End` event, so we need to
-                        // close this element in our own stack tracking.
-                        stack.pop();
+                                results[idx] = Some(inner_xml);
+
+                                // `read_to_end_into` consumes the corresponding `End` event, so we need to
+                                // close this element in our own stack tracking.
+                                stack.pop();
+                            }
+                            _ => (),
+                        }
                     }
                     _ => (),
                 }
@@ -71,30 +69,29 @@ pub(crate) fn extract_record_metadata(xml: &str) -> Result<Vec<Option<String>>> 
             Event::Empty(e) => {
                 let name = local_name(e.name().into_inner());
 
-                if name == b"metadata"
-                    && record_depth.is_some()
-                    && stack.len() == record_depth.unwrap()
-                    && let Some(idx) = current_record
-                {
-                    results[idx] = Some(String::new());
+                match (name, record_depth, current_record) {
+                    (b"metadata", Some(rd), Some(idx)) if stack.len() == rd => {
+                        results[idx] = Some(String::new());
+                    }
+                    _ => (),
                 }
             }
             Event::End(e) => {
                 let name = local_name(e.name().into_inner());
 
-                if matches!(name, b"GetRecord" | b"ListRecords")
-                    && payload_depth.is_some()
-                    && stack.len() == payload_depth.unwrap()
-                {
-                    payload_depth = None;
+                match (name, payload_depth) {
+                    (b"GetRecord" | b"ListRecords", Some(pd)) if stack.len() == pd => {
+                        payload_depth = None;
+                    }
+                    _ => (),
                 }
 
-                if name == b"record"
-                    && record_depth.is_some()
-                    && stack.len() == record_depth.unwrap()
-                {
-                    record_depth = None;
-                    current_record = None;
+                match (name, record_depth) {
+                    (b"record", Some(rd)) if stack.len() == rd => {
+                        record_depth = None;
+                        current_record = None;
+                    }
+                    _ => (),
                 }
 
                 stack.pop();

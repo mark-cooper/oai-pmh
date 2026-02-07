@@ -27,55 +27,47 @@ async fn main() -> Result<()> {
     println!("Fetching first {} responses...\n", limit);
 
     let mut stream = client.list_records(args).await?;
-    while let Some(response) = stream.next().await {
+    while let Some(response) = stream.try_next().await? {
         count += 1;
         println!("Response #{}\n", count);
 
-        match response {
-            Ok(response) => {
-                if let Some(error) = response.error {
-                    eprintln!("\t{:<12} {}\n", "OAI-PMH error:", error);
-                    continue;
+        if let Some(error) = response.error {
+            eprintln!("\t{:<12} {}\n", "OAI-PMH error:", error);
+            continue;
+        }
+
+        if let Some(payload) = response.payload {
+            for record in payload.record {
+                println!("\t{:<12} {}", "Identifier:", record.header.identifier);
+                println!("\t{:<12} {}", "Datestamp:", record.header.datestamp);
+
+                if let Some(status) = &record.header.status {
+                    println!("\t{:<12} {}", "Status:", status);
                 }
 
-                if let Some(payload) = response.payload {
-                    for record in payload.record {
-                        println!("\t{:<12} {}", "Identifier:", record.header.identifier);
-                        println!("\t{:<12} {}", "Datestamp:", record.header.datestamp);
-
-                        if let Some(status) = &record.header.status {
-                            println!("\t{:<12} {}", "Status:", status);
-                        }
-
-                        // Show first 50 chars of metadata (or indicate if empty)
-                        if record.metadata.is_empty() {
-                            println!("\t{:<12} (empty)", "Metadata:");
-                        } else {
-                            let metadata_preview = if record.metadata.len() > 50 {
-                                format!("{}...", &record.metadata[..50])
-                            } else {
-                                record.metadata.clone()
-                            };
-                            // Find first non-empty line
-                            let first_line = metadata_preview
-                                .lines()
-                                .find(|line| !line.trim().is_empty())
-                                .unwrap_or("(no content)");
-                            println!("\t{:<12} {}", "Metadata:", first_line);
-                        }
-
-                        println!();
-                    }
+                // Show first 50 chars of metadata (or indicate if empty)
+                if record.metadata.is_empty() {
+                    println!("\t{:<12} (empty)", "Metadata:");
+                } else {
+                    let metadata_preview = if record.metadata.len() > 50 {
+                        format!("{}...", &record.metadata[..50])
+                    } else {
+                        record.metadata.clone()
+                    };
+                    // Find first non-empty line
+                    let first_line = metadata_preview
+                        .lines()
+                        .find(|line| !line.trim().is_empty())
+                        .unwrap_or("(no content)");
+                    println!("\t{:<12} {}", "Metadata:", first_line);
                 }
 
-                if count >= limit {
-                    break;
-                }
+                println!();
             }
-            Err(e) => {
-                eprintln!("\t{:<12} {}\n", "Request error:", e);
-                break;
-            }
+        }
+
+        if count >= limit {
+            break;
         }
     }
 

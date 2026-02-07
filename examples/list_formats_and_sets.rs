@@ -23,8 +23,7 @@ async fn main() -> Result<()> {
 
     let mut set_names: Vec<String> = Vec::new();
     let mut stream = client.list_sets().await?;
-    while let Some(response) = stream.next().await {
-        let response = response?;
+    while let Some(response) = stream.try_next().await? {
         if let Some(payload) = response.payload {
             for set in payload.set {
                 set_names.push(set.set_name);
