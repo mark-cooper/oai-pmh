@@ -190,7 +190,7 @@ mod tests {
         assert_eq!(
             url.query(),
             Some(
-                "verb=GetRecord&identifier=oai%3Aarchivesspace%3A%2Frepositories%2F2%2Fresources%2F2&metadataPrefix=oai_ead"
+                "verb=GetRecord&identifier=oai:archivesspace:/repositories/2/resources/2&metadataPrefix=oai_ead"
             )
         );
     }

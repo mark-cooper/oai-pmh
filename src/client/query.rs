@@ -66,8 +66,11 @@ impl GetRecordArgs {
 #[serde(rename_all = "camelCase")]
 pub struct ListIdentifiersArgs {
     metadata_prefix: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
     from: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     until: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     set: Option<String>,
 }
 metadata_prefix_list_args!(ListIdentifiersArgs);
@@ -91,8 +94,11 @@ impl ListMetadataFormatsArgs {
 #[serde(rename_all = "camelCase")]
 pub struct ListRecordsArgs {
     metadata_prefix: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
     from: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     until: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     set: Option<String>,
 }
 metadata_prefix_list_args!(ListRecordsArgs);
