@@ -1,7 +1,9 @@
 pub mod metadata;
 pub mod query;
 pub mod response;
-pub(crate) mod resumable;
+pub mod resumable;
+
+pub use resumable::ResumableStream;
 
 use crate::Verb;
 use crate::client::query::{
@@ -11,13 +13,11 @@ use crate::client::response::{
     GetRecordResponse, IdentifyResponse, ListIdentifiersResponse, ListMetadataFormatsResponse,
     ListRecordsResponse, ListSetsResponse,
 };
-use crate::client::resumable::ResumableStream;
 
 use crate::error::{Error, Result};
 use serde::Serialize;
 use url::Url;
 
-const REQUIRED_SCHEME: &str = "http";
 const ACCEPT_HEADER: &str = "application/xml, text/xml;q=0.9, */*;q=0.1";
 
 pub struct Client {
@@ -29,7 +29,7 @@ impl Client {
     pub fn new(endpoint: &str) -> Result<Self> {
         let endpoint = Url::parse(endpoint)?;
 
-        if !endpoint.scheme().contains(REQUIRED_SCHEME) {
+        if !matches!(endpoint.scheme(), "http" | "https") {
             return Err(Error::InvalidEndpoint(format!(
                 "Endpoint must be an http or https url, given: {endpoint}"
             )));
@@ -83,9 +83,16 @@ impl Client {
         ResumableStream::new(self, Verb::ListSets, ()).await
     }
 
-    fn build_url<T: Serialize>(&self, query: Query<T>) -> Result<String> {
+    fn build_url<T: Serialize>(&self, query: Query<T>) -> Result<Url> {
         let query = serde_qs::to_string(&query)?;
-        let url = format!("{}?{query}", self.endpoint);
+        let mut url = self.endpoint.clone();
+
+        let combined_query = match url.query() {
+            Some(existing) if !existing.is_empty() => format!("{existing}&{query}"),
+            _ => query,
+        };
+        url.set_query(Some(&combined_query));
+
         Ok(url)
     }
 
@@ -142,8 +149,6 @@ impl Client {
 
 #[cfg(test)]
 mod tests {
-    use url::Url;
-
     use crate::Verb;
     use crate::client::Client;
     use crate::client::query::{
@@ -179,12 +184,11 @@ mod tests {
             GetRecordArgs::new("oai:archivesspace:/repositories/2/resources/2", "oai_ead"),
         );
         let url = client.build_url(query).unwrap();
-        let parsed_url = Url::parse(&url).unwrap();
 
-        assert_eq!(parsed_url.host_str(), Some("test.archivesspace.org"));
-        assert_eq!(parsed_url.path(), "/oai");
+        assert_eq!(url.host_str(), Some("test.archivesspace.org"));
+        assert_eq!(url.path(), "/oai");
         assert_eq!(
-            parsed_url.query(),
+            url.query(),
             Some(
                 "verb=GetRecord&identifier=oai%3Aarchivesspace%3A%2Frepositories%2F2%2Fresources%2F2&metadataPrefix=oai_ead"
             )
@@ -197,11 +201,10 @@ mod tests {
         let client = Client::new(endpoint).unwrap();
         let query = Query::new(Verb::Identify, ());
         let url = client.build_url(query).unwrap();
-        let parsed_url = Url::parse(&url).unwrap();
 
-        assert_eq!(parsed_url.host_str(), Some("test.archivesspace.org"));
-        assert_eq!(parsed_url.path(), "/oai");
-        assert_eq!(parsed_url.query(), Some("verb=Identify"));
+        assert_eq!(url.host_str(), Some("test.archivesspace.org"));
+        assert_eq!(url.path(), "/oai");
+        assert_eq!(url.query(), Some("verb=Identify"));
     }
 
     #[test]
@@ -213,12 +216,11 @@ mod tests {
             ListIdentifiersArgs::new("oai_ead").set("speccol"),
         );
         let url = client.build_url(query).unwrap();
-        let parsed_url = Url::parse(&url).unwrap();
 
-        assert_eq!(parsed_url.host_str(), Some("test.archivesspace.org"));
-        assert_eq!(parsed_url.path(), "/oai");
+        assert_eq!(url.host_str(), Some("test.archivesspace.org"));
+        assert_eq!(url.path(), "/oai");
         assert_eq!(
-            parsed_url.query(),
+            url.query(),
             Some("verb=ListIdentifiers&metadataPrefix=oai_ead&set=speccol")
         );
     }
@@ -229,11 +231,10 @@ mod tests {
         let client = Client::new(endpoint).unwrap();
         let query = Query::new(Verb::ListMetadataFormats, None::<ListMetadataFormatsArgs>);
         let url = client.build_url(query).unwrap();
-        let parsed_url = Url::parse(&url).unwrap();
 
-        assert_eq!(parsed_url.host_str(), Some("test.archivesspace.org"));
-        assert_eq!(parsed_url.path(), "/oai");
-        assert_eq!(parsed_url.query(), Some("verb=ListMetadataFormats"));
+        assert_eq!(url.host_str(), Some("test.archivesspace.org"));
+        assert_eq!(url.path(), "/oai");
+        assert_eq!(url.query(), Some("verb=ListMetadataFormats"));
     }
 
     #[test]
@@ -242,14 +243,10 @@ mod tests {
         let client = Client::new(endpoint).unwrap();
         let query = Query::new(Verb::ListRecords, ListRecordsArgs::new("oai_ead"));
         let url = client.build_url(query).unwrap();
-        let parsed_url = Url::parse(&url).unwrap();
 
-        assert_eq!(parsed_url.host_str(), Some("test.archivesspace.org"));
-        assert_eq!(parsed_url.path(), "/oai");
-        assert_eq!(
-            parsed_url.query(),
-            Some("verb=ListRecords&metadataPrefix=oai_ead")
-        );
+        assert_eq!(url.host_str(), Some("test.archivesspace.org"));
+        assert_eq!(url.path(), "/oai");
+        assert_eq!(url.query(), Some("verb=ListRecords&metadataPrefix=oai_ead"));
     }
 
     #[test]
@@ -258,10 +255,21 @@ mod tests {
         let client = Client::new(endpoint).unwrap();
         let query = Query::new(Verb::ListSets, ());
         let url = client.build_url(query).unwrap();
-        let parsed_url = Url::parse(&url).unwrap();
 
-        assert_eq!(parsed_url.host_str(), Some("test.archivesspace.org"));
-        assert_eq!(parsed_url.path(), "/oai");
-        assert_eq!(parsed_url.query(), Some("verb=ListSets"));
+        assert_eq!(url.host_str(), Some("test.archivesspace.org"));
+        assert_eq!(url.path(), "/oai");
+        assert_eq!(url.query(), Some("verb=ListSets"));
+    }
+
+    #[test]
+    fn client_build_query_url_with_existing_query() {
+        let endpoint = "https://test.archivesspace.org/oai?foo=bar";
+        let client = Client::new(endpoint).unwrap();
+        let query = Query::new(Verb::Identify, ());
+        let url = client.build_url(query).unwrap();
+
+        assert_eq!(url.host_str(), Some("test.archivesspace.org"));
+        assert_eq!(url.path(), "/oai");
+        assert_eq!(url.query(), Some("foo=bar&verb=Identify"));
     }
 }

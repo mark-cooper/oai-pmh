@@ -50,18 +50,27 @@ where
         Ok(response)
     }
 
-    /// Returns the next response, or None if out.
-    pub async fn next(&mut self) -> Option<Result<R>> {
+    /// Returns the next response, or `Ok(None)` if the stream is exhausted.
+    pub async fn try_next(&mut self) -> Result<Option<R>> {
         // Return buffered response if we have one
         if let Some(response) = self.current_response.take() {
-            return Some(Ok(response));
+            return Ok(Some(response));
         }
 
         // Fetch next page if we have a resumption token
         if self.resumption_token.is_some() {
-            Some(self.fetch_next().await)
+            Ok(Some(self.fetch_next().await?))
         } else {
-            None
+            Ok(None)
+        }
+    }
+
+    /// Returns the next response, or `None` if out.
+    pub async fn next(&mut self) -> Option<Result<R>> {
+        match self.try_next().await {
+            Ok(Some(response)) => Some(Ok(response)),
+            Ok(None) => None,
+            Err(err) => Some(Err(err)),
         }
     }
 }
