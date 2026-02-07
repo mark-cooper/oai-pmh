@@ -8,11 +8,11 @@ license = "MIT OR Apache-2.0"
 
 [dependencies]
 quick-xml = { version = "0.39.0", features = ["serialize"] }
-reqwest = "0.13.1"
+reqwest = "0.13.2"
 serde = {version = "1.0.228", features = ["derive"]}
-serde_qs = "0.15.0"
+serde_qs = "1.0.0"
 url = "2.5.8"
 
 [dev-dependencies]
-mockito = "1.7.1"
+mockito = "1.7.2"
 tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
