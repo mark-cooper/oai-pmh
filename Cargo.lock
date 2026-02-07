@@ -679,9 +679,7 @@ name = "oai-pmh"
 version = "0.3.0"
 dependencies = [
  "mockito",
- "once_cell",
  "quick-xml",
- "regex",
  "reqwest",
  "serde",
  "serde_qs",

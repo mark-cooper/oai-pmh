@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<OAI-PMH
+    xmlns="http://www.openarchives.org/OAI/2.0/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd"
+>
+  <responseDate>2025-11-27T00:00:00Z</responseDate>
+  <request verb="ListRecords">https://example.org/oai</request>
+  <ListRecords>
+    <record>
+      <header status="deleted">
+        <identifier>oai:example.org:deleted/1</identifier>
+        <datestamp>2025-11-26T00:00:00Z</datestamp>
+      </header>
+    </record>
+    <record>
+      <header>
+        <identifier>oai:example.org:alive/2</identifier>
+        <datestamp>2025-11-26T00:00:00Z</datestamp>
+      </header>
+      <metadata>
+        <oai_dc:dc
+            xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+            xmlns:dc="http://purl.org/dc/elements/1.1/"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd"
+        >
+          <dc:title>Alive</dc:title>
+        </oai_dc:dc>
+      </metadata>
+    </record>
+  </ListRecords>
+</OAI-PMH>

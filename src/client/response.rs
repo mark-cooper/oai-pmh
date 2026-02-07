@@ -89,9 +89,10 @@ impl GetRecordResponse {
     pub fn new(xml: &str) -> Result<Self> {
         let mut response: Self = quick_xml::de::from_str(xml)?;
 
-        let metadata = metadata::extract_metadata(xml)
+        let metadata = metadata::extract_record_metadata(xml)?
             .into_iter()
             .next()
+            .flatten()
             .unwrap_or_default();
 
         if let Some(ref mut payload) = response.payload {
@@ -183,11 +184,11 @@ impl ListRecordsResponse {
     pub fn new(xml: &str) -> Result<Self> {
         let mut response: Self = quick_xml::de::from_str(xml)?;
 
-        let metadata = metadata::extract_metadata(xml);
+        let metadata = metadata::extract_record_metadata(xml)?;
 
         if let Some(ref mut payload) = response.payload {
-            for (record, meta) in payload.record.iter_mut().zip(metadata) {
-                record.metadata = meta;
+            for (record, meta) in payload.record.iter_mut().zip(metadata.into_iter()) {
+                record.metadata = meta.unwrap_or_default();
             }
         }
 
@@ -467,6 +468,26 @@ mod tests {
             assert!(!record.metadata.is_empty());
             assert!(record.metadata.contains("<oai_dc:dc"));
         }
+    }
+
+    #[test]
+    fn test_list_records_deleted_records_have_empty_metadata() {
+        let xml = std::fs::read_to_string("tests/fixtures/list_records_with_deleted.xml")
+            .expect("Failed to load fixture");
+
+        let response = ListRecordsResponse::new(&xml).unwrap();
+        assert!(!response.is_err());
+
+        let payload = response.payload.unwrap();
+        assert_eq!(payload.record.len(), 2);
+
+        let deleted = &payload.record[0];
+        assert_eq!(deleted.header.status.as_deref(), Some("deleted"));
+        assert!(deleted.metadata.is_empty());
+
+        let alive = &payload.record[1];
+        assert!(alive.metadata.contains("<oai_dc:dc"));
+        assert!(alive.metadata.contains("<dc:title>Alive</dc:title>"));
     }
 
     #[test]

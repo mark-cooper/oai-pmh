@@ -18,7 +18,7 @@ use serde::Serialize;
 use url::Url;
 
 const REQUIRED_SCHEME: &str = "http";
-const REQUIRED_CONTENT_TYPE: &str = "text/xml";
+const ACCEPT_HEADER: &str = "application/xml, text/xml;q=0.9, */*;q=0.1";
 
 pub struct Client {
     client: reqwest::Client,
@@ -104,11 +104,12 @@ impl Client {
         let response = self
             .client
             .get(url)
-            .header("Accept", REQUIRED_CONTENT_TYPE)
+            .header(reqwest::header::ACCEPT, ACCEPT_HEADER)
             .header("User-Agent", user_agent)
             .send()
             .await?;
 
+        let status = response.status();
         let content_type = response
             .headers()
             .get(reqwest::header::CONTENT_TYPE)
@@ -117,9 +118,18 @@ impl Client {
 
         let body = response.text().await?;
 
-        // Check that response looks like XML
-        let trimmed = body.trim_start();
-        if !trimmed.starts_with("<?xml") {
+        if !status.is_success() {
+            return Err(Error::UnexpectedResponse {
+                content_type,
+                body: format!("HTTP {status}: {}", Self::truncate_body(&body, 200)),
+            });
+        }
+
+        // Heuristic: OAI-PMH should be XML with an <OAI-PMH> root element.
+        // Don't require an XML declaration, since many servers omit it.
+        let trimmed = body.trim_start_matches(|c: char| c.is_whitespace() || c == '\u{feff}');
+        let looks_like_oai_pmh = trimmed.contains("<OAI-PMH") || trimmed.contains(":OAI-PMH");
+        if !trimmed.starts_with('<') || !looks_like_oai_pmh {
             return Err(Error::UnexpectedResponse {
                 content_type,
                 body: Self::truncate_body(&body, 200),
