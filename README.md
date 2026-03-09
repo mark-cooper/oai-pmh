@@ -12,6 +12,8 @@ The standard practice will be to:
 - Create query args as necessary
 - Run the query
 
+Examples use the `#[tokio::main]` macro to create the async runtime. The tokio dependency is not provided by this library therefore you must include it in your `Cargo.toml` like: `tokio = { version = "1", features = ["rt-multi-thread", "macros"] }`. For async runtime requirements refer to the [reqwest](https://docs.rs/reqwest/latest/reqwest/index.html) documentation.
+
 ```rust
 use oai_pmh::{Client, ListRecordsArgs, Result};
 
