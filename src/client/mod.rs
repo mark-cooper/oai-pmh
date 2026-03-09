@@ -15,6 +15,7 @@ use crate::client::response::{
 };
 
 use crate::error::{Error, Result};
+use reqwest::header::{HeaderMap, HeaderName};
 use serde::Serialize;
 use url::Url;
 
@@ -23,6 +24,7 @@ const ACCEPT_HEADER: &str = "application/xml, text/xml;q=0.9, */*;q=0.1";
 pub struct Client {
     client: reqwest::Client,
     endpoint: Url,
+    headers: HeaderMap,
 }
 
 impl Client {
@@ -38,8 +40,20 @@ impl Client {
         let client = Self {
             client: reqwest::Client::new(),
             endpoint,
+            headers: HeaderMap::new(),
         };
         Ok(client)
+    }
+
+    pub fn add_header(&mut self, name: &str, value: &str) -> Result<()> {
+        let header_name: HeaderName = name
+            .parse()
+            .map_err(|_| Error::InvalidHeader(format!("invalid header name: {name}")))?;
+        let header_value = value
+            .parse()
+            .map_err(|_| Error::InvalidHeader(format!("invalid header value: {value}")))?;
+        self.headers.insert(header_name, header_value);
+        Ok(())
     }
 
     pub async fn get_record(&self, args: GetRecordArgs) -> Result<GetRecordResponse> {
@@ -108,13 +122,13 @@ impl Client {
     pub(crate) async fn do_query<T: Serialize>(&self, query: Query<T>) -> Result<String> {
         let url = self.build_url(query)?;
         let user_agent = format!("oai-pmh-rs/{}", env!("CARGO_PKG_VERSION"));
-        let response = self
-            .client
-            .get(url)
-            .header(reqwest::header::ACCEPT, ACCEPT_HEADER)
-            .header("User-Agent", user_agent)
-            .send()
-            .await?;
+
+        let mut headers = HeaderMap::new();
+        headers.insert(reqwest::header::ACCEPT, ACCEPT_HEADER.parse().unwrap());
+        headers.insert(reqwest::header::USER_AGENT, user_agent.parse().unwrap());
+        headers.extend(self.headers.clone());
+
+        let response = self.client.get(url).headers(headers).send().await?;
 
         let status = response.status();
         let content_type = response

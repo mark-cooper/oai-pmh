@@ -24,6 +24,9 @@ pub enum Error {
         /// The response body (truncated if too long)
         body: String,
     },
+
+    // Invalid HTTP Header
+    InvalidHeader(String),
 }
 
 impl std::error::Error for Error {
@@ -35,6 +38,7 @@ impl std::error::Error for Error {
             Error::QuerySerialize(e) => Some(e),
             Error::InvalidEndpoint(_) => None,
             Error::UnexpectedResponse { .. } => None,
+            Error::InvalidHeader(_) => None,
         }
     }
 }
@@ -51,6 +55,7 @@ impl fmt::Display for Error {
                 Some(ct) => write!(f, "unexpected response (content-type: {ct}): {body}"),
                 None => write!(f, "unexpected response: {body}"),
             },
+            Error::InvalidHeader(msg) => write!(f, "invalid error: {msg}"),
         }
     }
 }

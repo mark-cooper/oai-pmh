@@ -146,6 +146,56 @@ mod tests {
     }
 
     #[tokio::test]
+    async fn test_custom_request_headers() {
+        let mut server = mockito::Server::new_async().await;
+
+        let xml =
+            std::fs::read_to_string("tests/fixtures/identify.xml").expect("Failed to load fixture");
+
+        let mock = server
+            .mock("GET", "/")
+            .match_query(Matcher::UrlEncoded("verb".into(), "Identify".into()))
+            .match_header("x-api-key", "secret")
+            .with_status(200)
+            .with_header("content-type", "text/xml")
+            .with_body(xml)
+            .create_async()
+            .await;
+
+        let mut client = Client::new(&server.url()).unwrap();
+        client.add_header("x-api-key", "secret").unwrap();
+
+        let _ = client.identify().await.unwrap();
+
+        mock.assert_async().await;
+    }
+
+    #[tokio::test]
+    async fn test_custom_headers_override_defaults() {
+        let mut server = mockito::Server::new_async().await;
+
+        let xml =
+            std::fs::read_to_string("tests/fixtures/identify.xml").expect("Failed to load fixture");
+
+        let mock = server
+            .mock("GET", "/")
+            .match_query(Matcher::UrlEncoded("verb".into(), "Identify".into()))
+            .match_header("user-agent", "custom-agent/1.0")
+            .with_status(200)
+            .with_header("content-type", "text/xml")
+            .with_body(xml)
+            .create_async()
+            .await;
+
+        let mut client = Client::new(&server.url()).unwrap();
+        client.add_header("user-agent", "custom-agent/1.0").unwrap();
+
+        let _ = client.identify().await.unwrap();
+
+        mock.assert_async().await;
+    }
+
+    #[tokio::test]
     async fn test_list_records() {
         let metadata_prefix = "oai_dc";
 

@@ -36,6 +36,27 @@ async fn main() -> Result<()> {
 
 Queries that support resumption tokens return an async stream, as in `client.list_records` in the example.
 
+## Custom Request Headers
+
+Use `add_header` to pass additional HTTP headers with every request, for example when an endpoint requires authentication:
+
+```rust
+use oai_pmh::{Client, Result};
+
+#[tokio::main]
+async fn main() -> Result<()> {
+    let mut client = Client::new("https://demo.archivesspace.org/oai")?;
+    client.add_header("Authorization", "Bearer abc123")?;
+
+    let response = client.identify().await?;
+    println!("{:?}", response.payload);
+
+    Ok(())
+}
+```
+
+Custom headers override the defaults (`Accept` and `User-Agent`) if the same header name is supplied.
+
 ## Metadata
 
 To provide flexibilty metadata is not parsed by this library. The OAI response metadata element/s are captured as strings. The expectation is you "bring your own parser" to handle whatever metadata format is supported by the server and requested via the client.
