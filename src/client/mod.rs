@@ -15,7 +15,7 @@ use crate::client::response::{
 };
 
 use crate::error::{Error, Result};
-use reqwest::header::{HeaderMap, HeaderName};
+use reqwest::header::{HeaderMap, HeaderName, HeaderValue};
 use serde::Serialize;
 use url::Url;
 
@@ -46,12 +46,8 @@ impl Client {
     }
 
     pub fn add_header(&mut self, name: &str, value: &str) -> Result<()> {
-        let header_name: HeaderName = name
-            .parse()
-            .map_err(|_| Error::InvalidHeader(format!("invalid header name: {name}")))?;
-        let header_value = value
-            .parse()
-            .map_err(|_| Error::InvalidHeader(format!("invalid header value: {value}")))?;
+        let header_name: HeaderName = name.parse()?;
+        let header_value: HeaderValue = value.parse()?;
         self.headers.insert(header_name, header_value);
         Ok(())
     }
@@ -124,8 +120,8 @@ impl Client {
         let user_agent = format!("oai-pmh-rs/{}", env!("CARGO_PKG_VERSION"));
 
         let mut headers = HeaderMap::new();
-        headers.insert(reqwest::header::ACCEPT, ACCEPT_HEADER.parse().unwrap());
-        headers.insert(reqwest::header::USER_AGENT, user_agent.parse().unwrap());
+        headers.insert(reqwest::header::ACCEPT, ACCEPT_HEADER.parse()?);
+        headers.insert(reqwest::header::USER_AGENT, user_agent.parse()?);
         headers.extend(self.headers.clone());
 
         let response = self.client.get(url).headers(headers).send().await?;

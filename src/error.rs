@@ -25,8 +25,11 @@ pub enum Error {
         body: String,
     },
 
-    // Invalid HTTP Header
-    InvalidHeader(String),
+    /// Header name is invalid
+    InvalidHeaderName(reqwest::header::InvalidHeaderName),
+
+    /// Header value is invalid
+    InvalidHeaderValue(reqwest::header::InvalidHeaderValue),
 }
 
 impl std::error::Error for Error {
@@ -38,7 +41,8 @@ impl std::error::Error for Error {
             Error::QuerySerialize(e) => Some(e),
             Error::InvalidEndpoint(_) => None,
             Error::UnexpectedResponse { .. } => None,
-            Error::InvalidHeader(_) => None,
+            Error::InvalidHeaderName(e) => Some(e),
+            Error::InvalidHeaderValue(e) => Some(e),
         }
     }
 }
@@ -55,7 +59,8 @@ impl fmt::Display for Error {
                 Some(ct) => write!(f, "unexpected response (content-type: {ct}): {body}"),
                 None => write!(f, "unexpected response: {body}"),
             },
-            Error::InvalidHeader(msg) => write!(f, "invalid error: {msg}"),
+            Error::InvalidHeaderName(e) => write!(f, "invalid header name: {e}"),
+            Error::InvalidHeaderValue(e) => write!(f, "invalid header value: {e}"),
         }
     }
 }
@@ -81,6 +86,18 @@ impl From<url::ParseError> for Error {
 impl From<serde_qs::Error> for Error {
     fn from(err: serde_qs::Error) -> Self {
         Error::QuerySerialize(err)
+    }
+}
+
+impl From<reqwest::header::InvalidHeaderName> for Error {
+    fn from(err: reqwest::header::InvalidHeaderName) -> Self {
+        Error::InvalidHeaderName(err)
+    }
+}
+
+impl From<reqwest::header::InvalidHeaderValue> for Error {
+    fn from(err: reqwest::header::InvalidHeaderValue) -> Self {
+        Error::InvalidHeaderValue(err)
     }
 }
 
