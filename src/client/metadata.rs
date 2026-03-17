@@ -149,11 +149,12 @@ pub fn extract_metadata(xml: &str) -> Vec<String> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::fs;
 
     #[test]
     fn test_extract_metadata_single_record() {
-        let xml = std::fs::read_to_string("tests/fixtures/get_record.xml")
-            .expect("Failed to load fixture");
+        let xml =
+            fs::read_to_string("tests/fixtures/get_record.xml").expect("Failed to load fixture");
 
         let results = extract_metadata(&xml);
         assert_eq!(results.len(), 1);
@@ -163,8 +164,8 @@ mod tests {
 
     #[test]
     fn test_extract_metadata_list_records() {
-        let xml = std::fs::read_to_string("tests/fixtures/list_records.xml")
-            .expect("Failed to load fixture");
+        let xml =
+            fs::read_to_string("tests/fixtures/list_records.xml").expect("Failed to load fixture");
 
         let results = extract_metadata(&xml);
 
@@ -220,7 +221,7 @@ mod tests {
 
     #[test]
     fn test_extract_record_metadata_alignment_with_deleted() {
-        let xml = std::fs::read_to_string("tests/fixtures/list_records_with_deleted.xml")
+        let xml = fs::read_to_string("tests/fixtures/list_records_with_deleted.xml")
             .expect("Failed to load fixture");
 
         let results = extract_record_metadata(&xml).unwrap();

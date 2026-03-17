@@ -1,8 +1,8 @@
+use crate::client::metadata;
 use crate::error::Result;
+use quick_xml::de;
 use serde::Deserialize;
 use std::fmt;
-
-use crate::client::metadata;
 
 // Response error implementation
 #[derive(Debug, Deserialize)]
@@ -87,7 +87,7 @@ macro_rules! response {
 response!(GetRecordResponse, "GetRecord", GetRecord);
 impl GetRecordResponse {
     pub fn new(xml: &str) -> Result<Self> {
-        let mut response: Self = quick_xml::de::from_str(xml)?;
+        let mut response: Self = de::from_str(xml)?;
 
         let metadata = metadata::extract_record_metadata(xml)?
             .into_iter()
@@ -113,7 +113,7 @@ pub struct GetRecord {
 response!(IdentifyResponse, "Identify", Identify);
 impl IdentifyResponse {
     pub fn new(xml: &str) -> Result<Self> {
-        let response: Self = quick_xml::de::from_str(xml)?;
+        let response: Self = de::from_str(xml)?;
         Ok(response)
     }
 }
@@ -143,7 +143,7 @@ pub struct Identify {
 response!(ListIdentifiersResponse, "ListIdentifiers", ListIdentifiers);
 impl ListIdentifiersResponse {
     pub fn new(xml: &str) -> Result<Self> {
-        let response: Self = quick_xml::de::from_str(xml)?;
+        let response: Self = de::from_str(xml)?;
         Ok(response)
     }
 }
@@ -166,7 +166,7 @@ response!(
 );
 impl ListMetadataFormatsResponse {
     pub fn new(xml: &str) -> Result<Self> {
-        let response: Self = quick_xml::de::from_str(xml)?;
+        let response: Self = de::from_str(xml)?;
         Ok(response)
     }
 }
@@ -182,7 +182,7 @@ pub struct ListMetadataFormats {
 response!(ListRecordsResponse, "ListRecords", ListRecords);
 impl ListRecordsResponse {
     pub fn new(xml: &str) -> Result<Self> {
-        let mut response: Self = quick_xml::de::from_str(xml)?;
+        let mut response: Self = de::from_str(xml)?;
 
         let metadata = metadata::extract_record_metadata(xml)?;
 
@@ -210,7 +210,7 @@ pub struct ListRecords {
 response!(ListSetsResponse, "ListSets", ListSets);
 impl ListSetsResponse {
     pub fn new(xml: &str) -> Result<Self> {
-        let response: Self = quick_xml::de::from_str(xml)?;
+        let response: Self = de::from_str(xml)?;
         Ok(response)
     }
 }
@@ -286,10 +286,11 @@ pub struct Set {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::fs;
 
     #[test]
     fn test_err_cannot_disseminate_format() {
-        let xml = std::fs::read_to_string("tests/fixtures/err_bad_prefix.xml")
+        let xml = fs::read_to_string("tests/fixtures/err_bad_prefix.xml")
             .expect("Failed to load fixture");
 
         let response = GetRecordResponse::new(&xml).unwrap();
@@ -305,8 +306,8 @@ mod tests {
 
     #[test]
     fn test_err_id_does_not_exist() {
-        let xml = std::fs::read_to_string("tests/fixtures/err_not_found.xml")
-            .expect("Failed to load fixture");
+        let xml =
+            fs::read_to_string("tests/fixtures/err_not_found.xml").expect("Failed to load fixture");
 
         let response = GetRecordResponse::new(&xml).unwrap();
         assert!(response.is_err());
@@ -321,8 +322,8 @@ mod tests {
 
     #[test]
     fn test_get_record_success() {
-        let xml = std::fs::read_to_string("tests/fixtures/get_record.xml")
-            .expect("Failed to load fixture");
+        let xml =
+            fs::read_to_string("tests/fixtures/get_record.xml").expect("Failed to load fixture");
 
         let response = GetRecordResponse::new(&xml).unwrap();
         assert!(!response.is_err());
@@ -345,7 +346,7 @@ mod tests {
     #[test]
     fn test_identify_success() {
         let xml =
-            std::fs::read_to_string("tests/fixtures/identify.xml").expect("Failed to load fixture");
+            fs::read_to_string("tests/fixtures/identify.xml").expect("Failed to load fixture");
 
         let response = IdentifyResponse::new(&xml).unwrap();
         assert!(!response.is_err());
@@ -365,7 +366,7 @@ mod tests {
 
     #[test]
     fn test_list_identifiers_success() {
-        let xml = std::fs::read_to_string("tests/fixtures/list_identifiers.xml")
+        let xml = fs::read_to_string("tests/fixtures/list_identifiers.xml")
             .expect("Failed to load fixture");
 
         let response = ListIdentifiersResponse::new(&xml).unwrap();
@@ -397,7 +398,7 @@ mod tests {
 
     #[test]
     fn test_list_metadata_formats_success() {
-        let xml = std::fs::read_to_string("tests/fixtures/list_metadata_formats.xml")
+        let xml = fs::read_to_string("tests/fixtures/list_metadata_formats.xml")
             .expect("Failed to load fixture");
 
         let response = ListMetadataFormatsResponse::new(&xml).unwrap();
@@ -421,8 +422,8 @@ mod tests {
 
     #[test]
     fn test_list_records_success() {
-        let xml = std::fs::read_to_string("tests/fixtures/list_records.xml")
-            .expect("Failed to load fixture");
+        let xml =
+            fs::read_to_string("tests/fixtures/list_records.xml").expect("Failed to load fixture");
 
         let response = ListRecordsResponse::new(&xml).unwrap();
         assert!(!response.is_err());
@@ -472,7 +473,7 @@ mod tests {
 
     #[test]
     fn test_list_records_deleted_records_have_empty_metadata() {
-        let xml = std::fs::read_to_string("tests/fixtures/list_records_with_deleted.xml")
+        let xml = fs::read_to_string("tests/fixtures/list_records_with_deleted.xml")
             .expect("Failed to load fixture");
 
         let response = ListRecordsResponse::new(&xml).unwrap();
@@ -492,8 +493,8 @@ mod tests {
 
     #[test]
     fn test_list_sets_success() {
-        let xml = std::fs::read_to_string("tests/fixtures/list_sets.xml")
-            .expect("Failed to load fixture");
+        let xml =
+            fs::read_to_string("tests/fixtures/list_sets.xml").expect("Failed to load fixture");
 
         let response = ListSetsResponse::new(&xml).unwrap();
         assert!(!response.is_err());

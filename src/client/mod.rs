@@ -15,7 +15,7 @@ use crate::client::response::{
 };
 
 use crate::error::{Error, Result};
-use reqwest::header::{HeaderMap, HeaderName, HeaderValue};
+use reqwest::header::{ACCEPT, HeaderMap, HeaderName, HeaderValue, USER_AGENT};
 use serde::Serialize;
 use url::Url;
 
@@ -120,8 +120,8 @@ impl Client {
         let user_agent = format!("oai-pmh-rs/{}", env!("CARGO_PKG_VERSION"));
 
         let mut headers = HeaderMap::new();
-        headers.insert(reqwest::header::ACCEPT, ACCEPT_HEADER.parse()?);
-        headers.insert(reqwest::header::USER_AGENT, user_agent.parse()?);
+        headers.insert(ACCEPT, ACCEPT_HEADER.parse()?);
+        headers.insert(USER_AGENT, user_agent.parse()?);
         headers.extend(self.headers.clone());
 
         let response = self.client.get(url).headers(headers).send().await?;
