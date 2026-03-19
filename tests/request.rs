@@ -5,13 +5,14 @@ mod tests {
         Client,
         query::{GetRecordArgs, ListIdentifiersArgs, ListMetadataFormatsArgs, ListRecordsArgs},
     };
+    use std::fs;
 
     fn setup_mock_server(
         server: &mut ServerGuard,
         fixture: &str,
         query_matchers: Vec<Matcher>,
     ) -> mockito::Mock {
-        let xml = std::fs::read_to_string(fixture).expect("Failed to load fixture");
+        let xml = fs::read_to_string(fixture).expect("Failed to load fixture");
 
         server
             .mock("GET", "/")
@@ -150,7 +151,7 @@ mod tests {
         let mut server = mockito::Server::new_async().await;
 
         let xml =
-            std::fs::read_to_string("tests/fixtures/identify.xml").expect("Failed to load fixture");
+            fs::read_to_string("tests/fixtures/identify.xml").expect("Failed to load fixture");
 
         let mock = server
             .mock("GET", "/")
@@ -175,7 +176,7 @@ mod tests {
         let mut server = mockito::Server::new_async().await;
 
         let xml =
-            std::fs::read_to_string("tests/fixtures/identify.xml").expect("Failed to load fixture");
+            fs::read_to_string("tests/fixtures/identify.xml").expect("Failed to load fixture");
 
         let mock = server
             .mock("GET", "/")
