@@ -10,7 +10,7 @@ license = "MIT OR Apache-2.0"
 quick-xml = { version = "0.39.2", features = ["serialize"] }
 reqwest = "0.13.2"
 serde = { version = "1.0.228", features = ["derive"] }
-serde_qs = "1.1.0"
+serde_qs = "1.1.1"
 url = "2.5.8"
 
 [dev-dependencies]
