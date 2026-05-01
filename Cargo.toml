@@ -7,12 +7,13 @@ description = "Rust library for the Open Archives Initiative Protocol for Metada
 license = "MIT OR Apache-2.0"
 
 [dependencies]
-quick-xml = { version = "0.39.2", features = ["serialize"] }
-reqwest = "0.13.2"
-serde = { version = "1.0.228", features = ["derive"] }
-serde_qs = "1.1.0"
-url = "2.5.8"
+quick-xml = { version = "0.39", features = ["serialize"] }
+reqwest = "0.13"
+serde = { version = "1", features = ["derive"] }
+serde_qs = "1"
+thiserror = "2"
+url = "2"
 
 [dev-dependencies]
-mockito = "1.7.2"
+mockito = "1"
 tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
