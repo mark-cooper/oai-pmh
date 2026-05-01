@@ -1,109 +1,90 @@
-use std::fmt;
-
 use quick_xml::DeError;
 use reqwest::header::{InvalidHeaderName, InvalidHeaderValue};
+use thiserror::Error as ThisError;
 use url::ParseError;
 
-#[derive(Debug)]
+#[derive(Debug, ThisError)]
 pub enum Error {
     /// HTTP request failed (network error, timeout, etc.)
-    Http(reqwest::Error),
-
+    #[error("HTTP request failed: {0}")]
+    Http(#[from] reqwest::Error),
     /// The endpoint URL has an invalid scheme (must be http or https)
+    #[error("invalid endpoint: {0}")]
     InvalidEndpoint(String),
-
     /// Header name is invalid
-    InvalidHeaderName(InvalidHeaderName),
-
+    #[error("invalid header name: {0}")]
+    InvalidHeaderName(#[from] InvalidHeaderName),
     /// Header value is invalid
-    InvalidHeaderValue(InvalidHeaderValue),
-
+    #[error("invalid header value: {0}")]
+    InvalidHeaderValue(#[from] InvalidHeaderValue),
     /// Failed to serialize query parameters
-    QuerySerialize(serde_qs::Error),
-
+    #[error("query serialization failed: {0}")]
+    QuerySerialize(#[from] serde_qs::Error),
     /// Response was not valid XML (e.g., HTML error page, plain text)
+    #[error("unexpected response{}: {body}", content_type_label(content_type.as_deref()))]
     UnexpectedResponse {
         /// The content-type header, if present
         content_type: Option<String>,
         /// The response body (truncated if too long)
         body: String,
     },
-
     /// Failed to parse the endpoint URL
-    UrlParse(ParseError),
-
+    #[error("URL parsing failed: {0}")]
+    UrlParse(#[from] ParseError),
     /// Failed to parse XML response
-    XmlParse(DeError),
+    #[error("XML parsing failed: {0}")]
+    XmlParse(#[from] DeError),
 }
 
-impl std::error::Error for Error {
-    fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
-        match self {
-            Error::Http(e) => Some(e),
-            Error::InvalidEndpoint(_) => None,
-            Error::InvalidHeaderName(e) => Some(e),
-            Error::InvalidHeaderValue(e) => Some(e),
-            Error::QuerySerialize(e) => Some(e),
-            Error::UnexpectedResponse { .. } => None,
-            Error::UrlParse(e) => Some(e),
-            Error::XmlParse(e) => Some(e),
-        }
-    }
-}
-
-impl fmt::Display for Error {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        match self {
-            Error::Http(e) => write!(f, "HTTP request failed: {e}"),
-            Error::InvalidEndpoint(msg) => write!(f, "invalid endpoint: {msg}"),
-            Error::InvalidHeaderName(e) => write!(f, "invalid header name: {e}"),
-            Error::InvalidHeaderValue(e) => write!(f, "invalid header value: {e}"),
-            Error::QuerySerialize(e) => write!(f, "query serialization failed: {e}"),
-            Error::UnexpectedResponse { content_type, body } => match content_type {
-                Some(ct) => write!(f, "unexpected response (content-type: {ct}): {body}"),
-                None => write!(f, "unexpected response: {body}"),
-            },
-            Error::UrlParse(e) => write!(f, "URL parsing failed: {e}"),
-            Error::XmlParse(e) => write!(f, "XML parsing failed: {e}"),
-        }
-    }
-}
-
-impl From<reqwest::Error> for Error {
-    fn from(err: reqwest::Error) -> Self {
-        Error::Http(err)
-    }
-}
-
-impl From<InvalidHeaderName> for Error {
-    fn from(err: InvalidHeaderName) -> Self {
-        Error::InvalidHeaderName(err)
-    }
-}
-
-impl From<InvalidHeaderValue> for Error {
-    fn from(err: InvalidHeaderValue) -> Self {
-        Error::InvalidHeaderValue(err)
-    }
-}
-
-impl From<serde_qs::Error> for Error {
-    fn from(err: serde_qs::Error) -> Self {
-        Error::QuerySerialize(err)
-    }
-}
-
-impl From<ParseError> for Error {
-    fn from(err: ParseError) -> Self {
-        Error::UrlParse(err)
-    }
-}
-
-impl From<DeError> for Error {
-    fn from(err: DeError) -> Self {
-        Error::XmlParse(err)
+fn content_type_label(content_type: Option<&str>) -> String {
+    match content_type {
+        Some(content_type) => format!(" (content-type: {content_type})"),
+        None => String::new(),
     }
 }
 
 /// A specialized Result type for oai-pmh operations.
 pub type Result<T> = std::result::Result<T, Error>;
+
+#[cfg(test)]
+mod display_tests {
+    use super::*;
+    use std::error::Error as StdError;
+
+    #[test]
+    fn invalid_endpoint_display() {
+        let e = Error::InvalidEndpoint("bad".into());
+        assert_eq!(e.to_string(), "invalid endpoint: bad");
+        assert!(e.source().is_none());
+    }
+
+    #[test]
+    fn unexpected_response_with_content_type() {
+        let e = Error::UnexpectedResponse {
+            content_type: Some("text/html".into()),
+            body: "<html>".into(),
+        };
+        assert_eq!(
+            e.to_string(),
+            "unexpected response (content-type: text/html): <html>"
+        );
+        assert!(e.source().is_none());
+    }
+
+    #[test]
+    fn unexpected_response_without_content_type() {
+        let e = Error::UnexpectedResponse {
+            content_type: None,
+            body: "oops".into(),
+        };
+        assert_eq!(e.to_string(), "unexpected response: oops");
+    }
+
+    #[test]
+    fn url_parse_wraps_source() {
+        let inner = url::Url::parse("not a url").unwrap_err();
+        let e: Error = inner.into();
+        assert!(e.to_string().starts_with("URL parsing failed: "));
+        assert!(e.source().is_some());
+    }
+}

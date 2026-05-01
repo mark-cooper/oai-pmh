@@ -3,23 +3,16 @@ use crate::error::Result;
 use quick_xml::de;
 use serde::Deserialize;
 use std::fmt;
+use thiserror::Error as ThisError;
 
 // Response error implementation
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, ThisError)]
+#[error("{code}: {message}")]
 pub struct ResponseError {
     #[serde(rename = "@code")]
     pub code: ErrorCode,
-
     #[serde(rename = "$value")]
     pub message: String,
-}
-
-impl std::error::Error for ResponseError {}
-
-impl fmt::Display for ResponseError {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}: {}", self.code, self.message)
-    }
 }
 
 // Response error codes
@@ -45,16 +38,17 @@ pub enum ErrorCode {
 
 impl fmt::Display for ErrorCode {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        match self {
-            ErrorCode::BadArgument => write!(f, "badArgument"),
-            ErrorCode::BadResumptionToken => write!(f, "badResumptionToken"),
-            ErrorCode::BadVerb => write!(f, "badVerb"),
-            ErrorCode::CannotDisseminateFormat => write!(f, "cannotDisseminateFormat"),
-            ErrorCode::IdDoesNotExist => write!(f, "idDoesNotExist"),
-            ErrorCode::NoRecordsMatch => write!(f, "noRecordsMatch"),
-            ErrorCode::NoMetadataFormats => write!(f, "noMetadataFormats"),
-            ErrorCode::NoSetHierarchy => write!(f, "noSetHierarchy"),
-        }
+        let s = match self {
+            ErrorCode::BadArgument => "badArgument",
+            ErrorCode::BadResumptionToken => "badResumptionToken",
+            ErrorCode::BadVerb => "badVerb",
+            ErrorCode::CannotDisseminateFormat => "cannotDisseminateFormat",
+            ErrorCode::IdDoesNotExist => "idDoesNotExist",
+            ErrorCode::NoRecordsMatch => "noRecordsMatch",
+            ErrorCode::NoMetadataFormats => "noMetadataFormats",
+            ErrorCode::NoSetHierarchy => "noSetHierarchy",
+        };
+        f.write_str(s)
     }
 }
 
@@ -187,7 +181,7 @@ impl ListRecordsResponse {
         let metadata = metadata::extract_record_metadata(xml)?;
 
         if let Some(ref mut payload) = response.payload {
-            for (record, meta) in payload.record.iter_mut().zip(metadata.into_iter()) {
+            for (record, meta) in payload.record.iter_mut().zip(metadata) {
                 record.metadata = meta.unwrap_or_default();
             }
         }
@@ -287,6 +281,36 @@ pub struct Set {
 mod tests {
     use super::*;
     use std::fs;
+
+    #[test]
+    fn test_error_code_display() {
+        assert_eq!(ErrorCode::BadArgument.to_string(), "badArgument");
+        assert_eq!(
+            ErrorCode::BadResumptionToken.to_string(),
+            "badResumptionToken"
+        );
+        assert_eq!(ErrorCode::BadVerb.to_string(), "badVerb");
+        assert_eq!(
+            ErrorCode::CannotDisseminateFormat.to_string(),
+            "cannotDisseminateFormat"
+        );
+        assert_eq!(ErrorCode::IdDoesNotExist.to_string(), "idDoesNotExist");
+        assert_eq!(ErrorCode::NoRecordsMatch.to_string(), "noRecordsMatch");
+        assert_eq!(
+            ErrorCode::NoMetadataFormats.to_string(),
+            "noMetadataFormats"
+        );
+        assert_eq!(ErrorCode::NoSetHierarchy.to_string(), "noSetHierarchy");
+    }
+
+    #[test]
+    fn test_response_error_display() {
+        let e = ResponseError {
+            code: ErrorCode::IdDoesNotExist,
+            message: "unknown id".into(),
+        };
+        assert_eq!(e.to_string(), "idDoesNotExist: unknown id");
+    }
 
     #[test]
     fn test_err_cannot_disseminate_format() {
