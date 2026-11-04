@@ -87,3 +87,4 @@ Other examples include:
 
 - List formats and sets
 - List records
+- Retry when the server is busy (HTTP 503 / 429)

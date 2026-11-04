@@ -148,6 +148,21 @@ impl Client {
             .and_then(|v| v.to_str().ok())
             .map(|s| s.to_string());
 
+        // Only the delay-seconds form is supported; the HTTP-date form yields `None`.
+        let retry_after = response
+            .headers()
+            .get(reqwest::header::RETRY_AFTER)
+            .and_then(|v| v.to_str().ok())
+            .and_then(|v| v.trim().parse::<u64>().ok())
+            .map(Duration::from_secs);
+
+        if matches!(status.as_u16(), 429 | 503) {
+            return Err(Error::RateLimited {
+                status: status.as_u16(),
+                retry_after,
+            });
+        }
+
         let body = response.text().await?;
 
         if !status.is_success() {
