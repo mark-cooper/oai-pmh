@@ -1,3 +1,4 @@
+use crate::client::response::ResponseError;
 use quick_xml::DeError;
 use reqwest::header::{InvalidHeaderName, InvalidHeaderValue};
 use std::time::Duration;
@@ -37,6 +38,10 @@ pub enum Error {
         /// The response body (truncated if too long)
         body: String,
     },
+    /// The server returned OAI-PMH errors on a page after the first one in a
+    /// resumable stream, so the harvest cannot continue.
+    #[error("OAI-PMH error: {}", join_errors(.0))]
+    Oai(Vec<ResponseError>),
     /// Internal inconsistency while parsing a response (a bug in this crate)
     #[error("inconsistent response parse: {0}")]
     ParseMismatch(String),
@@ -46,6 +51,14 @@ pub enum Error {
     /// Failed to parse XML response
     #[error("XML parsing failed: {0}")]
     XmlParse(#[from] DeError),
+}
+
+fn join_errors(errors: &[ResponseError]) -> String {
+    errors
+        .iter()
+        .map(ToString::to_string)
+        .collect::<Vec<_>>()
+        .join("; ")
 }
 
 fn retry_after_label(retry_after: Option<Duration>) -> String {

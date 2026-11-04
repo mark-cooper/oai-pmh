@@ -1,11 +1,11 @@
-use crate::error::Result;
+use crate::error::{Error, Result};
 use serde::Serialize;
 
 use crate::Verb;
 use crate::client::Client;
 use crate::client::query::{Query, ResumableArgs};
 use crate::client::response::{
-    FromXml, ListIdentifiersResponse, ListRecordsResponse, ListSetsResponse,
+    FromXml, ListIdentifiersResponse, ListRecordsResponse, ListSetsResponse, ResponseError,
 };
 
 /// Async stream for OAI-PMH verbs that support resumption tokens
@@ -45,6 +45,13 @@ where
             .await?;
 
         let response = R::from_xml(&xml)?;
+
+        // An error on a continuation page means the harvest is incomplete. Without this the
+        // stream would just end (no payload, so no token) and look like a normal finish.
+        if !response.errors().is_empty() {
+            return Err(Error::Oai(response.into_errors()));
+        }
+
         // Only advance once the page has fetched and parsed successfully.
         self.resumption_token = response.resumption_token();
 
@@ -75,11 +82,21 @@ where
 /// Trait for OAI-PMH responses that support resumption tokens
 pub trait ResumableResponse: FromXml {
     fn resumption_token(&self) -> Option<String>;
+    fn errors(&self) -> &[ResponseError];
+    fn into_errors(self) -> Vec<ResponseError>;
 }
 
 macro_rules! resumable {
     ($response:ty) => {
         impl ResumableResponse for $response {
+            fn errors(&self) -> &[ResponseError] {
+                &self.error
+            }
+
+            fn into_errors(self) -> Vec<ResponseError> {
+                self.error
+            }
+
             fn resumption_token(&self) -> Option<String> {
                 self.payload
                     .as_ref()
