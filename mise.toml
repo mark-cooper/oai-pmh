@@ -1,0 +1,44 @@
+# Tasks use only single commands (no shell operators), so they run the same under
+# sh (macOS/Linux) and cmd/PowerShell (Windows). Requires cargo (rustup) on PATH.
+
+[tools]
+lefthook = "2.2.2"
+
+[vars]
+# `cargo pkgid` ends in `#<version>` or `#<name>@<version>`; keep what follows the last `#`/`@`.
+version = "{{ exec(command='cargo pkgid') | trim | split(pat='#') | last | split(pat='@') | last }}"
+
+# --- Setup ---------------------------------------------------------------
+
+[tasks.hooks]
+description = "Install the git hooks (lefthook)"
+run = "lefthook install"
+
+# --- Checks (same commands as CI and the pre-commit hook) -----------------
+
+[tasks.fmt]
+description = "Check formatting"
+run = "cargo fmt --check"
+
+[tasks.clippy]
+description = "Lint with clippy, warnings are errors"
+run = "cargo clippy --all-targets -- -D warnings"
+
+[tasks.test]
+description = "Run tests"
+run = "cargo test"
+
+[tasks.ci]
+description = "Run the same checks as CI (in order)"
+run = [{ task = "fmt" }, { task = "clippy" }, { task = "test" }]
+
+# --- Release -------------------------------------------------------------
+
+[tasks.publish]
+description = "Tag the Cargo.toml version and push the tag (triggers the publish workflow)"
+run = [
+  # Fails (non-zero exit) if the working tree has uncommitted changes. Commit the version bump first.
+  "git diff-index --quiet HEAD --",
+  "git tag -a v{{ vars.version }} -m v{{ vars.version }}",
+  "git push origin v{{ vars.version }}",
+]
