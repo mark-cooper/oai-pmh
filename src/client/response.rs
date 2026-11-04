@@ -240,7 +240,9 @@ pub struct Record {
     #[serde(skip)]
     pub metadata: String,
 
-    #[serde(default)]
+    /// Not yet populated. `<about>` holds arbitrary XML (and may repeat), which serde
+    /// can't read into a `String`, so it is skipped to avoid failing the whole response.
+    #[serde(skip)]
     pub about: String,
 }
 
@@ -271,6 +273,22 @@ pub struct Set {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn test_about_with_nested_xml_does_not_fail_parsing() {
+        let xml = r#"<OAI-PMH><responseDate>x</responseDate><request>y</request>
+<GetRecord><record>
+<header><identifier>i</identifier><datestamp>d</datestamp></header>
+<metadata><a/></metadata>
+<about><r:rights xmlns:r="u"><r:a>1</r:a></r:rights></about>
+<about><b>2</b></about>
+</record></GetRecord></OAI-PMH>"#;
+
+        let response = GetRecordResponse::new(xml).expect("about should not break parsing");
+        let record = response.payload.unwrap().record;
+        assert_eq!(record.header.identifier, "i");
+        assert!(record.about.is_empty());
+    }
+
     use super::*;
     use std::fs;
 
