@@ -284,7 +284,10 @@ mod tests {
         let err = client.identify().await.unwrap_err();
         assert!(matches!(
             err,
-            Error::RateLimited { status: 429, retry_after: None }
+            Error::RateLimited {
+                status: 429,
+                retry_after: None
+            }
         ));
         mock.assert();
     }
@@ -299,7 +302,10 @@ mod tests {
         let page1 = setup_mock_server(
             &mut server,
             "tests/fixtures/list_identifiers.xml",
-            vec![Matcher::UrlEncoded("metadataPrefix".into(), "oai_ead".into())],
+            vec![Matcher::UrlEncoded(
+                "metadataPrefix".into(),
+                "oai_ead".into(),
+            )],
         );
 
         // Page 2: busy once, then a final page without a token
@@ -353,7 +359,10 @@ mod tests {
         let _page1 = setup_mock_server(
             &mut server,
             "tests/fixtures/list_identifiers.xml",
-            vec![Matcher::UrlEncoded("metadataPrefix".into(), "oai_ead".into())],
+            vec![Matcher::UrlEncoded(
+                "metadataPrefix".into(),
+                "oai_ead".into(),
+            )],
         );
         let _page2 = server
             .mock("GET", "/")

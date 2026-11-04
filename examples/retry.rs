@@ -27,7 +27,10 @@ async fn main() -> Result<()> {
         let args = ListIdentifiersArgs::new(metadata_prefix.clone());
         match client.list_identifiers(args).await {
             Ok(stream) => break stream,
-            Err(Error::RateLimited { status, retry_after }) if retries < MAX_RETRIES => {
+            Err(Error::RateLimited {
+                status,
+                retry_after,
+            }) if retries < MAX_RETRIES => {
                 retries += 1;
                 backoff(status, retry_after, retries).await;
             }
@@ -47,7 +50,10 @@ async fn main() -> Result<()> {
                 println!("Page #{pages}: {count} identifiers");
             }
             Ok(None) => break,
-            Err(Error::RateLimited { status, retry_after }) if retries < MAX_RETRIES => {
+            Err(Error::RateLimited {
+                status,
+                retry_after,
+            }) if retries < MAX_RETRIES => {
                 retries += 1;
                 backoff(status, retry_after, retries).await;
             }

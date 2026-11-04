@@ -293,16 +293,18 @@ mod tests {
 <metadata><record><metadata><z/></metadata></record></metadata></record>
 </ListRecords></OAI-PMH>"#;
 
-        let records = ListRecordsResponse::new(xml).unwrap().payload.unwrap().record;
+        let records = ListRecordsResponse::new(xml)
+            .unwrap()
+            .payload
+            .unwrap()
+            .record;
         assert_eq!(records.len(), 2);
         assert_eq!(records[0].metadata, "<m>1</m>");
         assert!(records[1].metadata.starts_with("<record>"));
     }
 
     fn identify_xml(errors: &str) -> String {
-        format!(
-            "<OAI-PMH><responseDate>x</responseDate><request>y</request>{errors}</OAI-PMH>"
-        )
+        format!("<OAI-PMH><responseDate>x</responseDate><request>y</request>{errors}</OAI-PMH>")
     }
 
     #[test]
