@@ -70,10 +70,10 @@ List identifiers:
 cargo run --example list_identifiers
 
 # Specify endpoint and metadata prefix
-cargo run --example list_identifiers https://test.archivesspace.org oai_ead
+cargo run --example list_identifiers https://test.archivesspace.org/oai oai_ead
 
 # Specify number of respones/pages to fetch
-cargo run --example list_identifiers https://test.archivesspace.org oai_ead 100
+cargo run --example list_identifiers https://test.archivesspace.org/oai oai_ead 100
 
 # Specify a different endpoint and metadata format
 cargo run --example list_identifiers https://demo.archivesspace.org/oai oai_dc 5
