@@ -17,9 +17,12 @@ use crate::client::response::{
 use crate::error::{Error, Result};
 use reqwest::header::{ACCEPT, HeaderMap, HeaderName, HeaderValue, USER_AGENT};
 use serde::Serialize;
+use std::time::Duration;
 use url::Url;
 
 const ACCEPT_HEADER: &str = "application/xml, text/xml;q=0.9, */*;q=0.1";
+const DEFAULT_CONNECT_TIMEOUT: Duration = Duration::from_secs(10);
+const DEFAULT_REQUEST_TIMEOUT: Duration = Duration::from_secs(300);
 
 pub struct Client {
     client: reqwest::Client,
@@ -28,7 +31,20 @@ pub struct Client {
 }
 
 impl Client {
+    /// Create a client with default timeouts (10s connect, 300s per request).
+    ///
+    /// Use [`Client::with_http_client`] to customize timeouts, proxy, TLS, etc.
     pub fn new(endpoint: &str) -> Result<Self> {
+        let http = reqwest::Client::builder()
+            .connect_timeout(DEFAULT_CONNECT_TIMEOUT)
+            .timeout(DEFAULT_REQUEST_TIMEOUT)
+            .build()?;
+        Self::with_http_client(endpoint, http)
+    }
+
+    /// Create a client that uses the given `reqwest::Client`, which controls
+    /// timeouts, proxy, TLS and connection pool settings.
+    pub fn with_http_client(endpoint: &str, client: reqwest::Client) -> Result<Self> {
         let endpoint = Url::parse(endpoint)?;
 
         if !matches!(endpoint.scheme(), "http" | "https") {
@@ -37,12 +53,11 @@ impl Client {
             )));
         }
 
-        let client = Self {
-            client: reqwest::Client::new(),
+        Ok(Self {
+            client,
             endpoint,
             headers: HeaderMap::new(),
-        };
-        Ok(client)
+        })
     }
 
     pub fn add_header(&mut self, name: &str, value: &str) -> Result<()> {
@@ -170,6 +185,18 @@ mod tests {
         let endpoint = "https://test.archivesspace.org/oai";
         let client = Client::new(endpoint);
         assert!(client.is_ok());
+    }
+
+    #[test]
+    fn create_client_with_custom_http_client() {
+        let http = reqwest::Client::builder()
+            .timeout(std::time::Duration::from_secs(5))
+            .build()
+            .unwrap();
+        assert!(Client::with_http_client("https://test.archivesspace.org/oai", http).is_ok());
+
+        let http = reqwest::Client::new();
+        assert!(Client::with_http_client("ftp://test.archivesspace.org/oai", http).is_err());
     }
 
     #[test]
