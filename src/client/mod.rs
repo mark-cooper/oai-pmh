@@ -53,10 +53,18 @@ impl Client {
             )));
         }
 
+        // Default headers, `add_header` overrides them by name.
+        let mut headers = HeaderMap::new();
+        headers.insert(ACCEPT, HeaderValue::from_static(ACCEPT_HEADER));
+        headers.insert(
+            USER_AGENT,
+            HeaderValue::from_str(&format!("oai-pmh-rs/{}", env!("CARGO_PKG_VERSION")))?,
+        );
+
         Ok(Self {
             client,
             endpoint,
-            headers: HeaderMap::new(),
+            headers,
         })
     }
 
@@ -132,14 +140,12 @@ impl Client {
 
     pub(crate) async fn do_query<T: Serialize>(&self, query: Query<T>) -> Result<String> {
         let url = self.build_url(query)?;
-        let user_agent = format!("oai-pmh-rs/{}", env!("CARGO_PKG_VERSION"));
-
-        let mut headers = HeaderMap::new();
-        headers.insert(ACCEPT, ACCEPT_HEADER.parse()?);
-        headers.insert(USER_AGENT, user_agent.parse()?);
-        headers.extend(self.headers.clone());
-
-        let response = self.client.get(url).headers(headers).send().await?;
+        let response = self
+            .client
+            .get(url)
+            .headers(self.headers.clone())
+            .send()
+            .await?;
 
         let status = response.status();
         let content_type = response
