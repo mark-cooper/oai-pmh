@@ -28,7 +28,7 @@ pub(crate) fn extract_record_metadata(xml: &str) -> Result<Vec<Option<String>>> 
 
         match event {
             Event::Start(e) => {
-                let name = local_name(e.name().into_inner()).to_vec();
+                let name = local_name(e.name().into_inner().as_bytes()).to_vec();
                 stack.push(name.clone());
 
                 match name.as_slice() {
@@ -67,7 +67,7 @@ pub(crate) fn extract_record_metadata(xml: &str) -> Result<Vec<Option<String>>> 
                 }
             }
             Event::Empty(e) => {
-                let name = local_name(e.name().into_inner());
+                let name = local_name(e.name().into_inner().as_bytes());
 
                 match (name, record_depth, current_record) {
                     (b"metadata", Some(rd), Some(idx)) if stack.len() == rd => {
@@ -77,7 +77,7 @@ pub(crate) fn extract_record_metadata(xml: &str) -> Result<Vec<Option<String>>> 
                 }
             }
             Event::End(e) => {
-                let name = local_name(e.name().into_inner());
+                let name = local_name(e.name().into_inner().as_bytes());
 
                 match (name, payload_depth) {
                     (b"GetRecord" | b"ListRecords", Some(pd)) if stack.len() == pd => {
