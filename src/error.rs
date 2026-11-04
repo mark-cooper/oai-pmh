@@ -28,6 +28,9 @@ pub enum Error {
         /// The response body (truncated if too long)
         body: String,
     },
+    /// Internal inconsistency while parsing a response (a bug in this crate)
+    #[error("inconsistent response parse: {0}")]
+    ParseMismatch(String),
     /// Failed to parse the endpoint URL
     #[error("URL parsing failed: {0}")]
     UrlParse(#[from] ParseError),

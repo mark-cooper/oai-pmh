@@ -1,5 +1,5 @@
 use crate::client::metadata;
-use crate::error::Result;
+use crate::error::{Error, Result};
 use quick_xml::de;
 use serde::Deserialize;
 use std::fmt;
@@ -182,6 +182,14 @@ impl FromXml for ListRecordsResponse {
         let metadata = metadata::extract_record_metadata(xml)?;
 
         if let Some(payload) = self.payload.as_mut() {
+            // Metadata is matched to records by position, so the two parsers must agree.
+            if metadata.len() != payload.record.len() {
+                return Err(Error::ParseMismatch(format!(
+                    "found {} records but {} metadata slots",
+                    payload.record.len(),
+                    metadata.len()
+                )));
+            }
             for (record, meta) in payload.record.iter_mut().zip(metadata) {
                 record.metadata = meta.unwrap_or_default();
             }
@@ -275,6 +283,22 @@ pub struct Set {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn test_nested_record_elements_do_not_misalign_metadata() {
+        let xml = r#"<OAI-PMH><responseDate>x</responseDate><request>y</request><ListRecords>
+<record><header><identifier>1</identifier><datestamp>d</datestamp></header>
+<metadata><m>1</m></metadata>
+<about><record><metadata><z/></metadata></record></about></record>
+<record><header><identifier>2</identifier><datestamp>d</datestamp></header>
+<metadata><record><metadata><z/></metadata></record></metadata></record>
+</ListRecords></OAI-PMH>"#;
+
+        let records = ListRecordsResponse::new(xml).unwrap().payload.unwrap().record;
+        assert_eq!(records.len(), 2);
+        assert_eq!(records[0].metadata, "<m>1</m>");
+        assert!(records[1].metadata.starts_with("<record>"));
+    }
+
     fn identify_xml(errors: &str) -> String {
         format!(
             "<OAI-PMH><responseDate>x</responseDate><request>y</request>{errors}</OAI-PMH>"
