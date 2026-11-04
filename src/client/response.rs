@@ -11,7 +11,8 @@ use thiserror::Error as ThisError;
 pub struct ResponseError {
     #[serde(rename = "@code")]
     pub code: ErrorCode,
-    #[serde(rename = "$value")]
+    // The spec makes the message optional; servers often send e.g. `<error code="noRecordsMatch"/>`.
+    #[serde(rename = "$value", default)]
     pub message: String,
 }
 
@@ -81,8 +82,9 @@ macro_rules! response {
             pub response_date: String,
             pub request: String,
 
+            /// A response may carry several `<error>` elements.
             #[serde(default)]
-            pub error: Option<ResponseError>,
+            pub error: Vec<ResponseError>,
 
             #[serde(rename = $payload_name, default)]
             pub payload: Option<$payload_type>,
@@ -94,7 +96,7 @@ macro_rules! response {
             }
 
             pub fn is_err(&self) -> bool {
-                self.error.is_some()
+                !self.error.is_empty()
             }
         }
     };
@@ -273,6 +275,33 @@ pub struct Set {
 
 #[cfg(test)]
 mod tests {
+    fn identify_xml(errors: &str) -> String {
+        format!(
+            "<OAI-PMH><responseDate>x</responseDate><request>y</request>{errors}</OAI-PMH>"
+        )
+    }
+
+    #[test]
+    fn test_multiple_errors() {
+        let xml = identify_xml(
+            r#"<error code="badArgument">a</error><error code="badResumptionToken">b</error>"#,
+        );
+        let response = IdentifyResponse::new(&xml).unwrap();
+        assert!(response.is_err());
+        assert_eq!(response.error.len(), 2);
+        assert_eq!(response.error[0].code, ErrorCode::BadArgument);
+        assert_eq!(response.error[1].code, ErrorCode::BadResumptionToken);
+    }
+
+    #[test]
+    fn test_error_without_message() {
+        let xml = identify_xml(r#"<error code="noRecordsMatch"/>"#);
+        let response = IdentifyResponse::new(&xml).unwrap();
+        assert_eq!(response.error.len(), 1);
+        assert_eq!(response.error[0].code, ErrorCode::NoRecordsMatch);
+        assert!(response.error[0].message.is_empty());
+    }
+
     #[test]
     fn test_about_with_nested_xml_does_not_fail_parsing() {
         let xml = r#"<OAI-PMH><responseDate>x</responseDate><request>y</request>
@@ -330,7 +359,8 @@ mod tests {
         let response = GetRecordResponse::new(&xml).unwrap();
         assert!(response.is_err());
 
-        let error = response.error.unwrap();
+        assert_eq!(response.error.len(), 1);
+        let error = &response.error[0];
         assert_eq!(error.code, ErrorCode::CannotDisseminateFormat);
         assert_eq!(
             error.message,
@@ -346,7 +376,8 @@ mod tests {
         let response = GetRecordResponse::new(&xml).unwrap();
         assert!(response.is_err());
 
-        let error = response.error.unwrap();
+        assert_eq!(response.error.len(), 1);
+        let error = &response.error[0];
         assert_eq!(error.code, ErrorCode::IdDoesNotExist);
         assert_eq!(
             error.message,

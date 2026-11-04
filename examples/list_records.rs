@@ -31,8 +31,10 @@ async fn main() -> Result<()> {
         count += 1;
         println!("Response #{}\n", count);
 
-        if let Some(error) = response.error {
-            eprintln!("\t{:<12} {}\n", "OAI-PMH error:", error);
+        if response.is_err() {
+            for error in &response.error {
+                eprintln!("\t{:<12} {}\n", "OAI-PMH error:", error);
+            }
             continue;
         }
 
