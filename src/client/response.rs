@@ -1,5 +1,5 @@
 use crate::client::metadata;
-use crate::error::Result;
+use crate::error::{Error, Result};
 use quick_xml::de;
 use serde::Deserialize;
 use std::fmt;
@@ -11,7 +11,8 @@ use thiserror::Error as ThisError;
 pub struct ResponseError {
     #[serde(rename = "@code")]
     pub code: ErrorCode,
-    #[serde(rename = "$value")]
+    // The spec makes the message optional; servers often send e.g. `<error code="noRecordsMatch"/>`.
+    #[serde(rename = "$value", default)]
     pub message: String,
 }
 
@@ -28,10 +29,10 @@ pub enum ErrorCode {
     CannotDisseminateFormat,
     #[serde(rename = "idDoesNotExist")]
     IdDoesNotExist,
-    #[serde(rename = "noRecordsMatch")]
-    NoRecordsMatch,
     #[serde(rename = "noMetadataFormats")]
     NoMetadataFormats,
+    #[serde(rename = "noRecordsMatch")]
+    NoRecordsMatch,
     #[serde(rename = "noSetHierarchy")]
     NoSetHierarchy,
 }
@@ -44,11 +45,25 @@ impl fmt::Display for ErrorCode {
             ErrorCode::BadVerb => "badVerb",
             ErrorCode::CannotDisseminateFormat => "cannotDisseminateFormat",
             ErrorCode::IdDoesNotExist => "idDoesNotExist",
-            ErrorCode::NoRecordsMatch => "noRecordsMatch",
             ErrorCode::NoMetadataFormats => "noMetadataFormats",
+            ErrorCode::NoRecordsMatch => "noRecordsMatch",
             ErrorCode::NoSetHierarchy => "noSetHierarchy",
         };
         f.write_str(s)
+    }
+}
+
+/// Parse an OAI-PMH response from XML, with a hook for data serde can't capture
+/// (e.g. raw `<metadata>` XML).
+pub trait FromXml: Sized + serde::de::DeserializeOwned {
+    fn post_process(&mut self, _xml: &str) -> Result<()> {
+        Ok(())
+    }
+
+    fn from_xml(xml: &str) -> Result<Self> {
+        let mut response: Self = de::from_str(xml)?;
+        response.post_process(xml)?;
+        Ok(response)
     }
 }
 
@@ -56,6 +71,10 @@ impl fmt::Display for ErrorCode {
 // (preferring this to generics ['cus deserialization issues] and no direct struct embed)
 macro_rules! response {
     ($name:ident, $payload_name:literal, $payload_type:ty) => {
+        response!($name, $payload_name, $payload_type; custom);
+        impl FromXml for $name {}
+    };
+    ($name:ident, $payload_name:literal, $payload_type:ty; custom) => {
         #[derive(Debug, Deserialize)]
         #[serde(rename = "OAI-PMH")]
         #[serde(rename_all = "camelCase")]
@@ -63,37 +82,39 @@ macro_rules! response {
             pub response_date: String,
             pub request: String,
 
+            /// A response may carry several `<error>` elements.
             #[serde(default)]
-            pub error: Option<ResponseError>,
+            pub error: Vec<ResponseError>,
 
             #[serde(rename = $payload_name, default)]
             pub payload: Option<$payload_type>,
         }
 
         impl $name {
+            pub fn new(xml: &str) -> Result<Self> {
+                <Self as FromXml>::from_xml(xml)
+            }
+
             pub fn is_err(&self) -> bool {
-                self.error.is_some()
+                !self.error.is_empty()
             }
         }
     };
 }
 
-response!(GetRecordResponse, "GetRecord", GetRecord);
-impl GetRecordResponse {
-    pub fn new(xml: &str) -> Result<Self> {
-        let mut response: Self = de::from_str(xml)?;
-
+response!(GetRecordResponse, "GetRecord", GetRecord; custom);
+impl FromXml for GetRecordResponse {
+    fn post_process(&mut self, xml: &str) -> Result<()> {
         let metadata = metadata::extract_record_metadata(xml)?
             .into_iter()
             .next()
             .flatten()
             .unwrap_or_default();
 
-        if let Some(ref mut payload) = response.payload {
+        if let Some(payload) = self.payload.as_mut() {
             payload.record.metadata = metadata;
         }
-
-        Ok(response)
+        Ok(())
     }
 }
 
@@ -105,12 +126,6 @@ pub struct GetRecord {
 
 // Identify implementation
 response!(IdentifyResponse, "Identify", Identify);
-impl IdentifyResponse {
-    pub fn new(xml: &str) -> Result<Self> {
-        let response: Self = de::from_str(xml)?;
-        Ok(response)
-    }
-}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -135,12 +150,6 @@ pub struct Identify {
 
 // ListIdentifiers implementation
 response!(ListIdentifiersResponse, "ListIdentifiers", ListIdentifiers);
-impl ListIdentifiersResponse {
-    pub fn new(xml: &str) -> Result<Self> {
-        let response: Self = de::from_str(xml)?;
-        Ok(response)
-    }
-}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -158,12 +167,6 @@ response!(
     "ListMetadataFormats",
     ListMetadataFormats
 );
-impl ListMetadataFormatsResponse {
-    pub fn new(xml: &str) -> Result<Self> {
-        let response: Self = de::from_str(xml)?;
-        Ok(response)
-    }
-}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -173,20 +176,25 @@ pub struct ListMetadataFormats {
 }
 
 // ListRecords implementation
-response!(ListRecordsResponse, "ListRecords", ListRecords);
-impl ListRecordsResponse {
-    pub fn new(xml: &str) -> Result<Self> {
-        let mut response: Self = de::from_str(xml)?;
-
+response!(ListRecordsResponse, "ListRecords", ListRecords; custom);
+impl FromXml for ListRecordsResponse {
+    fn post_process(&mut self, xml: &str) -> Result<()> {
         let metadata = metadata::extract_record_metadata(xml)?;
 
-        if let Some(ref mut payload) = response.payload {
+        if let Some(payload) = self.payload.as_mut() {
+            // Metadata is matched to records by position, so the two parsers must agree.
+            if metadata.len() != payload.record.len() {
+                return Err(Error::ParseMismatch(format!(
+                    "found {} records but {} metadata slots",
+                    payload.record.len(),
+                    metadata.len()
+                )));
+            }
             for (record, meta) in payload.record.iter_mut().zip(metadata) {
                 record.metadata = meta.unwrap_or_default();
             }
         }
-
-        Ok(response)
+        Ok(())
     }
 }
 
@@ -202,12 +210,6 @@ pub struct ListRecords {
 
 // ListSets implementation
 response!(ListSetsResponse, "ListSets", ListSets);
-impl ListSetsResponse {
-    pub fn new(xml: &str) -> Result<Self> {
-        let response: Self = de::from_str(xml)?;
-        Ok(response)
-    }
-}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -248,7 +250,9 @@ pub struct Record {
     #[serde(skip)]
     pub metadata: String,
 
-    #[serde(default)]
+    /// Not yet populated. `<about>` holds arbitrary XML (and may repeat), which serde
+    /// can't read into a `String`, so it is skipped to avoid failing the whole response.
+    #[serde(skip)]
     pub about: String,
 }
 
@@ -279,6 +283,67 @@ pub struct Set {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn test_nested_record_elements_do_not_misalign_metadata() {
+        let xml = r#"<OAI-PMH><responseDate>x</responseDate><request>y</request><ListRecords>
+<record><header><identifier>1</identifier><datestamp>d</datestamp></header>
+<metadata><m>1</m></metadata>
+<about><record><metadata><z/></metadata></record></about></record>
+<record><header><identifier>2</identifier><datestamp>d</datestamp></header>
+<metadata><record><metadata><z/></metadata></record></metadata></record>
+</ListRecords></OAI-PMH>"#;
+
+        let records = ListRecordsResponse::new(xml)
+            .unwrap()
+            .payload
+            .unwrap()
+            .record;
+        assert_eq!(records.len(), 2);
+        assert_eq!(records[0].metadata, "<m>1</m>");
+        assert!(records[1].metadata.starts_with("<record>"));
+    }
+
+    fn identify_xml(errors: &str) -> String {
+        format!("<OAI-PMH><responseDate>x</responseDate><request>y</request>{errors}</OAI-PMH>")
+    }
+
+    #[test]
+    fn test_multiple_errors() {
+        let xml = identify_xml(
+            r#"<error code="badArgument">a</error><error code="badResumptionToken">b</error>"#,
+        );
+        let response = IdentifyResponse::new(&xml).unwrap();
+        assert!(response.is_err());
+        assert_eq!(response.error.len(), 2);
+        assert_eq!(response.error[0].code, ErrorCode::BadArgument);
+        assert_eq!(response.error[1].code, ErrorCode::BadResumptionToken);
+    }
+
+    #[test]
+    fn test_error_without_message() {
+        let xml = identify_xml(r#"<error code="noRecordsMatch"/>"#);
+        let response = IdentifyResponse::new(&xml).unwrap();
+        assert_eq!(response.error.len(), 1);
+        assert_eq!(response.error[0].code, ErrorCode::NoRecordsMatch);
+        assert!(response.error[0].message.is_empty());
+    }
+
+    #[test]
+    fn test_about_with_nested_xml_does_not_fail_parsing() {
+        let xml = r#"<OAI-PMH><responseDate>x</responseDate><request>y</request>
+<GetRecord><record>
+<header><identifier>i</identifier><datestamp>d</datestamp></header>
+<metadata><a/></metadata>
+<about><r:rights xmlns:r="u"><r:a>1</r:a></r:rights></about>
+<about><b>2</b></about>
+</record></GetRecord></OAI-PMH>"#;
+
+        let response = GetRecordResponse::new(xml).expect("about should not break parsing");
+        let record = response.payload.unwrap().record;
+        assert_eq!(record.header.identifier, "i");
+        assert!(record.about.is_empty());
+    }
+
     use super::*;
     use std::fs;
 
@@ -320,7 +385,8 @@ mod tests {
         let response = GetRecordResponse::new(&xml).unwrap();
         assert!(response.is_err());
 
-        let error = response.error.unwrap();
+        assert_eq!(response.error.len(), 1);
+        let error = &response.error[0];
         assert_eq!(error.code, ErrorCode::CannotDisseminateFormat);
         assert_eq!(
             error.message,
@@ -336,7 +402,8 @@ mod tests {
         let response = GetRecordResponse::new(&xml).unwrap();
         assert!(response.is_err());
 
-        let error = response.error.unwrap();
+        assert_eq!(response.error.len(), 1);
+        let error = &response.error[0];
         assert_eq!(error.code, ErrorCode::IdDoesNotExist);
         assert_eq!(
             error.message,

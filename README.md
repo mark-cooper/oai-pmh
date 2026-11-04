@@ -10,7 +10,7 @@ The standard practice will be to:
 - Create query args as necessary
 - Run the query
 
-Examples use the `#[tokio::main]` macro to create the async runtime. The tokio dependency is not provided by this library therefore you must include it in your `Cargo.toml` like: `tokio = { version = "1", features = ["rt-multi-thread", "macros"] }`. For async runtime requirements refer to the [reqwest](https://docs.rs/reqwest/latest/reqwest/index.html) documentation.
+Examples use the `#[tokio::main]` macro to create the async runtime. The tokio dependency is not provided by this library therefore you must include it in your `Cargo.toml` like: `tokio = { version = "1", features = ["rt-multi-thread", "macros", "time"] }` (`time` is only needed for sleeping between retries, as in the retry example). For async runtime requirements refer to the [reqwest](https://docs.rs/reqwest/latest/reqwest/index.html) documentation.
 
 ```rust
 use oai_pmh::{Client, ListRecordsArgs, Result};
@@ -68,10 +68,10 @@ List identifiers:
 cargo run --example list_identifiers
 
 # Specify endpoint and metadata prefix
-cargo run --example list_identifiers https://test.archivesspace.org oai_ead
+cargo run --example list_identifiers https://test.archivesspace.org/oai oai_ead
 
 # Specify number of respones/pages to fetch
-cargo run --example list_identifiers https://test.archivesspace.org oai_ead 100
+cargo run --example list_identifiers https://test.archivesspace.org/oai oai_ead 100
 
 # Specify a different endpoint and metadata format
 cargo run --example list_identifiers https://demo.archivesspace.org/oai oai_dc 5
@@ -85,3 +85,28 @@ Other examples include:
 
 - List formats and sets
 - List records
+- Retry when the server is busy (HTTP 503 / 429)
+
+## Development
+
+Tasks are defined in `mise.toml` and run with [mise](https://mise.jdx.dev). They work on Linux, macOS and Windows and require `cargo` on your `PATH`.
+
+```bash
+mise install      # install pinned tools (lefthook)
+mise run hooks    # install the git pre-commit hook (cargo fmt + clippy)
+
+mise run fmt      # cargo fmt --check
+mise run clippy   # cargo clippy, warnings are errors
+mise run test     # cargo test
+mise run ci       # fmt, clippy, test: the same checks as CI
+```
+
+Note that the README examples are doctests and make live requests, so `cargo test` needs network access.
+
+## Releasing
+
+Pushing a `v*` tag runs the `Publish` workflow (`cargo publish --locked`), which requires the tag to match `Cargo.toml`.
+
+1. Add a `CHANGELOG.md` entry and bump `version` in `Cargo.toml` (pre-1.0: breaking changes bump the minor), run `cargo check` so `Cargo.lock` follows.
+2. `mise run ci`, then PR and merge.
+3. Pull `main`, then `mise run publish` (tags `v<version>` and pushes it).

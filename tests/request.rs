@@ -245,4 +245,176 @@ mod tests {
 
         mock.assert();
     }
+
+    #[tokio::test]
+    async fn test_rate_limited_with_retry_after() {
+        use oai_pmh::error::Error;
+        use std::time::Duration;
+
+        let mut server = mockito::Server::new_async().await;
+        let mock = server
+            .mock("GET", "/")
+            .match_query(Matcher::Any)
+            .with_status(503)
+            .with_header("retry-after", "30")
+            .create();
+
+        let client = Client::new(&server.url()).unwrap();
+        let err = client.identify().await.unwrap_err();
+        assert!(matches!(
+            err,
+            Error::RateLimited { status: 503, retry_after: Some(d) } if d == Duration::from_secs(30)
+        ));
+        mock.assert();
+    }
+
+    #[tokio::test]
+    async fn test_rate_limited_429_and_http_date_retry_after() {
+        use oai_pmh::error::Error;
+
+        let mut server = mockito::Server::new_async().await;
+        let mock = server
+            .mock("GET", "/")
+            .match_query(Matcher::Any)
+            .with_status(429)
+            .with_header("retry-after", "Wed, 21 Oct 2026 07:28:00 GMT")
+            .create();
+
+        let client = Client::new(&server.url()).unwrap();
+        let err = client.identify().await.unwrap_err();
+        assert!(matches!(
+            err,
+            Error::RateLimited {
+                status: 429,
+                retry_after: None
+            }
+        ));
+        mock.assert();
+    }
+
+    #[tokio::test]
+    async fn test_stream_resumes_same_page_after_rate_limit() {
+        use oai_pmh::error::Error;
+
+        let mut server = mockito::Server::new_async().await;
+
+        // Page 1 (has a resumption token)
+        let page1 = setup_mock_server(
+            &mut server,
+            "tests/fixtures/list_identifiers.xml",
+            vec![Matcher::UrlEncoded(
+                "metadataPrefix".into(),
+                "oai_ead".into(),
+            )],
+        );
+
+        // Page 2: busy once, then a final page without a token
+        let busy = server
+            .mock("GET", "/")
+            .match_query(Matcher::Regex("resumptionToken=".into()))
+            .with_status(503)
+            .with_header("retry-after", "1")
+            .expect(1)
+            .create();
+        let last = server
+            .mock("GET", "/")
+            .match_query(Matcher::Regex("resumptionToken=".into()))
+            .with_status(200)
+            .with_header("content-type", "text/xml")
+            .with_body(
+                "<OAI-PMH><responseDate>x</responseDate><request>y</request>\
+                 <ListIdentifiers><header><identifier>last</identifier>\
+                 <datestamp>d</datestamp></header></ListIdentifiers></OAI-PMH>",
+            )
+            .expect(1)
+            .create();
+
+        let client = Client::new(&server.url()).unwrap();
+        let mut stream = client
+            .list_identifiers(ListIdentifiersArgs::new("oai_ead"))
+            .await
+            .unwrap();
+
+        assert!(stream.try_next().await.unwrap().is_some()); // page 1
+
+        let err = stream.try_next().await.unwrap_err(); // page 2: busy
+        assert!(matches!(err, Error::RateLimited { status: 503, .. }));
+
+        // Retrying resumes the same page rather than ending the stream
+        let page2 = stream.try_next().await.unwrap().unwrap();
+        assert_eq!(page2.payload.unwrap().header[0].identifier, "last");
+        assert!(stream.try_next().await.unwrap().is_none());
+
+        page1.assert();
+        busy.assert();
+        last.assert();
+    }
+
+    #[tokio::test]
+    async fn test_stream_errors_on_oai_error_in_continuation_page() {
+        use oai_pmh::error::Error;
+
+        let mut server = mockito::Server::new_async().await;
+
+        let _page1 = setup_mock_server(
+            &mut server,
+            "tests/fixtures/list_identifiers.xml",
+            vec![Matcher::UrlEncoded(
+                "metadataPrefix".into(),
+                "oai_ead".into(),
+            )],
+        );
+        let _page2 = server
+            .mock("GET", "/")
+            .match_query(Matcher::Regex("resumptionToken=".into()))
+            .with_status(200)
+            .with_header("content-type", "text/xml")
+            .with_body(
+                "<OAI-PMH><responseDate>x</responseDate><request>y</request>\
+                 <error code=\"badResumptionToken\">expired</error></OAI-PMH>",
+            )
+            .create();
+
+        let client = Client::new(&server.url()).unwrap();
+        let mut stream = client
+            .list_identifiers(ListIdentifiersArgs::new("oai_ead"))
+            .await
+            .unwrap();
+
+        assert!(stream.try_next().await.unwrap().is_some());
+
+        let err = stream.try_next().await.unwrap_err();
+        match err {
+            Error::Oai(errors) => {
+                assert_eq!(errors.len(), 1);
+                assert_eq!(errors[0].message, "expired");
+            }
+            other => panic!("expected Error::Oai, got {other:?}"),
+        }
+    }
+
+    #[tokio::test]
+    async fn test_stream_first_page_error_is_still_returned_as_response() {
+        let mut server = mockito::Server::new_async().await;
+        let _mock = server
+            .mock("GET", "/")
+            .match_query(Matcher::Any)
+            .with_status(200)
+            .with_header("content-type", "text/xml")
+            .with_body(
+                "<OAI-PMH><responseDate>x</responseDate><request>y</request>\
+                 <error code=\"noRecordsMatch\"/></OAI-PMH>",
+            )
+            .create();
+
+        let client = Client::new(&server.url()).unwrap();
+        let mut stream = client
+            .list_identifiers(ListIdentifiersArgs::new("oai_ead"))
+            .await
+            .unwrap();
+
+        let response = stream.try_next().await.unwrap().unwrap();
+        assert!(response.is_err());
+        assert!(stream.try_next().await.unwrap().is_none());
+    }
 }

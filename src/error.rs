@@ -1,5 +1,7 @@
+use crate::client::response::ResponseError;
 use quick_xml::DeError;
 use reqwest::header::{InvalidHeaderName, InvalidHeaderValue};
+use std::time::Duration;
 use thiserror::Error as ThisError;
 use url::ParseError;
 
@@ -17,9 +19,24 @@ pub enum Error {
     /// Header value is invalid
     #[error("invalid header value: {0}")]
     InvalidHeaderValue(#[from] InvalidHeaderValue),
+    /// The server returned OAI-PMH errors on a page after the first one in a
+    /// resumable stream, so the harvest cannot continue.
+    #[error("OAI-PMH error: {}", join_errors(.0))]
+    Oai(Vec<ResponseError>),
+    /// Internal inconsistency while parsing a response (a bug in this crate)
+    #[error("inconsistent response parse: {0}")]
+    ParseMismatch(String),
     /// Failed to serialize query parameters
     #[error("query serialization failed: {0}")]
     QuerySerialize(#[from] serde_qs::Error),
+    /// The server is busy or rate limiting (HTTP 503 or 429)
+    #[error("server busy (HTTP {status}){}", retry_after_label(*retry_after))]
+    RateLimited {
+        /// The HTTP status code (503 or 429)
+        status: u16,
+        /// The delay requested by the `Retry-After` header, if given in seconds
+        retry_after: Option<Duration>,
+    },
     /// Response was not valid XML (e.g., HTML error page, plain text)
     #[error("unexpected response{}: {body}", content_type_label(content_type.as_deref()))]
     UnexpectedResponse {
@@ -39,6 +56,21 @@ pub enum Error {
 fn content_type_label(content_type: Option<&str>) -> String {
     match content_type {
         Some(content_type) => format!(" (content-type: {content_type})"),
+        None => String::new(),
+    }
+}
+
+fn join_errors(errors: &[ResponseError]) -> String {
+    errors
+        .iter()
+        .map(ToString::to_string)
+        .collect::<Vec<_>>()
+        .join("; ")
+}
+
+fn retry_after_label(retry_after: Option<Duration>) -> String {
+    match retry_after {
+        Some(delay) => format!(", retry after {}s", delay.as_secs()),
         None => String::new(),
     }
 }

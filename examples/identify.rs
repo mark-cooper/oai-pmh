@@ -10,8 +10,10 @@ async fn main() -> Result<()> {
 
     println!("Response:\n");
 
-    if let Some(error) = response.error {
-        eprintln!("\t{:<12} {}\n", "OAI-PMH error:", error);
+    if response.is_err() {
+        for error in &response.error {
+            eprintln!("\t{:<12} {}\n", "OAI-PMH error:", error);
+        }
         process::exit(1);
     }
 

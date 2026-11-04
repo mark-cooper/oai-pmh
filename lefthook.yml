@@ -1,0 +1,11 @@
+# Installed via `mise run hooks`. Commands run sequentially so cargo doesn't
+# contend for the build directory lock.
+pre-commit:
+  parallel: false
+  commands:
+    fmt:
+      glob: "*.rs"
+      run: cargo fmt --check
+    clippy:
+      glob: "*.{rs,toml}"
+      run: cargo clippy --all-targets -- -D warnings
