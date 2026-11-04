@@ -29,10 +29,10 @@ pub enum ErrorCode {
     CannotDisseminateFormat,
     #[serde(rename = "idDoesNotExist")]
     IdDoesNotExist,
-    #[serde(rename = "noRecordsMatch")]
-    NoRecordsMatch,
     #[serde(rename = "noMetadataFormats")]
     NoMetadataFormats,
+    #[serde(rename = "noRecordsMatch")]
+    NoRecordsMatch,
     #[serde(rename = "noSetHierarchy")]
     NoSetHierarchy,
 }
@@ -45,8 +45,8 @@ impl fmt::Display for ErrorCode {
             ErrorCode::BadVerb => "badVerb",
             ErrorCode::CannotDisseminateFormat => "cannotDisseminateFormat",
             ErrorCode::IdDoesNotExist => "idDoesNotExist",
-            ErrorCode::NoRecordsMatch => "noRecordsMatch",
             ErrorCode::NoMetadataFormats => "noMetadataFormats",
+            ErrorCode::NoRecordsMatch => "noRecordsMatch",
             ErrorCode::NoSetHierarchy => "noSetHierarchy",
         };
         f.write_str(s)

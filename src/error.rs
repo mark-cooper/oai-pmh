@@ -19,6 +19,13 @@ pub enum Error {
     /// Header value is invalid
     #[error("invalid header value: {0}")]
     InvalidHeaderValue(#[from] InvalidHeaderValue),
+    /// The server returned OAI-PMH errors on a page after the first one in a
+    /// resumable stream, so the harvest cannot continue.
+    #[error("OAI-PMH error: {}", join_errors(.0))]
+    Oai(Vec<ResponseError>),
+    /// Internal inconsistency while parsing a response (a bug in this crate)
+    #[error("inconsistent response parse: {0}")]
+    ParseMismatch(String),
     /// Failed to serialize query parameters
     #[error("query serialization failed: {0}")]
     QuerySerialize(#[from] serde_qs::Error),
@@ -38,19 +45,19 @@ pub enum Error {
         /// The response body (truncated if too long)
         body: String,
     },
-    /// The server returned OAI-PMH errors on a page after the first one in a
-    /// resumable stream, so the harvest cannot continue.
-    #[error("OAI-PMH error: {}", join_errors(.0))]
-    Oai(Vec<ResponseError>),
-    /// Internal inconsistency while parsing a response (a bug in this crate)
-    #[error("inconsistent response parse: {0}")]
-    ParseMismatch(String),
     /// Failed to parse the endpoint URL
     #[error("URL parsing failed: {0}")]
     UrlParse(#[from] ParseError),
     /// Failed to parse XML response
     #[error("XML parsing failed: {0}")]
     XmlParse(#[from] DeError),
+}
+
+fn content_type_label(content_type: Option<&str>) -> String {
+    match content_type {
+        Some(content_type) => format!(" (content-type: {content_type})"),
+        None => String::new(),
+    }
 }
 
 fn join_errors(errors: &[ResponseError]) -> String {
@@ -64,13 +71,6 @@ fn join_errors(errors: &[ResponseError]) -> String {
 fn retry_after_label(retry_after: Option<Duration>) -> String {
     match retry_after {
         Some(delay) => format!(", retry after {}s", delay.as_secs()),
-        None => String::new(),
-    }
-}
-
-fn content_type_label(content_type: Option<&str>) -> String {
-    match content_type {
-        Some(content_type) => format!(" (content-type: {content_type})"),
         None => String::new(),
     }
 }
