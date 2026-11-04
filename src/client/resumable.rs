@@ -5,7 +5,7 @@ use crate::Verb;
 use crate::client::Client;
 use crate::client::query::{Query, ResumableArgs};
 use crate::client::response::{
-    ListIdentifiersResponse, ListRecordsResponse, ListSetsResponse, ResumptionToken,
+    FromXml, ListIdentifiersResponse, ListRecordsResponse, ListSetsResponse,
 };
 
 /// Async stream for OAI-PMH verbs that support resumption tokens
@@ -37,7 +37,7 @@ where
     }
 
     async fn fetch_next(&mut self) -> Result<R> {
-        let token = self.resumption_token.take().expect("called without token");
+        let token = self.resumption_token.clone().expect("called without token");
 
         let xml = self
             .client
@@ -45,6 +45,7 @@ where
             .await?;
 
         let response = R::from_xml(&xml)?;
+        // Only advance once the page has fetched and parsed successfully.
         self.resumption_token = response.resumption_token();
 
         Ok(response)
@@ -67,39 +68,24 @@ where
 
     /// Returns the next response, or `None` if out.
     pub async fn next(&mut self) -> Option<Result<R>> {
-        match self.try_next().await {
-            Ok(Some(response)) => Some(Ok(response)),
-            Ok(None) => None,
-            Err(err) => Some(Err(err)),
-        }
+        self.try_next().await.transpose()
     }
 }
 
 /// Trait for OAI-PMH responses that support resumption tokens
-pub trait ResumableResponse: Sized {
-    fn from_xml(xml: &str) -> Result<Self>;
+pub trait ResumableResponse: FromXml {
     fn resumption_token(&self) -> Option<String>;
-
-    fn extract_token(token: Option<&ResumptionToken>) -> Option<String> {
-        token
-            .filter(|t| !t.token.is_empty())
-            .map(|t| t.token.clone())
-    }
 }
 
 macro_rules! resumable {
     ($response:ty) => {
         impl ResumableResponse for $response {
-            fn from_xml(xml: &str) -> Result<Self> {
-                <$response>::new(xml)
-            }
-
             fn resumption_token(&self) -> Option<String> {
-                Self::extract_token(
-                    self.payload
-                        .as_ref()
-                        .and_then(|p| p.resumption_token.as_ref()),
-                )
+                self.payload
+                    .as_ref()
+                    .and_then(|p| p.resumption_token.as_ref())
+                    .filter(|t| !t.token.is_empty())
+                    .map(|t| t.token.clone())
             }
         }
     };

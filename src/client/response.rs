@@ -52,10 +52,28 @@ impl fmt::Display for ErrorCode {
     }
 }
 
+/// Parse an OAI-PMH response from XML, with a hook for data serde can't capture
+/// (e.g. raw `<metadata>` XML).
+pub trait FromXml: Sized + serde::de::DeserializeOwned {
+    fn post_process(&mut self, _xml: &str) -> Result<()> {
+        Ok(())
+    }
+
+    fn from_xml(xml: &str) -> Result<Self> {
+        let mut response: Self = de::from_str(xml)?;
+        response.post_process(xml)?;
+        Ok(response)
+    }
+}
+
 // Generate common response structure
 // (preferring this to generics ['cus deserialization issues] and no direct struct embed)
 macro_rules! response {
     ($name:ident, $payload_name:literal, $payload_type:ty) => {
+        response!($name, $payload_name, $payload_type; custom);
+        impl FromXml for $name {}
+    };
+    ($name:ident, $payload_name:literal, $payload_type:ty; custom) => {
         #[derive(Debug, Deserialize)]
         #[serde(rename = "OAI-PMH")]
         #[serde(rename_all = "camelCase")]
@@ -71,6 +89,10 @@ macro_rules! response {
         }
 
         impl $name {
+            pub fn new(xml: &str) -> Result<Self> {
+                <Self as FromXml>::from_xml(xml)
+            }
+
             pub fn is_err(&self) -> bool {
                 self.error.is_some()
             }
@@ -78,22 +100,19 @@ macro_rules! response {
     };
 }
 
-response!(GetRecordResponse, "GetRecord", GetRecord);
-impl GetRecordResponse {
-    pub fn new(xml: &str) -> Result<Self> {
-        let mut response: Self = de::from_str(xml)?;
-
+response!(GetRecordResponse, "GetRecord", GetRecord; custom);
+impl FromXml for GetRecordResponse {
+    fn post_process(&mut self, xml: &str) -> Result<()> {
         let metadata = metadata::extract_record_metadata(xml)?
             .into_iter()
             .next()
             .flatten()
             .unwrap_or_default();
 
-        if let Some(ref mut payload) = response.payload {
+        if let Some(payload) = self.payload.as_mut() {
             payload.record.metadata = metadata;
         }
-
-        Ok(response)
+        Ok(())
     }
 }
 
@@ -105,12 +124,6 @@ pub struct GetRecord {
 
 // Identify implementation
 response!(IdentifyResponse, "Identify", Identify);
-impl IdentifyResponse {
-    pub fn new(xml: &str) -> Result<Self> {
-        let response: Self = de::from_str(xml)?;
-        Ok(response)
-    }
-}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -135,12 +148,6 @@ pub struct Identify {
 
 // ListIdentifiers implementation
 response!(ListIdentifiersResponse, "ListIdentifiers", ListIdentifiers);
-impl ListIdentifiersResponse {
-    pub fn new(xml: &str) -> Result<Self> {
-        let response: Self = de::from_str(xml)?;
-        Ok(response)
-    }
-}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -158,12 +165,6 @@ response!(
     "ListMetadataFormats",
     ListMetadataFormats
 );
-impl ListMetadataFormatsResponse {
-    pub fn new(xml: &str) -> Result<Self> {
-        let response: Self = de::from_str(xml)?;
-        Ok(response)
-    }
-}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -173,20 +174,17 @@ pub struct ListMetadataFormats {
 }
 
 // ListRecords implementation
-response!(ListRecordsResponse, "ListRecords", ListRecords);
-impl ListRecordsResponse {
-    pub fn new(xml: &str) -> Result<Self> {
-        let mut response: Self = de::from_str(xml)?;
-
+response!(ListRecordsResponse, "ListRecords", ListRecords; custom);
+impl FromXml for ListRecordsResponse {
+    fn post_process(&mut self, xml: &str) -> Result<()> {
         let metadata = metadata::extract_record_metadata(xml)?;
 
-        if let Some(ref mut payload) = response.payload {
+        if let Some(payload) = self.payload.as_mut() {
             for (record, meta) in payload.record.iter_mut().zip(metadata) {
                 record.metadata = meta.unwrap_or_default();
             }
         }
-
-        Ok(response)
+        Ok(())
     }
 }
 
@@ -202,12 +200,6 @@ pub struct ListRecords {
 
 // ListSets implementation
 response!(ListSetsResponse, "ListSets", ListSets);
-impl ListSetsResponse {
-    pub fn new(xml: &str) -> Result<Self> {
-        let response: Self = de::from_str(xml)?;
-        Ok(response)
-    }
-}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
