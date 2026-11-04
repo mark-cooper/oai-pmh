@@ -1,10 +1,13 @@
 [package]
 name = "oai-pmh"
-version = "0.5.1"
+version = "0.6.0"
 edition = "2024"
 authors = ["Mark Cooper <gh.aftermath967@passinbox.com>"]
 description = "Rust library for the Open Archives Initiative Protocol for Metadata Harvesting"
 license = "MIT OR Apache-2.0"
+repository = "https://github.com/mark-cooper/oai-pmh"
+keywords = ["oai-pmh", "oai", "metadata", "harvesting", "xml"]
+categories = ["api-bindings", "web-programming::http-client"]
 
 [dependencies]
 quick-xml = { version = "0.41", features = ["serialize"] }
