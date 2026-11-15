@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.7.0 - 2026-11-15
+
+### Breaking changes
+
+- `Client::list_identifiers`, `list_records` and `list_sets` are no longer `async`, make no request and return the stream directly (no `Result`): the first page is fetched by the first `try_next()`. Replace `client.list_records(args).await?` with `client.list_records(args)`. A failed first request can now be retried by calling `try_next()` again, like any other page.
+- `ResumableStream` returns `Err(Error::Oai(..))` for OAI-PMH errors on every page, the first included, except `noRecordsMatch` on the first page, which ends the stream with `Ok(None)` (an empty list). Previously a first-page error was returned as a normal response.
+
 ## 0.6.0 - 2026-11-04
 
 ### Breaking changes

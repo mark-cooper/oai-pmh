@@ -1,8 +1,8 @@
 //! Harvest a list, backing off when the server is busy (HTTP 503 / 429).
 //!
-//! A failed `try_next()` keeps its resumption token, so after sleeping we can
-//! simply call it again and resume the same page. The first request is made when
-//! the stream is created, so it needs its own retry.
+//! No request is made until the first `try_next()`, and a failed `try_next()`
+//! leaves the stream where it was, so after sleeping we can simply call it again
+//! to retry the same page (the first one included).
 
 use oai_pmh::{Client, Error, ListIdentifiersArgs, Result};
 use std::time::Duration;
@@ -22,24 +22,11 @@ async fn main() -> Result<()> {
 
     let client = Client::new(&endpoint)?;
 
-    let mut retries = 0;
-    let mut stream = loop {
-        let args = ListIdentifiersArgs::new(metadata_prefix.clone());
-        match client.list_identifiers(args).await {
-            Ok(stream) => break stream,
-            Err(Error::RateLimited {
-                status,
-                retry_after,
-            }) if retries < MAX_RETRIES => {
-                retries += 1;
-                backoff(status, retry_after, retries).await;
-            }
-            Err(err) => return Err(err),
-        }
-    };
+    let args = ListIdentifiersArgs::new(metadata_prefix);
+    let mut stream = client.list_identifiers(args);
 
     let mut pages = 0;
-    retries = 0;
+    let mut retries = 0;
 
     loop {
         match stream.try_next().await {

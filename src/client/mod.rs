@@ -87,11 +87,13 @@ impl Client {
         Ok(response)
     }
 
-    pub async fn list_identifiers(
+    /// Returns a stream of `ListIdentifiers` pages. No request is made until
+    /// the first `try_next()`.
+    pub fn list_identifiers(
         &self,
         args: ListIdentifiersArgs,
-    ) -> Result<ResumableStream<'_, ListIdentifiersResponse>> {
-        ResumableStream::new(self, Verb::ListIdentifiers, args).await
+    ) -> ResumableStream<'_, ListIdentifiersResponse> {
+        ResumableStream::new(self, Verb::ListIdentifiers, args)
     }
 
     pub async fn list_metadata_formats(
@@ -105,28 +107,33 @@ impl Client {
         Ok(response)
     }
 
-    pub async fn list_records(
-        &self,
-        args: ListRecordsArgs,
-    ) -> Result<ResumableStream<'_, ListRecordsResponse>> {
-        ResumableStream::new(self, Verb::ListRecords, args).await
+    /// Returns a stream of `ListRecords` pages. No request is made until the
+    /// first `try_next()`.
+    pub fn list_records(&self, args: ListRecordsArgs) -> ResumableStream<'_, ListRecordsResponse> {
+        ResumableStream::new(self, Verb::ListRecords, args)
     }
 
-    pub async fn list_sets(&self) -> Result<ResumableStream<'_, ListSetsResponse>> {
-        ResumableStream::new(self, Verb::ListSets, ()).await
+    /// Returns a stream of `ListSets` pages. No request is made until the
+    /// first `try_next()`.
+    pub fn list_sets(&self) -> ResumableStream<'_, ListSetsResponse> {
+        ResumableStream::new(self, Verb::ListSets, ())
     }
 
     fn build_url<T: Serialize>(&self, query: Query<T>) -> Result<Url> {
         let query = serde_qs::to_string(&query)?;
+        Ok(self.url_with_query(&query))
+    }
+
+    fn url_with_query(&self, query: &str) -> Url {
         let mut url = self.endpoint.clone();
 
         let combined_query = match url.query() {
             Some(existing) if !existing.is_empty() => format!("{existing}&{query}"),
-            _ => query,
+            _ => query.to_string(),
         };
         url.set_query(Some(&combined_query));
 
-        Ok(url)
+        url
     }
 
     fn truncate_body(s: &str, max_chars: usize) -> String {
@@ -139,7 +146,15 @@ impl Client {
     }
 
     pub(crate) async fn do_query<T: Serialize>(&self, query: Query<T>) -> Result<String> {
-        let url = self.build_url(query)?;
+        self.fetch(self.build_url(query)?).await
+    }
+
+    /// Like `do_query`, with the query already serialized.
+    pub(crate) async fn do_raw_query(&self, query: &str) -> Result<String> {
+        self.fetch(self.url_with_query(query)).await
+    }
+
+    async fn fetch(&self, url: Url) -> Result<String> {
         let response = self
             .client
             .get(url)

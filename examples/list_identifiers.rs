@@ -26,17 +26,10 @@ async fn main() -> Result<()> {
 
     println!("Fetching first {} responses...\n", limit);
 
-    let mut stream = client.list_identifiers(args).await?;
+    let mut stream = client.list_identifiers(args);
     while let Some(response) = stream.try_next().await? {
         count += 1;
         println!("Response #{}", count);
-
-        if response.is_err() {
-            for error in &response.error {
-                eprintln!("\t{:<12} {}\n", "OAI-PMH error:", error);
-            }
-            continue;
-        }
 
         if let Some(payload) = response.payload {
             for header in payload.header {

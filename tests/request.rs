@@ -87,7 +87,7 @@ mod tests {
             "2025-11-11T14:28:08Z",
         )];
 
-        let mut stream = client.list_identifiers(args).await.unwrap();
+        let mut stream = client.list_identifiers(args);
         if let Some(response) = stream.next().await {
             let response = response.unwrap();
             let headers = response.payload.unwrap().header;
@@ -230,7 +230,7 @@ mod tests {
             ),
         ];
 
-        let mut stream = client.list_records(args).await.unwrap();
+        let mut stream = client.list_records(args);
         if let Some(response) = stream.next().await {
             let response = response.unwrap();
             let records = response.payload.unwrap().record;
@@ -330,10 +330,7 @@ mod tests {
             .create();
 
         let client = Client::new(&server.url()).unwrap();
-        let mut stream = client
-            .list_identifiers(ListIdentifiersArgs::new("oai_ead"))
-            .await
-            .unwrap();
+        let mut stream = client.list_identifiers(ListIdentifiersArgs::new("oai_ead"));
 
         assert!(stream.try_next().await.unwrap().is_some()); // page 1
 
@@ -376,10 +373,7 @@ mod tests {
             .create();
 
         let client = Client::new(&server.url()).unwrap();
-        let mut stream = client
-            .list_identifiers(ListIdentifiersArgs::new("oai_ead"))
-            .await
-            .unwrap();
+        let mut stream = client.list_identifiers(ListIdentifiersArgs::new("oai_ead"));
 
         assert!(stream.try_next().await.unwrap().is_some());
 
@@ -393,28 +387,87 @@ mod tests {
         }
     }
 
-    #[tokio::test]
-    async fn test_stream_first_page_error_is_still_returned_as_response() {
-        let mut server = mockito::Server::new_async().await;
-        let _mock = server
+    fn first_page_error_server(server: &mut ServerGuard, error: &str) -> mockito::Mock {
+        server
             .mock("GET", "/")
             .match_query(Matcher::Any)
             .with_status(200)
             .with_header("content-type", "text/xml")
-            .with_body(
-                "<OAI-PMH><responseDate>x</responseDate><request>y</request>\
-                 <error code=\"noRecordsMatch\"/></OAI-PMH>",
-            )
+            .with_body(format!(
+                "<OAI-PMH><responseDate>x</responseDate><request>y</request>{error}</OAI-PMH>"
+            ))
+            .create()
+    }
+
+    #[tokio::test]
+    async fn test_stream_no_records_match_on_first_page_is_empty() {
+        let mut server = mockito::Server::new_async().await;
+        let mock = first_page_error_server(&mut server, r#"<error code="noRecordsMatch"/>"#);
+
+        let client = Client::new(&server.url()).unwrap();
+        let mut stream = client.list_identifiers(ListIdentifiersArgs::new("oai_ead"));
+
+        assert!(stream.try_next().await.unwrap().is_none());
+        assert!(stream.try_next().await.unwrap().is_none());
+        mock.assert(); // no second request once done
+    }
+
+    #[tokio::test]
+    async fn test_stream_errors_on_oai_error_in_first_page() {
+        use oai_pmh::error::Error;
+
+        let mut server = mockito::Server::new_async().await;
+        let _mock = first_page_error_server(
+            &mut server,
+            r#"<error code="cannotDisseminateFormat">nope</error>"#,
+        );
+
+        let client = Client::new(&server.url()).unwrap();
+        let mut stream = client.list_identifiers(ListIdentifiersArgs::new("bogus"));
+
+        match stream.try_next().await.unwrap_err() {
+            Error::Oai(errors) => {
+                assert_eq!(errors.len(), 1);
+                assert_eq!(errors[0].message, "nope");
+            }
+            other => panic!("expected Error::Oai, got {other:?}"),
+        }
+    }
+
+    #[tokio::test]
+    async fn test_stream_defers_and_retries_first_request() {
+        use oai_pmh::error::Error;
+
+        let mut server = mockito::Server::new_async().await;
+        let busy = server
+            .mock("GET", "/")
+            .match_query(Matcher::Any)
+            .with_status(503)
+            .expect(1)
             .create();
 
         let client = Client::new(&server.url()).unwrap();
-        let mut stream = client
-            .list_identifiers(ListIdentifiersArgs::new("oai_ead"))
-            .await
-            .unwrap();
+        let mut stream = client.list_identifiers(ListIdentifiersArgs::new("oai_ead"));
 
-        let response = stream.try_next().await.unwrap().unwrap();
-        assert!(response.is_err());
-        assert!(stream.try_next().await.unwrap().is_none());
+        // Creating the stream makes no request
+        assert!(!busy.matched());
+
+        let err = stream.try_next().await.unwrap_err();
+        assert!(matches!(err, Error::RateLimited { status: 503, .. }));
+        busy.assert();
+        busy.remove();
+
+        let page1 = setup_mock_server(
+            &mut server,
+            "tests/fixtures/list_identifiers.xml",
+            vec![Matcher::UrlEncoded(
+                "metadataPrefix".into(),
+                "oai_ead".into(),
+            )],
+        );
+
+        // Retrying repeats the initial request
+        assert!(stream.try_next().await.unwrap().is_some());
+        page1.assert();
     }
 }
