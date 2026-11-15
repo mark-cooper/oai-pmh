@@ -8,7 +8,7 @@ async fn main() -> Result<()> {
     println!("{:?}", response.payload);
 
     let args = ListRecordsArgs::new("oai_dc");
-    let mut stream = client.list_records(args).await?;
+    let mut stream = client.list_records(args);
     if let Some(response) = stream.try_next().await? {
         println!("{:?}", response);
     }

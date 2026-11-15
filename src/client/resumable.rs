@@ -1,76 +1,101 @@
 use crate::error::{Error, Result};
 use serde::Serialize;
+use std::marker::PhantomData;
 
 use crate::Verb;
 use crate::client::Client;
 use crate::client::query::{Query, ResumableArgs};
 use crate::client::response::{
-    FromXml, ListIdentifiersResponse, ListRecordsResponse, ListSetsResponse, ResponseError,
+    ErrorCode, FromXml, ListIdentifiersResponse, ListRecordsResponse, ListSetsResponse,
+    ResponseError,
 };
 
-/// Async stream for OAI-PMH verbs that support resumption tokens
+/// Async stream for OAI-PMH verbs that support resumption tokens.
+///
+/// No request is made until the first call to [`try_next`](Self::try_next).
+/// Responses carrying OAI-PMH errors are returned as `Err(Error::Oai(..))`, except
+/// `noRecordsMatch` on the first page, which ends the stream (an empty list).
 pub struct ResumableStream<'a, R> {
     client: &'a Client,
     verb: Verb,
-    current_response: Option<R>,
-    resumption_token: Option<String>,
+    next: Next,
+    _response: PhantomData<R>,
+}
+
+/// The request the next `try_next()` will make.
+enum Next {
+    /// The initial request, as a serialized query string.
+    Start(String),
+    /// A continuation request for this resumption token.
+    Resume(String),
+    /// The query args could not be serialized; reported by the next `try_next()`.
+    Invalid(Error),
+    /// The stream is exhausted.
+    Done,
 }
 
 impl<'a, R> ResumableStream<'a, R>
 where
     R: ResumableResponse,
 {
-    pub(crate) async fn new<Args>(client: &'a Client, verb: Verb, args: Args) -> Result<Self>
+    pub(crate) fn new<Args>(client: &'a Client, verb: Verb, args: Args) -> Self
     where
         Args: Serialize,
     {
-        let xml = client.do_query(Query::new(verb, args)).await?;
-        let response = R::from_xml(&xml)?;
-        let resumption_token = response.resumption_token();
+        let next = match serde_qs::to_string(&Query::new(verb, args)) {
+            Ok(query) => Next::Start(query),
+            Err(err) => Next::Invalid(err.into()),
+        };
 
-        Ok(Self {
+        Self {
             client,
             verb,
-            current_response: Some(response),
-            resumption_token,
-        })
+            next,
+            _response: PhantomData,
+        }
     }
 
-    async fn fetch_next(&mut self) -> Result<R> {
-        let token = self.resumption_token.clone().expect("called without token");
+    /// Returns the next response, or `Ok(None)` if the stream is exhausted.
+    ///
+    /// A failed request leaves the stream where it was, so calling this again
+    /// retries the same page (the first one included).
+    pub async fn try_next(&mut self) -> Result<Option<R>> {
+        let query = match &self.next {
+            Next::Start(query) => query.clone(),
+            Next::Resume(token) => {
+                serde_qs::to_string(&Query::new(self.verb, ResumableArgs::new(token.as_str())))?
+            }
+            Next::Invalid(_) => match std::mem::replace(&mut self.next, Next::Done) {
+                Next::Invalid(err) => return Err(err),
+                _ => unreachable!(),
+            },
+            Next::Done => return Ok(None),
+        };
 
-        let xml = self
-            .client
-            .do_query(Query::new(self.verb, ResumableArgs::new(token)))
-            .await?;
-
+        let xml = self.client.do_raw_query(&query).await?;
         let response = R::from_xml(&xml)?;
 
-        // An error on a continuation page means the harvest is incomplete. Without this the
-        // stream would just end (no payload, so no token) and look like a normal finish.
         if !response.errors().is_empty() {
+            // noRecordsMatch on the first request just means the list is empty.
+            let is_first = matches!(self.next, Next::Start(_));
+            let no_records = response
+                .errors()
+                .iter()
+                .all(|e| e.code == ErrorCode::NoRecordsMatch);
+            if is_first && no_records {
+                self.next = Next::Done;
+                return Ok(None);
+            }
+
+            // Anything else is a failed request. On a continuation page this also stops
+            // an incomplete harvest from looking like a normal finish.
             return Err(Error::Oai(response.into_errors()));
         }
 
         // Only advance once the page has fetched and parsed successfully.
-        self.resumption_token = response.resumption_token();
+        self.next = response.resumption_token().map_or(Next::Done, Next::Resume);
 
-        Ok(response)
-    }
-
-    /// Returns the next response, or `Ok(None)` if the stream is exhausted.
-    pub async fn try_next(&mut self) -> Result<Option<R>> {
-        // Return buffered response if we have one
-        if let Some(response) = self.current_response.take() {
-            return Ok(Some(response));
-        }
-
-        // Fetch next page if we have a resumption token
-        if self.resumption_token.is_some() {
-            Ok(Some(self.fetch_next().await?))
-        } else {
-            Ok(None)
-        }
+        Ok(Some(response))
     }
 
     /// Returns the next response, or `None` if out.
